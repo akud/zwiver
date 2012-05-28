@@ -1,1 +1,1 @@
-Ev = Events = Ember.Application.create();
+EV = Events = Ember.Application.create();

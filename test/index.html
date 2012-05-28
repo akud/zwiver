@@ -3,24 +3,19 @@
 <html>  
 	<head>  
 		<link rel="stylesheet" href="qunit.css" type="text/css"/>  
-		<script type="text/javascript" src="../public/js/libs/jquery-1.7.2.min.js"></script>  
+		<script type="text/javascript" src="../app/js/libs/jquery-1.7.2.min.js"></script>  
 		<script type="text/javascript" src="qunit.js"></script>  
-		<script type="text/javascript" src="../public/js/libs/jquery-1.7.2.min.js"></script>  
-		<script type="text/javascript" src="../public/js/libs/ember-0.9.8.1.js"></script>  
-		<script type="text/javascript" src="../public/js/events.js"></script>  
+		<script type="text/javascript" src="../app/js/libs/ember-0.9.8.1.js"></script>  
+		<script type="text/javascript" src="../app/js/events.js"></script>  
 		<script type="text/javascript">  
     $(document).ready(function(){  
       module("Basic Definitions");  
       test("Application", function(){  
          expect(3);  
 				 ok( Events, "Events" );
-				 ok( Ev, "Ev" );
-				 strictEqual( Ev, Events, "Ev === Events" );
+				 ok( EV, "EV" );
+				 strictEqual( EV, Events, "EV === Events" );
       });  
-			test("State Manager", function(){
-				expect(1);
-				ok( Ev.stateManager, "App.stateManager" );
-			});
     });  
 		</script>  
 	</head>  
