@@ -12,10 +12,18 @@
       module("Basic Definitions");  
       test("Application", function(){  
          expect(3);  
-				 ok( Events, "Events" );
-				 ok( EV, "EV" );
-				 strictEqual( EV, Events, "EV === Events" );
+				 ok(Events, "Events");
+				 ok(EV, "EV");
+				 strictEqual(EV, Events, "EV === Events");
       });  
+			test("Controllers", function() {
+				expect(1);
+				ok(EV.eventsController, "eventsController");
+			});
+			test("Views", function() {
+				expect(1);
+				ok(EV.listView, "listView");
+			});
     });  
 		</script>  
 	</head>  
