@@ -52,8 +52,20 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "find upcoming" do
-    upcoming = Event.find_upcoming
+    upcoming = Event.find_upcoming 2
     assert_not_nil upcoming, 'returned nil list'
-    assert_equal 2, upcoming.length
+    assert upcoming.length >= 2, "didn't find all upcoming events"
+    upcoming.each do |u|
+      assert u.date > Time.now, "returned an event that wasn't in the future"
+      #since we go up to the midnight two days in the future, it could be up to 
+      #3 24 hour periods from now
+      assert u.date < Time.now + (3*60*60*24), 
+        "returned an event too far in to the future"
+    end
+  end
+  test "search" do 
+    results = Event.search ['comedy']
+    assert_not_nil results, 'returned nil results list'
+    assert !results.empty?, 'returned empty results list'
   end
 end

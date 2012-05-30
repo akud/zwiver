@@ -10,4 +10,9 @@ class EventsController < ApplicationController
     render :json => @event
   end
 
+  def search 
+    @events = Event.search params[:terms]
+    render :json => @events
+  end
+
 end
