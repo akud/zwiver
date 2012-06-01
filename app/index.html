@@ -4,13 +4,20 @@
 		<!-- <script data-main="js/main" src="js/libs/require-jquery.js"></script> -->
 		<script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>  
 		<script type="text/javascript" src="js/libs/ember-0.9.8.1.js"></script>  
+		<script type="text/javascript" 
+			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
 		<script type="text/javascript" src="js/events.js"></script>  
+		<script type="text/javascript">
+			$(document).ready(function(){
+				EV.eventsController.loadUpcoming();
+				EV.listView.append();
+			});
+		</script>  
 	</head>
 	<body>
-	<script type="text/x-handlebars">
-		{{#each EV.eventsController}}
-			
-		{{/each}}
-	</script>
+		<h3>Some upcoming events</h3>
 	</body>
+	<script type="text/x-handlebars" data-template-name="list-item">
+		<a {{bindAttr href="content.url"}}>{{content.title}}</a>
+	</script>
 </html>

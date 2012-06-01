@@ -3,26 +3,58 @@
 <html>  
 	<head>  
 		<link rel="stylesheet" href="qunit.css" type="text/css"/>  
-		<script type="text/javascript" src="../app/js/libs/jquery-1.7.2.min.js"></script>  
+		<script type="text/javascript" src="/js/libs/jquery-1.7.2.min.js"></script>  
 		<script type="text/javascript" src="qunit.js"></script>  
-		<script type="text/javascript" src="../app/js/libs/ember-0.9.8.1.js"></script>  
-		<script type="text/javascript" src="../app/js/events.js"></script>  
+		<script type="text/javascript" src="/js/libs/ember-0.9.8.1.js"></script>  
+		<script type="text/javascript" src="/js/events.js"></script>  
 		<script type="text/javascript">  
     $(document).ready(function(){  
       module("Basic Definitions");  
       test("Application", function(){  
-         expect(3);  
 				 ok(Events, "Events");
 				 ok(EV, "EV");
 				 strictEqual(EV, Events, "EV === Events");
       });  
 			test("Controllers", function() {
-				expect(1);
 				ok(EV.eventsController, "eventsController");
 			});
 			test("Views", function() {
-				expect(1);
 				ok(EV.listView, "listView");
+				ok(EV.mapView, "mapView");
+			});
+
+			module("Content");
+			test("Controller Content", function() {
+				var data = ['foo','bar'];
+				EV.eventsController.set('content',data);
+				equal(EV.eventsController.get('content'), data, "Content");
+			});
+			test("List View Content", function() {
+				var data = ['foo','bar']
+				EV.listView.set('content',data);
+				equal(EV.listView.get('content'), data, 'Content');
+			});
+
+			module("Bindings");
+			asyncTest("ListView-Controller Binding", function() {
+				var data = ['bar', 'baz'];
+				EV.eventsController.set('content', data);
+				setTimeout(function() {
+					equal(EV.listView.get('content'), data, 'Controller updates ListView');
+					start();
+				}, 10);
+			});
+
+			module("Load Data");
+			asyncTest("Load Controller Data", function() {
+				EV.eventsController.set('content',[]);
+				EV.eventsController.loadUpcoming();
+				setTimeout(function() {
+					ok(!!EV.eventsController.get('length'), "Check controller's content")
+					ok(EV.eventsController.everyProperty('title'), "Every event has a title");
+					ok(EV.eventsController.everyProperty('url'), "Every event has a url");
+					start();
+				},100);
 			});
     });  
 		</script>  
