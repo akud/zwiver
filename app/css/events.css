@@ -1,3 +1,37 @@
+/*Fix for bad google maps - bootstrap interaction*/
 #map-container img {
 	max-width: none;
+}
+
+/* items in the list view */
+li.list-item {
+	background-color: #F54F2A;
+	margin-bottom: 5px;
+	padding: 10px 10px 3px 10px;
+	color: #222;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+li.list-item:hover {
+	background-color: #E63F19; 
+}
+
+li.list-item.selected {
+	background-color: #D62D06;
+}
+
+li.list-item a {
+	color: #333;
+}
+
+li.list-item a:hover {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.event-title {
+	font-size: 14pt;
+	font-weight: bold;
 }

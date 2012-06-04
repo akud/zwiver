@@ -32,7 +32,18 @@ EV.eventsController = Ember.ArrayController.create({
 EV.listView = Ember.CollectionView.create({
 	contentBinding: Ember.Binding.oneWay('EV.eventsController.content'),
 	tagName: 'ul',
-	itemViewClass: Ember.View.extend({templateName: 'list-item'})
+	classNames: ['event-list','unstyled'],
+	itemViewClass: Ember.View.extend({
+		templateName: 'list-item',
+		classNameBindings: ['itemClass','selected'],
+		itemClass: 'list-item',
+		selected: false,
+		click: function(evt) {
+			this.set('selected', true);
+			//unselect others
+			//pan map to this marker
+		}
+	})
 });
 
 EV.mapView = Ember.View.create({

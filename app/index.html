@@ -53,11 +53,9 @@
 
     <div class="container">
 
-      <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit" id="map-container">
       </div>
 
-      <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
           <h2>Search Stuff</h2>
@@ -79,12 +77,14 @@
 
 		<!-- Handlebars templates -->
 		<script type="text/x-handlebars" data-template-name="list-item">
-			<a {{bindAttr href="content.url"}}>{{content.title}}</a>
+			<span class="event-title">{{content.title}}</span>
+			<div class="event-description">{{content.shortDescription}}</div>
+			<a {{bindAttr href="content.url"}}>Original Posting</a>
 		</script>
 
 		<!-- Libraries -->
 		<script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>  
-		<script type="text/javascript" src="js/libs/ember-0.9.8.1.js"></script>  
+		<script type="text/javascript" src="js/libs/ember-0.9.8.1.min.js"></script>  
 		<script type="text/javascript" 
 			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
 		<script type="text/javascript" src="js/events.js"></script>  
