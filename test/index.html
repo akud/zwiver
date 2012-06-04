@@ -6,55 +6,126 @@
 		<script type="text/javascript" src="/js/libs/jquery-1.7.2.min.js"></script>  
 		<script type="text/javascript" src="qunit.js"></script>  
 		<script type="text/javascript" src="/js/libs/ember-0.9.8.1.js"></script>  
+		<script type="text/javascript" 
+			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
 		<script type="text/javascript" src="/js/events.js"></script>  
 		<script type="text/javascript">  
     $(document).ready(function(){  
-      module("Basic Definitions");  
-      test("Application", function(){  
-				 ok(Events, "Events");
-				 ok(EV, "EV");
-				 strictEqual(EV, Events, "EV === Events");
+			/***********Basic Definitions***************/
+      module('Basic Definitions');  
+      test('Application', function(){  
+				expect(3);		
+				ok(Events, 'Events');
+				ok(EV, 'EV');
+				strictEqual(EV, Events, 'EV === Events');
       });  
-			test("Controllers", function() {
-				ok(EV.eventsController, "eventsController");
+			test('Models',function() {
+				expect(1);
+				ok(EV.Event, 'EV.Event');
 			});
-			test("Views", function() {
-				ok(EV.listView, "listView");
-				ok(EV.mapView, "mapView");
-			});
-
-			module("Content");
-			test("Controller Content", function() {
-				var data = ['foo','bar'];
-				EV.eventsController.set('content',data);
-				equal(EV.eventsController.get('content'), data, "Content");
-			});
-			test("List View Content", function() {
-				var data = ['foo','bar']
-				EV.listView.set('content',data);
-				equal(EV.listView.get('content'), data, 'Content');
+			test('Controllers', function() {
+				expect(1);
+				ok(EV.eventsController, 'eventsController');
+  		});
+			test('Views', function() {
+				expect(2);
+				ok(EV.listView, 'listView');
+				ok(EV.mapView, 'mapView');
 			});
 
-			module("Bindings");
-			asyncTest("ListView-Controller Binding", function() {
-				var data = ['bar', 'baz'];
-				EV.eventsController.set('content', data);
+			/**************Events Model******************/
+			module('Events Model');
+			test('Computed Properties', function(){
+				expect(3);
+				var desc = 'I don’t feel that it is necessary to know exactly what I am. The main interest in life and work is to become someone else that you were not in the beginning. If you knew when you began a book what you would say at the end, do you think that you would have the courage to write it? What is true for writing and for love relationships is true also for life. The game is worthwhile insofar as we don’t know where it will end.';
+				var ev = EV.Event.create({
+					description: desc,
+					lat: 35.32145,
+					lon: -124.53435
+				});
+				ok(ev.get('shortDescription'),'short description');
+				ok(ev.get('shortDescription').length < desc.length, 
+					'shortDescription.length < description.length');
+				ok(ev.get('position'), 'position');
+			});
+
+			//define some models for tests to use
+			var e1 = EV.Event.create({
+				title: 'test event 1',
+				description: 'A test event. Number 1',
+				lat: 35.32145,
+				lon: -124.53435
+			});
+			var e2 = EV.Event.create({
+				title: 'test event 2',
+				description: 'A test event. Number 2',
+				lat: 36.345,
+				lon: -123.53435
+			});
+			var e3 = EV.Event.create({
+				title: 'test event 3',
+				description: 'A test event. Number 3',
+				lat: 34.321,
+				lon: -122.535
+			});
+
+			/***************Events Controller****************/	
+			module('Events Controller');
+			asyncTest('Loads data', function() {
+				expect(3);
+				setTimeout(function(){
+					ok(!!EV.eventsController.get('length'), 'Controller loads content on init')
+					ok(EV.eventsController.everyProperty('title'), 'Every event has a title');
+					ok(EV.eventsController.everyProperty('url'), 'Every event has a url');
+					start();
+				}, 50);
+			});
+
+			/********************List View******************/
+			module('List View');
+			test('ListView-Controller Binding', function() {
+				expect(1);
+				equal(EV.listView.get('content'), EV.eventsController.get('content'), 
+					'Controller updates ListView');
+			});
+			asyncTest('Append to DOM', function() {
+				expect(1);
+				EV.eventsController.set('content', [e1, e2]);
+				EV.listView.appendTo('#qunit-fixture');
 				setTimeout(function() {
-					equal(EV.listView.get('content'), data, 'Controller updates ListView');
+					equal($('#qunit-fixture li.ember-view').length, 2,'creates list elements');	
 					start();
 				}, 10);
 			});
-
-			module("Load Data");
-			asyncTest("Load Controller Data", function() {
-				EV.eventsController.set('content',[]);
-				EV.eventsController.loadUpcoming();
+	
+			/******************Map View*****************/
+			module('Map View');
+			test('MapView-Controller Binding', function() {
+				expect(1);
+				equal(EV.mapView.get('content'), EV.eventsController.get('content'), 
+					'Controller updates Map View');
+			});
+			asyncTest('Append to DOM', function() {
+				EV.eventsController.set('content', [e1, e2]);
+				EV.mapView.appendTo('#qunit-fixture');
 				setTimeout(function() {
-					ok(!!EV.eventsController.get('length'), "Check controller's content")
-					ok(EV.eventsController.everyProperty('title'), "Every event has a title");
-					ok(EV.eventsController.everyProperty('url'), "Every event has a url");
+					var map = EV.mapView.get('map');
+					ok(map,'creates map object');
+					//the map should have appended a bunch of div children
+					ok($('#qunit-fixture div').length > 5, 'appends map elements');
+					ok(!!EV.mapView.get('markers').length, 'creates markers');
+					EV.mapView.get('markers').forEach(function(marker) {
+						equal(marker.getMap(), map,'All markers are on the map');
+					});
 					start();
-				},100);
+				}, 100);
+			});
+			asyncTest('Update Markers', function() {
+				EV.eventsController.set('content', [e3, e2, e1, e1]);	
+				setTimeout(function() {
+					equal(EV.mapView.get('markers').length, 4, 'updates markers');
+					start();
+				}, 10);
 			});
     });  
 		</script>  
@@ -65,5 +136,7 @@
 		<h2 id="qunit-userAgent"></h2>  
 		<ol id="qunit-tests">  
 		</ol>  
-	</body>  
+		<div id="qunit-fixture">test markup, will be hidden</div>
+		<script type="text/x-handlebars" data-template-name="list-item"> List Item </script>
+	</body>
 </html>  

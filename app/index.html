@@ -7,8 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="Alex Kudlick">
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- styles -->
+    <link href="css/bootstrap.css" rel="stylesheet"> 
+    <link href="css/events.css" rel="stylesheet"> 
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -17,12 +18,12 @@
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Le fav and touch icons -->
+    <!-- fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114-precomposed.png">
@@ -54,9 +55,6 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit" id="map-container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
       </div>
 
       <!-- Example row of columns -->
@@ -91,7 +89,16 @@
 			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
 		<script type="text/javascript" src="js/events.js"></script>  
 
+		<!-- initialize -->
+		<script type="text/javascript">
+			$(document).ready(function(){
+				EV.listView.appendTo('#list-container');
+				EV.mapView.appendTo('#map-container');
+			});
+		</script>  
+	
     <!--  Bootstrap js -->
+		<!-- TODO: which of these are we actually using -->
     <script src="js/libs/bootstrap-transition.js"></script>
     <script src="js/libs/bootstrap-alert.js"></script>
     <script src="js/libs/bootstrap-modal.js"></script>
@@ -104,14 +111,5 @@
     <script src="js/libs/bootstrap-collapse.js"></script>
     <script src="js/libs/bootstrap-carousel.js"></script>
     <script src="js/libs/bootstrap-typeahead.js"></script>
-
-		<!-- initialize -->
-
-		<script type="text/javascript">
-			$(document).ready(function(){
-				EV.eventsController.loadUpcoming();
-				EV.listView.appendTo('#list-container');
-			});
-		</script>  
 	</body>
 </html>
