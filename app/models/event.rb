@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :date, :description, :location, :title, :url
+  attr_accessible :date, :description, :location, :title, :url, :lat, :lon
   
   validates_presence_of :date, :url, :location
 
