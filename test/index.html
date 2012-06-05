@@ -12,30 +12,21 @@
 		<script type="text/javascript">  
     $(document).ready(function(){  
 			/***********Basic Definitions***************/
-      module('Basic Definitions');  
-      test('Application', function(){  
-				expect(3);		
+      module('Core');  
+      test('Required Objects', function(){  
+				expect(7);		
 				ok(Events, 'Events');
 				ok(EV, 'EV');
 				strictEqual(EV, Events, 'EV === Events');
-      });  
-			test('Models',function() {
-				expect(1);
 				ok(EV.Event, 'EV.Event');
-			});
-			test('Controllers', function() {
-				expect(1);
 				ok(EV.eventsController, 'eventsController');
-  		});
-			test('Views', function() {
-				expect(2);
 				ok(EV.listView, 'listView');
 				ok(EV.mapView, 'mapView');
-			});
+      });  
 
 			/**************Events Model******************/
-			module('Events Model');
-			test('Computed Properties', function(){
+			module('Models');
+			test('Events Model', function(){
 				expect(3);
 				var desc = 'I don’t feel that it is necessary to know' + 
 				' exactly what I am. The main interest in life and work' + 
@@ -56,29 +47,9 @@
 				ok(ev.get('position'), 'position');
 			});
 
-			//define some models for tests to use
-			var e1 = EV.Event.create({
-				title: 'test event 1',
-				description: 'A test event. Number 1',
-				lat: 35.32145,
-				lon: -124.53435
-			});
-			var e2 = EV.Event.create({
-				title: 'test event 2',
-				description: 'A test event. Number 2',
-				lat: 36.345,
-				lon: -123.53435
-			});
-			var e3 = EV.Event.create({
-				title: 'test event 3',
-				description: 'A test event. Number 3',
-				lat: 34.321,
-				lon: -122.535
-			});
-
 			/***************Events Controller****************/	
-			module('Events Controller');
-			asyncTest('Loads data', function() {
+			module('Controllers');
+			asyncTest('Events Controller', function() {
 				expect(3);
 				setTimeout(function(){
 					ok(!!EV.eventsController.get('length'), 'Controller loads content on init')
@@ -96,9 +67,9 @@
 					'Controller Binding');
 				
 				//append to the dom
-				stop();
 				EV.listView.appendTo('#qunit-fixture');
 
+				stop();
 				setTimeout(function() {
 					equal($('#qunit-fixture li.list-item').length, 
 						EV.eventsController.get('length'), 
@@ -109,8 +80,8 @@
 
 					//check click behavior
 					ok(childViews.everyProperty('selected',false), 'views are unselected by default');
-					stop();
 					$('#qunit-fixture li.list-item')[0].click();
+					stop();
 					setTimeout(function() {
 						ok(childViews[0].get('selected'),'click selects element');
 						console.log(childViews.everyProperty('selected'));
@@ -118,8 +89,8 @@
 						start();
 					},10);
 
-					stop();
 					$('#qunit-fixture li.list-item')[1].click();
+					stop();
 					setTimeout(function() {
 						ok(childViews[1].get('selected'),'click selects new element');
 						ok(!childViews[0].get('selected'),'click deselects old element');
@@ -131,15 +102,12 @@
 			});
 	
 			/******************Map View*****************/
-			module('Map View');
-			test('MapView-Controller Binding', function() {
-				expect(1);
+			test('MapView', function() {
 				equal(EV.mapView.get('content'), EV.eventsController.get('content'), 
 					'Controller updates Map View');
-			});
-			asyncTest('Append to DOM', function() {
-				EV.eventsController.set('content', [e1, e2]);
+
 				EV.mapView.appendTo('#qunit-fixture');
+				stop();
 				setTimeout(function() {
 					var map = EV.mapView.get('map');
 					ok(map,'creates map object');
@@ -149,15 +117,20 @@
 					EV.mapView.get('markers').forEach(function(marker) {
 						equal(marker.getMap(), map,'All markers are on the map');
 					});
+
+					
+					//update markers
+					var newContent = EV.eventsController.get('content').slice(1,2);
+					EV.eventsController.set('content', newContent);	
+					stop();
+					setTimeout(function() {
+						var markers = EV.mapView.get('markers');
+						equal(markers.length, 1, 'updates markers with new content array');
+						start();
+					}, 10);
+
 					start();
 				}, 100);
-			});
-			asyncTest('Update Markers', function() {
-				EV.eventsController.set('content', [e3, e2, e1, e1]);	
-				setTimeout(function() {
-					equal(EV.mapView.get('markers').length, 4, 'updates markers');
-					start();
-				}, 10);
 			});
     });  
 		</script>  
