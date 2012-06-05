@@ -89,20 +89,45 @@
 			});
 
 			/********************List View******************/
-			module('List View');
-			test('ListView-Controller Binding', function() {
-				expect(1);
+			module('Views');
+			test('ListView', function() {
+				expect(8);
 				equal(EV.listView.get('content'), EV.eventsController.get('content'), 
-					'Controller updates ListView');
-			});
-			asyncTest('Append to DOM', function() {
-				expect(1);
-				EV.eventsController.set('content', [e1, e2]);
+					'Controller Binding');
+				
+				//append to the dom
+				stop();
 				EV.listView.appendTo('#qunit-fixture');
+
 				setTimeout(function() {
-					equal($('#qunit-fixture li.ember-view').length, 2,'creates list elements');	
+					equal($('#qunit-fixture li.list-item').length, 
+						EV.eventsController.get('length'), 
+						'appending creates list elements');	
+
+					var childViews = EV.listView.get('childViews');
+					ok(!!childViews.length, 'creates child views');
+
+					//check click behavior
+					ok(childViews.everyProperty('selected',false), 'views are unselected by default');
+					stop();
+					$('#qunit-fixture li.list-item')[0].click();
+					setTimeout(function() {
+						ok(childViews[0].get('selected'),'click selects element');
+						console.log(childViews.everyProperty('selected'));
+						ok(!childViews.everyProperty('selected'), 'click selected all elements');
+						start();
+					},10);
+
+					stop();
+					$('#qunit-fixture li.list-item')[1].click();
+					setTimeout(function() {
+						ok(childViews[1].get('selected'),'click selects new element');
+						ok(!childViews[0].get('selected'),'click deselects old element');
+						start();
+					}, 10);
+
 					start();
-				}, 10);
+				}, 20);
 			});
 	
 			/******************Map View*****************/
