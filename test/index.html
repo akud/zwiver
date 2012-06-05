@@ -37,7 +37,14 @@
 			module('Events Model');
 			test('Computed Properties', function(){
 				expect(3);
-				var desc = 'I don’t feel that it is necessary to know exactly what I am. The main interest in life and work is to become someone else that you were not in the beginning. If you knew when you began a book what you would say at the end, do you think that you would have the courage to write it? What is true for writing and for love relationships is true also for life. The game is worthwhile insofar as we don’t know where it will end.';
+				var desc = 'I don’t feel that it is necessary to know' + 
+				' exactly what I am. The main interest in life and work' + 
+				' is to become someone else that you were not in the beginning.' + 
+				' If you knew when you began a book what you would say at the end,' + 
+				' do you think that you would have the courage to write it?' + 
+				' What is true for writing and for love relationships is true' + 
+				' also for life. The game is worthwhile insofar as we don\'t' + 
+				' know where it will end.';
 				var ev = EV.Event.create({
 					description: desc,
 					lat: 35.32145,
