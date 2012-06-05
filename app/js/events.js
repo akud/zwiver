@@ -39,9 +39,9 @@ EV.listView = Ember.CollectionView.create({
 		itemClass: 'list-item',
 		selected: false,
 		click: function(evt) {
+			EV.listView.get('childViews').invoke('set','selected',false);
 			this.set('selected', true);
-			//unselect others
-			//pan map to this marker
+			EV.mapView.set('center',this.get('content').get('position'));
 		}
 	})
 });
@@ -60,7 +60,8 @@ EV.mapView = Ember.View.create({
 	//content may be loaded before the map is ready,
 	//so observe both properties
 	markers: [],
-	mapObserver: function() {
+	center: null,
+	pointsObserver: function() {
 		var markers = this.get('markers')
 		var map = this.get('map');
 		//reset markers, if any
@@ -77,6 +78,14 @@ EV.mapView = Ember.View.create({
 			});
 		}
 	}.observes('map','content.@each'),
+	//pan the map to the center when it changes
+	centerObserver: function() {
+		var thisMap = this.get('map');
+		if(thisMap) {
+			thisMap.panTo(this.get('center'));
+		}
+	}.observes('center'),
+
 	//initialize the map when we're appending to the dom
 	appendTo: function(selector) {
 		this._super(selector);

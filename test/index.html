@@ -62,7 +62,7 @@
 			/********************List View******************/
 			module('Views');
 			test('ListView', function() {
-				expect(8);
+				expect(11);
 				equal(EV.listView.get('content'), EV.eventsController.get('content'), 
 					'Controller Binding');
 				
@@ -84,19 +84,26 @@
 					stop();
 					setTimeout(function() {
 						ok(childViews[0].get('selected'),'click selects element');
-						console.log(childViews.everyProperty('selected'));
 						ok(!childViews.everyProperty('selected'), 'click selected all elements');
-						start();
-					},10);
+						ok(EV.mapView.get('center'), 'click sets the map center');
 
-					$('#qunit-fixture li.list-item')[1].click();
-					stop();
-					setTimeout(function() {
-						ok(childViews[1].get('selected'),'click selects new element');
-						ok(!childViews[0].get('selected'),'click deselects old element');
-						start();
-					}, 10);
+						ok(EV.mapView.get('center').lat(), childViews[0].getPath('content.position').lat(),
+							'Click sets the correct latitude value');
+						ok(EV.mapView.get('center').lng(), childViews[0].getPath('content.position').lng(),
+							'Click sets the correct longitude value');
 
+						//select another item
+						$('#qunit-fixture li.list-item')[1].click();
+						stop();
+						setTimeout(function() {
+							ok(childViews[1].get('selected'),'click selects new element');
+							ok(!childViews[0].get('selected'),'click deselects old element');
+							start();
+						}, 20);
+
+						start();
+					}, 20);
+	
 					start();
 				}, 20);
 			});
