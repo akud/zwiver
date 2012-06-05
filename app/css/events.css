@@ -3,9 +3,14 @@
 	max-width: none;
 }
 
+#map-container {
+	padding: 10px;
+}
+
 /* items in the list view */
 li.list-item {
-	background-color: #F54F2A;
+	background-color: #F2FFEE;
+	border: 2px solid #A5DDAD;
 	margin-bottom: 5px;
 	padding: 10px 10px 3px 10px;
 	color: #222;
@@ -15,20 +20,12 @@ li.list-item {
 }
 
 li.list-item:hover {
-	background-color: #E63F19; 
+	background-color: #A5DDAD;
 }
 
 li.list-item.selected {
-	background-color: #D62D06;
-}
-
-li.list-item a {
-	color: #333;
-}
-
-li.list-item a:hover {
-	text-decoration: none;
-	font-weight: bold;
+	background-color: #A0CCA0;
+	border: 2px solid #A0CCA0;
 }
 
 .event-title {
