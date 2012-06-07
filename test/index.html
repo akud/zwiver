@@ -5,6 +5,13 @@
 		<link rel="stylesheet" href="qunit.css" type="text/css"/>  
 		<script type="text/javascript" src="/js/libs/jquery-1.7.2.min.js"></script>  
 		<script type="text/javascript" src="qunit.js"></script>  
+		<!-- defaults for Ember -->
+		<script type="text/javascript" >
+			ENV = {
+				CP_DEFAULT_CACHEABLE: true,
+				VIEW_PRESERVES_CONTEXT: true
+			};
+    </script>
 		<script type="text/javascript" src="/js/libs/ember-0.9.8.1.js"></script>  
 		<script type="text/javascript" 
 			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
@@ -18,7 +25,7 @@
 				ok(Events, 'Events');
 				ok(EV, 'EV');
 				strictEqual(EV, Events, 'EV === Events');
-				ok(EV.Event, 'EV.Event');
+				ok(EV.Event, 'Event Class');
 				ok(EV.eventsController, 'eventsController');
 				ok(EV.listView, 'listView');
 				ok(EV.mapView, 'mapView');
@@ -62,7 +69,7 @@
 			/********************List View******************/
 			module('Views');
 			test('ListView', function() {
-				expect(11);
+				expect(9);
 				equal(EV.listView.get('content'), EV.eventsController.get('content'), 
 					'Controller Binding');
 				
@@ -85,12 +92,9 @@
 					setTimeout(function() {
 						ok(childViews[0].get('selected'),'click selects element');
 						ok(!childViews.everyProperty('selected'), 'click selected all elements');
-						ok(EV.mapView.get('center'), 'click sets the map center');
 
-						ok(EV.mapView.get('center').lat(), childViews[0].getPath('content.position').lat(),
-							'Click sets the correct latitude value');
-						ok(EV.mapView.get('center').lng(), childViews[0].getPath('content.position').lng(),
-							'Click sets the correct longitude value');
+						equal(EV.eventsController.get('selectedEvent'), childViews[0].get('content'),
+							'click sets selected event on controller');
 
 						//select another item
 						$('#qunit-fixture li.list-item')[1].click();
@@ -110,9 +114,6 @@
 	
 			/******************Map View*****************/
 			test('MapView', function() {
-				equal(EV.mapView.get('content'), EV.eventsController.get('content'), 
-					'Controller updates Map View');
-
 				EV.mapView.appendTo('#qunit-fixture');
 				stop();
 				setTimeout(function() {
@@ -120,22 +121,7 @@
 					ok(map,'creates map object');
 					//the map should have appended a bunch of div children
 					ok($('#qunit-fixture div').length > 5, 'appends map elements');
-					ok(!!EV.mapView.get('markers').length, 'creates markers');
-					EV.mapView.get('markers').forEach(function(marker) {
-						equal(marker.getMap(), map,'All markers are on the map');
-					});
-
 					
-					//update markers
-					var newContent = EV.eventsController.get('content').slice(1,2);
-					EV.eventsController.set('content', newContent);	
-					stop();
-					setTimeout(function() {
-						var markers = EV.mapView.get('markers');
-						equal(markers.length, 1, 'updates markers with new content array');
-						start();
-					}, 10);
-
 					start();
 				}, 100);
 			});
@@ -149,6 +135,6 @@
 		<ol id="qunit-tests">  
 		</ol>  
 		<div id="qunit-fixture">test markup, will be hidden</div>
-		<script type="text/x-handlebars" data-template-name="list-item"> List Item </script>
+		<script type="text/x-handlebars" data-template-name="list-item">List Item</script>
 	</body>
 </html>  

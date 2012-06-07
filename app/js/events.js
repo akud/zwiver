@@ -4,17 +4,39 @@ EV.Event = Ember.Object.extend({
 	maxDescriptionLength: 140,
 	position: function() {
 		return new google.maps.LatLng(this.get('lat'),this.get('lon'));
-	}.property('lat','lon').cacheable(),
+	}.property('lat','lon'),
 
 	shortDescription: function() {
 		var desc = this.get('description') || '';
 		var maxLength = this.get('maxDescriptionLength');
 		return desc.length < maxLength ? desc : desc.substring(0,maxLength) + '...';
-	}.property('description').cacheable()
+	}.property('description'), 
+
+	mapMarker: function() {
+		return new google.maps.Marker({
+			position: this.get('position'),
+			title: this.get('title')
+		});
+	}.property('title','position'),
+
+	infoWindowContent: function() {
+		return '<div class="info-window-title">' + 
+			this.get('title') + '</div>' +
+			'<div class="info-window-content">' + 
+			this.get('shortDescription') + '</div>';
+	}.property('title','shortDescription'),
+
+	infoWindow: function() {
+		return new google.maps.InfoWindow({
+			content: this.get('infoWindowContent'),
+			position: this.get('position')
+		});
+	}.property('infoWindowContent','position')
 });
 
 EV.eventsController = Ember.ArrayController.create({
 	content: [],
+	selectedEvent: null,
 	/**
 	  * Load upcoming events
 		*/
@@ -26,7 +48,13 @@ EV.eventsController = Ember.ArrayController.create({
 				})
 			);
 		});
-	} 
+	},
+	select: function(evt) {
+		if(this.get('selectedEvent')) {
+			this.get('selectedEvent').get('infoWindow').close();
+		}
+		this.set('selectedEvent', evt);
+	}
 });
 
 EV.listView = Ember.CollectionView.create({
@@ -41,55 +69,48 @@ EV.listView = Ember.CollectionView.create({
 		click: function(evt) {
 			EV.listView.get('childViews').invoke('set','selected',false);
 			this.set('selected', true);
-			EV.mapView.set('center',this.get('content').get('position'));
+			EV.eventsController.select(this.get('content'));
 		}
 	})
 });
 
 EV.mapView = Ember.View.create({
-	contentBinding: Ember.Binding.oneWay('EV.eventsController.content'),
 	map: null,
-	mapOpts: { 
-		center: new google.maps.LatLng(37.78,-122.442),
-		zoom: 12,
-		disableDefaultUI: true,
-		zoomControl: true,
-		panControl: true,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	},
+	//observes events list and draws markers
 	//content may be loaded before the map is ready,
 	//so observe both properties
-	markers: [],
-	center: null,
 	pointsObserver: function() {
 		var markers = this.get('markers')
 		var map = this.get('map');
-		//reset markers, if any
-		markers.forEach(function(marker){ marker.setMap(null); });
-		markers.length = 0;
 		//add new markers to map
 		if(map) {
-			this.get('content').forEach(function(item) {
-				markers.push(new google.maps.Marker({
-					map: map,
-					position: item.get('position'),
-					title: item.title
-				}));
+			EV.eventsController.get('content').forEach(function(evt) {
+				//TODO: click listener on markers for selecting the event
+				evt.get('mapMarker').setMap(map);
 			});
 		}
-	}.observes('map','content.@each'),
-	//pan the map to the center when it changes
-	centerObserver: function() {
-		var thisMap = this.get('map');
-		if(thisMap) {
-			thisMap.panTo(this.get('center'));
+	}.observes('map','EV.eventsController.content.@each'),
+	
+	selectedEventObserver: function() {
+		var map = this.get('map');
+		var selectedEvent = EV.eventsController.getPath('selectedEvent');
+		if(map && selectedEvent) {
+			map.panTo(selectedEvent.get('position'));
+			selectedEvent.get('infoWindow').open(map, selectedEvent.get('mapMarker'));
 		}
-	}.observes('center'),
+	}.observes('EV.eventsController.selectedEvent'),
 
 	//initialize the map when we're appending to the dom
 	appendTo: function(selector) {
 		this._super(selector);
-		this.set('map', 
-			new google.maps.Map($(selector).get(0),	this.get('mapOpts')));
+		this.set('map', new google.maps.Map($(selector).get(0),	{ 
+			//TODO: more intelligent center for the map
+			center: new google.maps.LatLng(37.78,-122.442),
+			zoom: 12,
+			disableDefaultUI: true,
+			zoomControl: true,
+			panControl: true,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}));
 	}
 });
