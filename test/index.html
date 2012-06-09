@@ -34,7 +34,7 @@
 			/**************Events Model******************/
 			module('Models');
 			test('Events Model', function(){
-				expect(3);
+				expect(11);
 				var desc = 'I don’t feel that it is necessary to know' + 
 				' exactly what I am. The main interest in life and work' + 
 				' is to become someone else that you were not in the beginning.' + 
@@ -52,12 +52,36 @@
 				ok(ev.get('shortDescription').length < desc.length, 
 					'shortDescription.length < description.length');
 				ok(ev.get('position'), 'position');
+				equal(Math.round(ev.get('position').lat()), 35,
+					'correct latitude for position');
+				equal(Math.round(ev.get('position').lng()), -125, 
+					'correct longitude for position');
+				ok(ev.get('mapMarker'), 'map marker');
+				equal(ev.get('mapMarker').getPosition(), ev.get('position'), 
+					'correct position for map marker');
+
+				ok(ev.get('infoWindowContent'), 'info window content');
+				ok(ev.get('infoWindow'), 'info window');	
+				equal(ev.get('infoWindow').getPosition(), ev.get('position'), 
+					'correct position for info window');
+				equal(ev.get('infoWindow').getContent(), ev.get('infoWindowContent'),
+					'correct content for info window');
 			});
 
 			/***************Events Controller****************/	
 			module('Controllers');
-			asyncTest('Events Controller', function() {
-				expect(3);
+			test('Events Controller', function() {
+				expect(4);
+				var ev = EV.Event.create({
+					title: 'test title',
+					description: 'foo',
+					lat: 32.534,
+					lon: -123.324
+				});
+				EV.eventsController.select(ev);
+				equal(EV.eventsController.get('selectedEvent'), ev, 
+					'selects correct event');
+				stop();
 				setTimeout(function(){
 					ok(!!EV.eventsController.get('length'), 'Controller loads content on init')
 					ok(EV.eventsController.everyProperty('title'), 'Every event has a title');
@@ -86,17 +110,18 @@
 					ok(!!childViews.length, 'creates child views');
 
 					//check click behavior
-					ok(childViews.everyProperty('selected',false), 'views are unselected by default');
+					ok(childViews.everyProperty('selected',false), 
+						'views are unselected by default');
 					$('#qunit-fixture li.list-item')[0].click();
 					stop();
 					setTimeout(function() {
 						ok(childViews[0].get('selected'),'click selects element');
 						ok(!childViews.everyProperty('selected'), 'click selected all elements');
+						equal(childViews[0].get('content'), 
+							EV.eventsController.get('selectedEvent'), 
+							'Click sets selected event on events controller');
 
-						equal(EV.eventsController.get('selectedEvent'), childViews[0].get('content'),
-							'click sets selected event on controller');
-
-						//select another item
+							//select another item
 						$('#qunit-fixture li.list-item')[1].click();
 						stop();
 						setTimeout(function() {
@@ -104,26 +129,47 @@
 							ok(!childViews[0].get('selected'),'click deselects old element');
 							start();
 						}, 20);
-
 						start();
 					}, 20);
-	
 					start();
 				}, 20);
 			});
 	
 			/******************Map View*****************/
 			test('MapView', function() {
+				expect(3);
 				EV.mapView.appendTo('#qunit-fixture');
 				stop();
 				setTimeout(function() {
 					var map = EV.mapView.get('map');
 					ok(map,'creates map object');
 					//the map should have appended a bunch of div children
-					ok($('#qunit-fixture div').length > 5, 'appends map elements');
+					ok($('#qunit-fixture div').length > 10, 'appends map elements');
 					
-					start();
-				}, 100);
+					var ev = EV.Event.create({
+						lat: 30.129,
+						lon: 129.34,
+						title: 'test title',
+						description: 'foo'
+					});
+
+					EV.eventsController.select(ev);
+					stop();
+					setTimeout(function() {
+						equal(Math.round(EV.mapView.get('map').getCenter().lat()), 
+							Math.round(ev.get('position').lat()),
+							'selecting an event pans the map');
+						/*
+						TODO: why aren't info windows opening in the tests?
+						ok(!!$('div.info-window-title').length, 
+							'selecting an event opens the info window')
+						equal($('div.info-window-title').text(), ev.get('title'),
+							'open info window has correct title');
+						*/
+						start();
+					}, 25);
+				start();
+				}, 150);
 			});
     });  
 		</script>  

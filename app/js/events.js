@@ -96,7 +96,7 @@ EV.mapView = Ember.View.create({
 		var selectedEvent = EV.eventsController.getPath('selectedEvent');
 		if(map && selectedEvent) {
 			map.panTo(selectedEvent.get('position'));
-			selectedEvent.get('infoWindow').open(map, selectedEvent.get('mapMarker'));
+			selectedEvent.get('infoWindow').open(map);
 		}
 	}.observes('EV.eventsController.selectedEvent'),
 
