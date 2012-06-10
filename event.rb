@@ -6,18 +6,17 @@ class Event
 	EVENT_URL = URI.parse('http://localhost/api/events/')
 
 	def initialize args
-		@body = args.to_json
+		@body = args
 	end
 
 
 	def post
 		response = Net::HTTP.post_form EVENT_URL, { 
-			:event => @body
+			:event => @body.to_json
 		}
-		response.value #will raise exception if not success
-		rescue => e 
-			puts 'Failed to save event'
-			puts e.inspect
-			puts e.backtrace
+		unless response.is_a? Net::HTTPSuccess
+			puts "Failed to save event for #{@body[:url]}"
+			puts response.code, response.message
+		end
 	end
 end
