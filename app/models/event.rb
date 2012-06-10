@@ -1,11 +1,15 @@
 class Event < ActiveRecord::Base
-  attr_accessible :date, :description, :location, :title, :url, :lat, :lon
+  attr_accessible :date, :description, :venue, :address, :title, :url, :lat, :lon
   
-  validates_presence_of :date, :url, :location
+  validates_presence_of :date, :url, :venue, :address
 
   validates_uniqueness_of [:url,:title]
 
+  geocoded_by :address, :latitude => :lat, :longitude => :lon
+  after_validation :geocode 
+
   # Find upcoming events
+  # TODO: make this a `find_upcoming_near` and take in IP or location
   # Params:
   # +days_in_future+:: number of days in the future to look.
   #                     goes up to midnight that night

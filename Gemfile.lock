@@ -32,6 +32,7 @@ GEM
     builder (3.0.0)
     chronic (0.6.7)
     erubis (2.7.0)
+    geocoder (1.1.2)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
@@ -86,6 +87,7 @@ PLATFORMS
 
 DEPENDENCIES
   chronic
+  geocoder
   mysql2
   rails (= 3.2.3)
   sqlite3

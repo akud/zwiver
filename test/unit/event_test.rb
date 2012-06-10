@@ -4,50 +4,69 @@ class EventTest < ActiveSupport::TestCase
   test "basic save" do
     event = Event.new :date => Time.now,
       :description => 'foo',
-      :location => 'foo',
+      :venue => 'foo',
       :title => 'foo',
-      :url => 'foo'
+      :url => 'foo',
+      :address => '982 Market St  San Francisco, CA 94102'
     assert event.save, 'failed to save event'
-    assert_not_nil event.id, 'event didn\'t have an id'
+    assert_not_nil event.id, 'event had no id'
+    assert_not_nil event.lat, 'event had no latitude'
+    assert_equal event.lat, 37.7825785, 'event had incorrect latitude'
+    assert_not_nil event.lon, 'event had no longitude'
+    assert_equal event.lon, -122.4098898, 'event had incorrect longitude'
   end
 
   test "doesn't allow save without date" do
     event = Event.new :date => nil, 
-      :location => 'foo',
+      :venue => 'foo',
       :title => 'foo',
-      :url => 'foo'
+      :url => 'foo',
+      :address => '982 Market St  San Francisco, CA 94102'
     assert !event.save, 'event saved without date'
     assert_nil event.id, 'event had id generated'
   end
 
   test "doesn't allow save without url" do
     event = Event.new :date => Time.now, 
-      :location => 'foo',
+      :venue => 'foo',
       :title => 'foo',
-      :url => nil
+      :url => nil,
+      :address => '982 Market St  San Francisco, CA 94102'
     assert !event.save, 'event saved without url'
     assert_nil event.id, 'event had id generated'
   end
 
-  test "doesn't allow save without location" do
+  test "doesn't allow save without venue" do
     event = Event.new :date => Time.now, 
-      :location => nil,
+      :venue => nil,
+      :title => 'foo',
+      :url => 'foo',
+      :address => '982 Market St  San Francisco, CA 94102'
+    assert !event.save, 'event saved without venue'
+    assert_nil event.id, 'event had id generated'
+  end
+
+  test "doesn't allow save without address" do
+    event = Event.new :date => Time.now, 
+      :venue => 'foo',
       :title => 'foo',
       :url => 'foo'
-    assert !event.save, 'event saved without location'
+    assert !event.save, 'event saved without venue'
     assert_nil event.id, 'event had id generated'
   end
 
   test "unique title and url" do
     e1 = Event.new :date => Time.now, 
-      :location => 'location',
+      :venue => 'venue',
       :title => 'non_unique_title',
-      :url => 'non_unique_url'
+      :url => 'non_unique_url',
+      :address => '982 Market St  San Francisco, CA 94102'
     assert e1.save, 'didn\'t save first event'
      e2 = Event.new :date => Time.now, 
-      :location => 'location',
+      :venue => 'venue',
       :title => 'non_unique_title',
-      :url => 'non_unique_url'
+      :url => 'non_unique_url',
+      :address => '982 Market St  San Francisco, CA 94102'
     assert !e2.save, 'allowed non-unique title and url to be saved'
   end
 

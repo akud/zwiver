@@ -8,6 +8,8 @@ gem 'mysql2'
 
 gem 'chronic'
 
+gem 'geocoder'
+
 #TODO: decide on a search library
 #gem 'thinking-sphinx', '~> 2.0.12'
 #gem 'acts_as_ferret', '~> 0.5.4'
