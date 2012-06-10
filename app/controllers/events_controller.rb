@@ -15,4 +15,10 @@ class EventsController < ApplicationController
     render :json => @events
   end
 
+  def create 
+    @event = Event.new params[:event]
+    @event.save
+    render :json => @event, 
+      :status => :created, :location => @event
+  end
 end
