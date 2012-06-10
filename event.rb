@@ -16,7 +16,7 @@ class Event
 		}
 		unless response.is_a? Net::HTTPSuccess
 			puts "Failed to save event for #{@body[:url]}"
-			puts response.code, response.message
+			puts "#{response.code}: #{response.message}"
 		end
 	end
 end
