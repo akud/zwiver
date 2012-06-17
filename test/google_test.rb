@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'google'
 require 'stringio'
+require 'uri'
 
 #Expand Kernel module to allow capturing stdout 
 #Copied from http://thinkingdigitally.com/archive/capturing-output-from-puts-in-ruby/
@@ -25,6 +26,7 @@ class TestGoogle < MiniTest::Unit::TestCase
     assert_equal 20, out.string.lines.count, 'incorrect number of lines'
     out.string.lines.each do |line|
       assert_equal 2, line.split(',').length, "#{line} had incorrect number of csv fields"
+      assert line.split(',')[1] =~ URI::regexp, "#{line} had invalid url"
     end
   end
 end
