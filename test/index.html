@@ -1,186 +1,186 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
-			"http://www.w3.org/TR/html4/loose.dtd">  
+      "http://www.w3.org/TR/html4/loose.dtd">  
 <html>  
-	<head>  
-		<link rel="stylesheet" href="qunit.css" type="text/css"/>  
-		<script type="text/javascript" src="/js/libs/jquery-1.7.2.min.js"></script>  
-		<script type="text/javascript" src="qunit.js"></script>  
-		<!-- defaults for Ember -->
-		<script type="text/javascript" >
-			ENV = {
-				CP_DEFAULT_CACHEABLE: true,
-				VIEW_PRESERVES_CONTEXT: true
-			};
+  <head>  
+    <link rel="stylesheet" href="qunit.css" type="text/css"/>  
+    <script type="text/javascript" src="/js/libs/jquery-1.7.2.min.js"></script>  
+    <script type="text/javascript" src="qunit.js"></script>  
+    <!-- defaults for Ember -->
+    <script type="text/javascript" >
+      ENV = {
+        CP_DEFAULT_CACHEABLE: true,
+        VIEW_PRESERVES_CONTEXT: true
+      };
     </script>
-		<script type="text/javascript" src="/js/libs/ember-0.9.8.1.js"></script>  
-		<script type="text/javascript" 
-			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
-		<script type="text/javascript" src="/js/events.js"></script>  
-		<script type="text/javascript">  
+    <script type="text/javascript" src="/js/libs/ember-0.9.8.1.js"></script>  
+    <script type="text/javascript" 
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
+    <script type="text/javascript" src="/js/events.js"></script>  
+    <script type="text/javascript">  
     $(document).ready(function(){  
-			/***********Basic Definitions***************/
+      /***********Basic Definitions***************/
       module('Core');  
       test('Required Objects', function(){  
-				expect(7);		
-				ok(Events, 'Events');
-				ok(EV, 'EV');
-				strictEqual(EV, Events, 'EV === Events');
-				ok(EV.Event, 'Event Class');
-				ok(EV.eventsController, 'eventsController');
-				ok(EV.listView, 'listView');
-				ok(EV.mapView, 'mapView');
+        expect(7);    
+        ok(Events, 'Events');
+        ok(EV, 'EV');
+        strictEqual(EV, Events, 'EV === Events');
+        ok(EV.Event, 'Event Class');
+        ok(EV.eventsController, 'eventsController');
+        ok(EV.listView, 'listView');
+        ok(EV.mapView, 'mapView');
       });  
 
-			/**************Events Model******************/
-			module('Models');
-			test('Events Model', function(){
-				expect(11);
-				var desc = 'I don’t feel that it is necessary to know' + 
-				' exactly what I am. The main interest in life and work' + 
-				' is to become someone else that you were not in the beginning.' + 
-				' If you knew when you began a book what you would say at the end,' + 
-				' do you think that you would have the courage to write it?' + 
-				' What is true for writing and for love relationships is true' + 
-				' also for life. The game is worthwhile insofar as we don\'t' + 
-				' know where it will end.';
-				var ev = EV.Event.create({
-					description: desc,
-					lat: 35.32145,
-					lon: -124.53435
-				});
-				ok(ev.get('shortDescription'),'short description');
-				ok(ev.get('shortDescription').length < desc.length, 
-					'shortDescription.length < description.length');
-				ok(ev.get('position'), 'position');
-				equal(Math.round(ev.get('position').lat()), 35,
-					'correct latitude for position');
-				equal(Math.round(ev.get('position').lng()), -125, 
-					'correct longitude for position');
-				ok(ev.get('mapMarker'), 'map marker');
-				equal(ev.get('mapMarker').getPosition(), ev.get('position'), 
-					'correct position for map marker');
+      /**************Events Model******************/
+      module('Models');
+      test('Events Model', function(){
+        expect(11);
+        var desc = 'I don’t feel that it is necessary to know' + 
+        ' exactly what I am. The main interest in life and work' + 
+        ' is to become someone else that you were not in the beginning.' + 
+        ' If you knew when you began a book what you would say at the end,' + 
+        ' do you think that you would have the courage to write it?' + 
+        ' What is true for writing and for love relationships is true' + 
+        ' also for life. The game is worthwhile insofar as we don\'t' + 
+        ' know where it will end.';
+        var ev = EV.Event.create({
+          description: desc,
+          lat: 35.32145,
+          lon: -124.53435
+        });
+        ok(ev.get('shortDescription'),'short description');
+        ok(ev.get('shortDescription').length < desc.length, 
+          'shortDescription.length < description.length');
+        ok(ev.get('position'), 'position');
+        equal(Math.round(ev.get('position').lat()), 35,
+          'correct latitude for position');
+        equal(Math.round(ev.get('position').lng()), -125, 
+          'correct longitude for position');
+        ok(ev.get('mapMarker'), 'map marker');
+        equal(ev.get('mapMarker').getPosition(), ev.get('position'), 
+          'correct position for map marker');
 
-				ok(ev.get('infoWindowContent'), 'info window content');
-				ok(ev.get('infoWindow'), 'info window');	
-				equal(ev.get('infoWindow').getPosition(), ev.get('position'), 
-					'correct position for info window');
-				equal(ev.get('infoWindow').getContent(), ev.get('infoWindowContent'),
-					'correct content for info window');
-			});
+        ok(ev.get('infoWindowContent'), 'info window content');
+        ok(ev.get('infoWindow'), 'info window');  
+        equal(ev.get('infoWindow').getPosition(), ev.get('position'), 
+          'correct position for info window');
+        equal(ev.get('infoWindow').getContent(), ev.get('infoWindowContent'),
+          'correct content for info window');
+      });
 
-			/***************Events Controller****************/	
-			module('Controllers');
-			test('Events Controller', function() {
-				expect(4);
-				var ev = EV.Event.create({
-					title: 'test title',
-					description: 'foo',
-					lat: 32.534,
-					lon: -123.324
-				});
-				EV.eventsController.select(ev);
-				equal(EV.eventsController.get('selectedEvent'), ev, 
-					'selects correct event');
-				stop();
-				setTimeout(function(){
-					ok(!!EV.eventsController.get('length'), 'Controller loads content on init')
-					ok(EV.eventsController.everyProperty('title'), 'Every event has a title');
-					ok(EV.eventsController.everyProperty('url'), 'Every event has a url');
-					start();
-				}, 50);
-			});
+      /***************Events Controller****************/  
+      module('Controllers');
+      test('Events Controller', function() {
+        expect(4);
+        var ev = EV.Event.create({
+          title: 'test title',
+          description: 'foo',
+          lat: 32.534,
+          lon: -123.324
+        });
+        EV.eventsController.select(ev);
+        equal(EV.eventsController.get('selectedEvent'), ev, 
+          'selects correct event');
+        stop();
+        setTimeout(function(){
+          ok(!!EV.eventsController.get('length'), 'Controller loads content on init')
+          ok(EV.eventsController.everyProperty('title'), 'Every event has a title');
+          ok(EV.eventsController.everyProperty('url'), 'Every event has a url');
+          start();
+        }, 50);
+      });
 
-			/********************List View******************/
-			module('Views');
-			test('ListView', function() {
-				expect(9);
-				equal(EV.listView.get('content'), EV.eventsController.get('content'), 
-					'Controller Binding');
-				
-				//append to the dom
-				EV.listView.appendTo('#qunit-fixture');
+      /********************List View******************/
+      module('Views');
+      test('ListView', function() {
+        expect(9);
+        equal(EV.listView.get('content'), EV.eventsController.get('content'), 
+          'Controller Binding');
+        
+        //append to the dom
+        EV.listView.appendTo('#qunit-fixture');
 
-				stop();
-				setTimeout(function() {
-					equal($('#qunit-fixture li.list-item').length, 
-						EV.eventsController.get('length'), 
-						'appending creates list elements');	
+        stop();
+        setTimeout(function() {
+          equal($('#qunit-fixture li.list-item').length, 
+            EV.eventsController.get('length'), 
+            'appending creates list elements');  
 
-					var childViews = EV.listView.get('childViews');
-					ok(!!childViews.length, 'creates child views');
+          var childViews = EV.listView.get('childViews');
+          ok(!!childViews.length, 'creates child views');
 
-					//check click behavior
-					ok(childViews.everyProperty('selected',false), 
-						'views are unselected by default');
-					$('#qunit-fixture li.list-item')[0].click();
-					stop();
-					setTimeout(function() {
-						ok(childViews[0].get('selected'),'click selects element');
-						ok(!childViews.everyProperty('selected'), 'click selected all elements');
-						equal(childViews[0].get('content'), 
-							EV.eventsController.get('selectedEvent'), 
-							'Click sets selected event on events controller');
+          //check click behavior
+          ok(childViews.everyProperty('selected',false), 
+            'views are unselected by default');
+          $('#qunit-fixture li.list-item')[0].click();
+          stop();
+          setTimeout(function() {
+            ok(childViews[0].get('selected'),'click selects element');
+            ok(!childViews.everyProperty('selected'), 'click selected all elements');
+            equal(childViews[0].get('content'), 
+              EV.eventsController.get('selectedEvent'), 
+              'Click sets selected event on events controller');
 
-							//select another item
-						$('#qunit-fixture li.list-item')[1].click();
-						stop();
-						setTimeout(function() {
-							ok(childViews[1].get('selected'),'click selects new element');
-							ok(!childViews[0].get('selected'),'click deselects old element');
-							start();
-						}, 20);
-						start();
-					}, 20);
-					start();
-				}, 20);
-			});
-	
-			/******************Map View*****************/
-			test('MapView', function() {
-				expect(3);
-				EV.mapView.appendTo('#qunit-fixture');
-				stop();
-				setTimeout(function() {
-					var map = EV.mapView.get('map');
-					ok(map,'creates map object');
-					//the map should have appended a bunch of div children
-					ok($('#qunit-fixture div').length > 10, 'appends map elements');
-					
-					var ev = EV.Event.create({
-						lat: 30.129,
-						lon: 129.34,
-						title: 'test title',
-						description: 'foo'
-					});
+              //select another item
+            $('#qunit-fixture li.list-item')[1].click();
+            stop();
+            setTimeout(function() {
+              ok(childViews[1].get('selected'),'click selects new element');
+              ok(!childViews[0].get('selected'),'click deselects old element');
+              start();
+            }, 20);
+            start();
+          }, 20);
+          start();
+        }, 20);
+      });
+  
+      /******************Map View*****************/
+      test('MapView', function() {
+        expect(3);
+        EV.mapView.appendTo('#qunit-fixture');
+        stop();
+        setTimeout(function() {
+          var map = EV.mapView.get('map');
+          ok(map,'creates map object');
+          //the map should have appended a bunch of div children
+          ok($('#qunit-fixture div').length > 10, 'appends map elements');
+          
+          var ev = EV.Event.create({
+            lat: 30.129,
+            lon: 129.34,
+            title: 'test title',
+            description: 'foo'
+          });
 
-					EV.eventsController.select(ev);
-					stop();
-					setTimeout(function() {
-						equal(Math.round(EV.mapView.get('map').getCenter().lat()), 
-							Math.round(ev.get('position').lat()),
-							'selecting an event pans the map');
-						/*
-						TODO: why aren't info windows opening in the tests?
-						ok(!!$('div.info-window-title').length, 
-							'selecting an event opens the info window')
-						equal($('div.info-window-title').text(), ev.get('title'),
-							'open info window has correct title');
-						*/
-						start();
-					}, 25);
-				start();
-				}, 150);
-			});
+          EV.eventsController.select(ev);
+          stop();
+          setTimeout(function() {
+            equal(Math.round(EV.mapView.get('map').getCenter().lat()), 
+              Math.round(ev.get('position').lat()),
+              'selecting an event pans the map');
+            /*
+            TODO: why aren't info windows opening in the tests?
+            ok(!!$('div.info-window-title').length, 
+              'selecting an event opens the info window')
+            equal($('div.info-window-title').text(), ev.get('title'),
+              'open info window has correct title');
+            */
+            start();
+          }, 25);
+        start();
+        }, 150);
+      });
     });  
-		</script>  
-	</head>  
-	<body>  
-		<h1 id="qunit-header">Events QUnit Tests</h1>  
-		<h2 id="qunit-banner"></h2>  
-		<h2 id="qunit-userAgent"></h2>  
-		<ol id="qunit-tests">  
-		</ol>  
-		<div id="qunit-fixture">test markup, will be hidden</div>
-		<script type="text/x-handlebars" data-template-name="list-item">List Item</script>
-	</body>
+    </script>  
+  </head>  
+  <body>  
+    <h1 id="qunit-header">Events QUnit Tests</h1>  
+    <h2 id="qunit-banner"></h2>  
+    <h2 id="qunit-userAgent"></h2>  
+    <ol id="qunit-tests">  
+    </ol>  
+    <div id="qunit-fixture">test markup, will be hidden</div>
+    <script type="text/x-handlebars" data-template-name="list-item">List Item</script>
+  </body>
 </html>  

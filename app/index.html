@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
     <title>Events</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -29,8 +29,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-57-precomposed.png">
-	</head>
-	<body>
+  </head>
+  <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -75,37 +75,37 @@
 
     </div> <!-- /container -->
 
-		<!-- Handlebars templates -->
-		<script type="text/x-handlebars" data-template-name="list-item">
-			<span class="event-title">{{content.title}}</span>
-			<div class="event-description">{{content.shortDescription}}</div>
-			<a {{bindAttr href="content.url"}}>Original Posting</a>
-		</script>
-
-		<!-- Libraries -->
-		<script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>  
-		<script type="text/javascript" >
-			//defaults for ember
-			ENV = {
-				CP_DEFAULT_CACHEABLE: true
-				//VIEW_PRESERVES_CONTEXT: true
-			};
+    <!-- Handlebars templates -->
+    <script type="text/x-handlebars" data-template-name="list-item">
+      <span class="event-title">{{content.title}}</span>
+      <div class="event-description">{{content.shortDescription}}</div>
+      <a {{bindAttr href="content.url"}}>Original Posting</a>
     </script>
-		<script type="text/javascript" src="js/libs/ember-0.9.8.1.min.js"></script>  
-		<script type="text/javascript" 
-			src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
-		<script type="text/javascript" src="js/events.js"></script>  
 
-		<!-- initialize -->
-		<script type="text/javascript">
-			$(document).ready(function(){
-				EV.listView.appendTo('#list-container');
-				EV.mapView.appendTo('#map-container');
-			});
-		</script>  
-	
+    <!-- Libraries -->
+    <script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>  
+    <script type="text/javascript" >
+      //defaults for ember
+      ENV = {
+        CP_DEFAULT_CACHEABLE: true
+        //VIEW_PRESERVES_CONTEXT: true
+      };
+    </script>
+    <script type="text/javascript" src="js/libs/ember-0.9.8.1.min.js"></script>  
+    <script type="text/javascript" 
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
+    <script type="text/javascript" src="js/events.js"></script>  
+
+    <!-- initialize -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+        EV.listView.appendTo('#list-container');
+        EV.mapView.appendTo('#map-container');
+      });
+    </script>  
+  
     <!--  Bootstrap js -->
-		<!-- TODO: which of these are we actually using -->
+    <!-- TODO: which of these are we actually using -->
     <script src="js/libs/bootstrap-transition.js"></script>
     <script src="js/libs/bootstrap-alert.js"></script>
     <script src="js/libs/bootstrap-modal.js"></script>
@@ -118,5 +118,5 @@
     <script src="js/libs/bootstrap-collapse.js"></script>
     <script src="js/libs/bootstrap-carousel.js"></script>
     <script src="js/libs/bootstrap-typeahead.js"></script>
-	</body>
+  </body>
 </html>
