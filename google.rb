@@ -35,7 +35,7 @@ module Google
       page.links_with(:href => /\/url/).each do |link|
         name = link.text
         url = link.click.uri.to_s
-        CSV { |csv_out| csv_out << [name.gsub(',',';'), url] }
+        CSV { |csv_out| csv_out << [name.gsub(',',''), url] }
         count += 1
       end
       page = page.link_with(:text => 'Next').click
