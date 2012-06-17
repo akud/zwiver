@@ -13,7 +13,50 @@ module Google
     'yelp.com',
     'bissapbaobab.com',
     'ebar.com',
-    'sfbar.org'
+    'sfbar.org',
+    'ticketmaster.com',
+    'cbslocal.com',
+    'about.com',
+    'facebook.com',
+    'twitter.com',
+    'sfstandup.com',
+    'sfgate.com',
+    'laughstub.com',
+    'sfstation.com',
+    'sanfrancisco.com',
+    'citysearch.com',
+    'eater.com',
+    'gaycities.com',
+    'sfweekly.com',
+    'sanfrancisco.travel',
+    'crawlsf.com',
+    'sfbarexperiment.com',
+    'askmen.com',
+    'foursquare.com',
+    'prnewswire.com',
+    'wikipedia.org',
+    'opentable.com',
+    'gayot.com',
+    'venturebeat.com',
+    'linkedin.com',
+    'meetup.com',
+    'schmap.com',
+    'menupages.com',
+    'travelchannel.com',
+    'youtube.com',
+    'noaa.gov',
+    'yahoo.com', 
+    'quora.com',
+    'friendssfpl.org',
+    'sff.net',
+    'gop.gov',
+    'biblio.com',
+    'interleaves.org',
+    'ferrybuildingmarketplace.com',
+    'coffeeratings.com',
+    'urbanspoon.com',
+    'localeats.com',
+    'allgoodseats.com'
   ]
  
   # Scrape a list of San Francisco venues from Google
@@ -33,10 +76,15 @@ module Google
     count = 0
     until count >= num_results do
       page.links_with(:href => /\/url/).each do |link|
-        name = link.text
-        url = link.click.uri.to_s
-        CSV { |csv_out| csv_out << [name.gsub(',',''), url] }
-        count += 1
+        begin
+          name = link.text
+          url = link.click.uri.to_s
+          CSV { |csv_out| csv_out << [name.gsub(',',''), url] }
+          count += 1
+        rescue => e
+          $stderr.puts "Error fetching #{link.href}:"
+          $stderr.puts e.message
+        end
       end
       page = page.link_with(:text => 'Next').click
     end
