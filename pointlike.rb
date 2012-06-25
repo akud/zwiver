@@ -1,7 +1,7 @@
 module Pointlike
   @@R = 6371 # km
   
-  def distance_to lat, lon
+  def distance_from lat, lon
     dLat = (@lat-lat)*Math::PI/180
     dLon = (@lon-lon)*Math::PI/180
     lat1 = @lat*Math::PI/180

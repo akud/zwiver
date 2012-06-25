@@ -120,8 +120,8 @@ class Event < FBItem
   def initialize id
     super id
     if self['venue']
-      @lat = self['location']['latitude']
-      @lon = self['location']['longitude']
+      @lat = self['venue']['latitude']
+      @lon = self['venue']['longitude']
     end
   end
 
