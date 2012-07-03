@@ -1,6 +1,6 @@
+#Base Classes for Facebook graph lists and items
 require 'restclient'
 require 'json'
-require 'pointlike'
 
 
 class FB
@@ -22,7 +22,7 @@ class FBList < FB
     make_next_params! data
   end
 
-  def next!
+  def load_next!
     if @next_params
       response = JSON.parse(RestClient.get @@search_url, :params => @next_params)
       make_list! response
@@ -75,57 +75,3 @@ class FBItem < FB
     JSON.pretty_generate @data
   end
 end 
-
-
-class VenueList < FBList
-  def initialize query, center='37.7750,-122.4183', distance=50000
-    super Venue, :q => query,
-      :type => 'place',
-      :center => center,
-      :distance => distance
-  end
-end
-
-class EventList < FBList
-  def initialize query
-    require 'chronic'
-    super Event, :q => query,
-      :type => 'event',
-      :until => Chronic.parse('next sunday at midnight').to_i
-  end
-end
-
-class Venue < FBItem
-  include Pointlike
-
-  def initialize id
-    super id
-    self['site'] = self['website'] || self['link']
-    @lat = self['location']['latitude']
-    @lon = self['location']['longitude']
-  end
-
-  def matches? terms
-    terms.any? do |term|
-      (self['description'] && self['description'].downcase.include?(term.downcase)) ||
-      ( self['about'] && self['about'].downcase.include?(term.downcase))
-    end
-  end
-end
-
-class Event < FBItem
-  
-  include Pointlike
-
-  def initialize id
-    super id
-    if self['venue']
-      @lat = self['venue']['latitude']
-      @lon = self['venue']['longitude']
-    end
-  end
-
-  def has_location?
-    (!!@lat) && (!!@lon)
-  end
-end

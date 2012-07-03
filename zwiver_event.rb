@@ -33,9 +33,10 @@ class ZwiverEvent
       http.request(request)
     end
     
-    unless response.is_a? Net::HTTPSuccess
-      puts "Failed to save event for #{@body[:url]}"
-      puts "#{response.code}: #{response.message}"
+    if response.is_a? Net::HTTPSuccess
+      puts "Created event for #{@body[:url]}" 
+    else
+      puts "Failed to save event for #{@body[:url]}: #{response.code} #{response.message}"
     end
     response
   end
