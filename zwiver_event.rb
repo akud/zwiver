@@ -1,0 +1,42 @@
+require 'json'
+require 'uri'
+require 'net/http'
+
+# Main model class for storing events to the zwiver api
+class ZwiverEvent
+  
+  EVENT_URL = URI.parse('http://localhost/api/events/')
+  
+##
+# Constructor. Takes a hash with the following keys:
+# :title - the title of the event
+# :description (optional)- a description of the event
+# :url - a url pointing to a page of the event
+# :price (optional)- the price of the event
+# :date - the date/time when the event occurs
+# :venue (optional)- the name of the venue hosting the event
+# :address - the street address of the event venue
+# :lat / :lon (optional)- latitude and longitude of the event venue
+  def initialize args
+    @body = args
+  end
+
+
+  def post
+    request = Net::HTTP::Post.new(EVENT_URL.path)  
+
+    request.body = {:event => @body}.to_json
+    request.add_field 'Content-Type', 'application/json'
+    request.add_field 'Accept', 'application/json'
+
+    response = Net::HTTP.new(EVENT_URL.host, EVENT_URL.port).start do |http|
+      http.request(request)
+    end
+    
+    unless response.is_a? Net::HTTPSuccess
+      puts "Failed to save event for #{@body[:url]}"
+      puts "#{response.code}: #{response.message}"
+    end
+    response
+  end
+end

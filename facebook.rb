@@ -78,11 +78,11 @@ end
 
 
 class VenueList < FBList
-  def initialize query
+  def initialize query, center='37.7750,-122.4183', distance=50000
     super Venue, :q => query,
       :type => 'place',
-      :center => '37.7750,-122.4183',
-      :distance => 50000
+      :center => center,
+      :distance => distance
   end
 end
 
