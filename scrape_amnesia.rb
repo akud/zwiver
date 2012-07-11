@@ -63,6 +63,7 @@ module Amnesia
   class Event
 
     attr_reader :date, :title, :description, :url, :address
+    include Zwiver::Saveable
 
     def initialize parent, span
       span = span
@@ -79,15 +80,6 @@ module Amnesia
       @url = Amnesia::URL
       @address = Amnesia::ADDRESS
       @venue_name = Amnesia::NAME
-    end
-
-    def to_zw 
-      ZwiverEvent.new :date => @date,
-        :title => @title,
-        :description => @description,
-        :url => @url,
-        :address => @address,
-        :venue => @venue_name
     end
 
     private 

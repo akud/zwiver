@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'mechanize'
 require 'chronic'
-require 'event'
+require 'zwiver_event'
 
 class WarfieldScraper 
 
@@ -24,19 +24,20 @@ class WarfieldScraper
         info_items = event_page.search 'div#main div ul li'
         day = info_items[0].text.sub 'Day: ', ''
         time = info_items[1].text.sub 'Showtime: ', ''
-        date = Chronic.parse(day + ' ' + time)
+        date = day + ' ' + time
         description = ''
         event_page.search('div.right').each do |tag|
           if tag.name.eql? 'text'
             description += tag.text.strip
           end
         end
-        Event.new(
+        Zwiver::Event.new(
           :title => title,
           :date => date,
           :description => description,
           :address => @address,
-          :venue => @venue
+          :venue => @venue,
+          :url => event_page.uri.to_s
         ).post
       end
     end

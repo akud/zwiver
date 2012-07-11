@@ -1,5 +1,6 @@
 #!/usr/bin/ruby -I.
 require 'restclient'
+require 'zwiver_event'
 require 'json'
 
 class EventbriteList
@@ -51,29 +52,34 @@ class EventbriteList
 
   def get_event_list json_result
     json_result['events'].slice(1..json_result['events'].length).map do |e|
-        { :url => e['event']['url'],
-          :title => e['event']['title'].gsub(/<.*?>/, ''),
-          :price => e['event']['tickets'][0]['ticket']['price'],
-          :description => e['event']['description'].gsub(/<.*?>/, ''),
-          :date => e['event']['start_date'],
-          :venue => e['event']['venue']['name'],
-          :lat => e['event']['venue']['latitude'],
-          :lon => e['event']['venue']['longitude'],
-          :address => "#{e['event']['venue']['address']}, " + 
-            "#{e['event']['venue']['city']}, " + 
-            "#{e['event']['venue']['region']} #{e['event']['venue']['zip']}"
-        }
+      EventbriteEvent.new e
     end
   end
 end
 
+class EventbriteEvent
+  include Zwiver::Saveable
+
+    def initialize e
+      @url = e['event']['url']
+      @title = e['event']['title'].gsub(/<.*?>/, '')
+      @price = e['event']['tickets'][0]['ticket']['price']
+      @description = e['event']['description'].gsub(/<.*?>/, '')
+      @date = e['event']['start_date']
+      @venue_name = e['event']['venue']['name']
+      @lat = e['event']['venue']['latitude']
+      @lon = e['event']['venue']['longitude']
+      @address = "#{e['event']['venue']['address']}, " + 
+        "#{e['event']['venue']['city']}, " + 
+        "#{e['event']['venue']['region']} #{e['event']['venue']['zip']}"
+    end
+end
+
 if $0 == __FILE__
-  require 'zwiver_event'
   list = EventbriteList.new
   begin 
     list.events.each do |e|
-      #p e
-      ZwiverEvent.new(e).post 
+      e.to_zw.post
     end
   end while list.has_next?
 end

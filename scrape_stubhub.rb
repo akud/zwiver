@@ -79,8 +79,10 @@ module Stubhub
   class Event
     attr_reader :id, :title, :date, :url,
       :address, :venue_name
+
+    include Zwiver::Saveable
     def initialize venue, args
-      @id = agrs['id']
+      @id = args['id']
       @title = args['title'] 
       @url = "http://stubhub.com/#{args['urlpath']}"
       @date = args['event_date_time_local']
@@ -93,15 +95,6 @@ module Stubhub
         " AND id:#{id}",
         :fl => 'id,title,urlpath,event_date_time_local'
       ).first
-    end
-
-
-    def to_zw
-      ZwiverEvent.new :title => @title,
-        :url => @url,
-        :date => @date,
-        :address => @address,
-        :venue => @venue_name
     end
   end
 end

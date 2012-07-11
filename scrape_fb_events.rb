@@ -15,6 +15,7 @@ end
 class Event < FBItem
   
   include Pointlike
+  include Zwiver::Saveable
 
   def initialize id
     super id
@@ -22,21 +23,16 @@ class Event < FBItem
       @lat = self['venue']['latitude']
       @lon = self['venue']['longitude']
     end
+    @url = "http://www.facebook.com/events/#{self['id']}",
+    @title = self['name'],
+    @description = self['description'],
+    @date = self['start_time'],
+    @venue = self['location'],
+    @address = "#{self['venue']['street']} #{@data['venue']['city']} #{@data['venue']['state']}",
   end
 
   def has_location?
     !!(@lat && @lon)
-  end
-
-  def to_zw
-    ZwiverEvent.new :url => "http://www.facebook.com/events/#{@data['id']}",
-      :title => @data['name'],
-      :description => @data['description'],
-      :date => @data['start_time'],
-      :venue => @data['location'],
-      :address => "#{@data['venue']['street']} #{@data['venue']['city']} #{@data['venue']['state']}",
-      :lat => @data['venue']['latitude'],
-      :lon => @data['venue']['longitude']
   end
 end
 
