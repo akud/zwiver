@@ -24,6 +24,7 @@ class EventsController < ApplicationController
       if @event.save
         render :nothing => true, :status => :created, :location => @event
       else
+        Rails.logger.error "Failed to create event: #{@event.errors.to_json}"
         render :json => @event.errors.to_json, :status => :error
       end
     end
