@@ -79,7 +79,7 @@ if $0 == __FILE__
   list = EventbriteList.new
   begin 
     list.events.each do |e|
-      e.to_zw.post
+      e.save
     end
   end while list.has_next?
 end
