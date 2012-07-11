@@ -55,19 +55,35 @@ class EventTest < ActiveSupport::TestCase
     assert_nil event.id, 'event had id generated'
   end
 
-  test "unique title and url" do
-    e1 = Event.new :date => Time.now, 
+  test "unique title and date" do
+    date = Chronic.parse 'next sunday at midnight'
+    e1 = Event.new :date => date, 
       :venue => 'venue',
       :title => 'non_unique_title',
-      :url => 'non_unique_url',
+      :url => 'some url',
       :address => '982 Market St  San Francisco, CA 94102'
-    assert e1.save, 'didn\'t save first event'
+    assert e1.save, "didn't save first event"
+
      e2 = Event.new :date => Time.now, 
       :venue => 'venue',
       :title => 'non_unique_title',
-      :url => 'non_unique_url',
+      :url => 'some other url',
       :address => '982 Market St  San Francisco, CA 94102'
-    assert !e2.save, 'allowed non-unique title and url to be saved'
+    assert e2.save, "didn't allow save with different date"
+
+   e3 = Event.new :date => date, 
+      :venue => 'venue',
+      :title => 'Brand new title',
+      :url => 'some other url',
+      :address => '982 Market St  San Francisco, CA 94102'
+   assert e3.save, "didn't allow save with different title"
+
+   e4 = Event.new :date => date, 
+      :venue => 'venue',
+      :title => 'Brand new title',
+      :url => 'some other url',
+      :address => '982 Market St  San Francisco, CA 94102'
+   assert !e4.save, "allowed non-unique title and date to be saved"
   end
 
   test "find upcoming" do

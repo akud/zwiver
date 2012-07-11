@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   
   validates_presence_of :date, :url, :venue, :address
 
-  validates_uniqueness_of :title, :scope => :url
+  validates_uniqueness_of :date, :scope => :title
 
   geocoded_by :address, :latitude => :lat, :longitude => :lon
   after_validation :geocode 

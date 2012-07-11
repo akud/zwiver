@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20120527051147) do
   end
 
   add_index "events", ["date"], :name => "index_events_on_date"
-  add_index "events", ["url", "title"], :name => "index_events_on_url_and_title", :unique => true
+  add_index "events", ["url", "date"], :name => "index_events_on_url_and_date", :unique => true
 
   create_table "events_backup", :id => false, :force => true do |t|
     t.integer  "id",                                         :default => 0, :null => false

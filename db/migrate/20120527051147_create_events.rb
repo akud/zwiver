@@ -12,7 +12,7 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :events, [:url, :title], :unique => true
+    add_index :events, [:url, :date], :unique => true
     add_index :events, :date
     #TODO: spatial index on lat, lon
   end
