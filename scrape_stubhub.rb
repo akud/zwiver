@@ -103,7 +103,7 @@ if $0 == __FILE__
   Stubhub::Venue.find_by_region.each do |venue|
     puts "scraping events for #{venue.name}"
     venue.events.each do |event|
-      event.to_zw.post
+      event.save
     end
   end
 end

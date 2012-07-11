@@ -41,7 +41,7 @@ if $0 == __FILE__
     events = EventList.new letter
     begin
       events.list.find_all {|e| e.has_location? && e.distance_from(37.7750,-122.4183) < 20}.each do |e|
-        e.to_zw.post
+        e.save
       end
       events.load_next!
     end while events.has_next?

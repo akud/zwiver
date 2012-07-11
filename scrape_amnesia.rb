@@ -94,7 +94,7 @@ end
 if $0 == __FILE__
   Amnesia::Calendar.new.cells.each do |cell|
     cell.events.each do |event|
-      event.to_zw.post
+      event.save
     end
   end
 end

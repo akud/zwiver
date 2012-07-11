@@ -8,8 +8,8 @@ module Zwiver
   
 #Mixin for other classes that can be converted to Zwiver Events
   module Saveable
-    def to_zw
-      Zwiver::Event.new :title => @title,
+    def save
+      Zwiver::Event.new(:title => @title,
         :date => @date,
         :url => @url,
         :description => @description,
@@ -17,11 +17,11 @@ module Zwiver
         :address => @address,
         :lat => @lat,
         :lon => @lon
+      ).post
     end
   end
 
   class Event
-    
     @@url = URI.parse('http://localhost/api/events/')
     
 ##
