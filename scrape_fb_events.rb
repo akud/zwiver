@@ -28,7 +28,7 @@ class Event < FBItem
     @description = self['description'],
     @date = self['start_time'],
     @venue = self['location'],
-    @address = "#{self['venue']['street']} #{@data['venue']['city']} #{@data['venue']['state']}",
+    @address = "#{self['venue']['street']} #{@data['venue']['city']} #{@data['venue']['state']}"
   end
 
   def has_location?
