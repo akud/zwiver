@@ -36,3 +36,16 @@ div.info-window-title {
 	font-size: 14pt;
 	font-weight: bold;
 }
+
+.load-button img{
+  position: relative; 
+  max-width: 100px;
+}
+
+.load-button.right img {
+  float: right;  
+}
+
+.load-button.left img {
+  float: left;  
+}
