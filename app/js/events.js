@@ -31,29 +31,61 @@ EV.Event = Ember.Object.extend({
       content: this.get('infoWindowContent'),
       position: this.get('position')
     });
-  }.property('infoWindowContent','position')
+  }.property('infoWindowContent','position'),
+
+  remove: function() {
+    this.get('infoWindow').close();
+    this.get('mapMarker').setMap(null);
+  }
 });
 
 EV.eventsController = Ember.ArrayController.create({
   content: [],
   selectedEvent: null,
+  next: {},
+  prev: null,
   /**
     * Load upcoming events
     */
   init: function() {
     this._super();
-    $.get('/api/events', function(data) {
-      EV.eventsController.set('content', data.map(function(item) {
-        return EV.Event.create(item);
-        })
-      );
-    });
+    this.loadNext();
   },
   select: function(evt) {
     if(this.get('selectedEvent')) {
       this.get('selectedEvent').get('infoWindow').close();
     }
     this.set('selectedEvent', evt);
+  },
+  loadNext: function() {
+    $.get('/api/events', this.get('next'), function(data) {
+      EV.eventsController.get('content').forEach(function(evt) {
+        evt.remove();
+      });
+      EV.eventsController.set('content', data.events.map(function(item) {
+        return EV.Event.create(item);
+        })
+      );
+      EV.eventsController.set('next', data.next)
+      if(data.prev) {
+        EV.eventsController.set('prev', data.prev)
+      }
+    });
+  },
+  loadPrevious: function() {
+    $.get('/api/events', this.get('prev') || {}, function(data) {
+      EV.eventsController.get('content').forEach(function(evt) {
+        evt.remove();
+      });
+      EV.eventsController.set('content', data.events.map(function(item) {
+        return EV.Event.create(item);
+        })
+      );
+      EV.eventsController.set('next', data.next)
+      if(data.prev) {
+        EV.eventsController.set('prev', data.prev)
+      }
+    });
   }
 });
 
@@ -110,7 +142,29 @@ EV.mapView = Ember.View.create({
       disableDefaultUI: true,
       zoomControl: true,
       panControl: true,
+      scrollwheel: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }));
+  }
+});
+
+EV.nextButton = Ember.View.create({
+  templateName: 'next-button',
+  click: function() {
+    EV.eventsController.loadNext();
+  }
+});
+
+EV.prevButton = Ember.View.create({
+  templateName: 'prev-button',
+
+  clickable: function() {
+    return EV.eventsController.get('prev') != null;
+  }.property('EV.eventsController.prev'),
+
+  click: function() {
+    if(this.get('clickable')) {
+      EV.eventsController.loadPrevious();
+    }
   }
 });

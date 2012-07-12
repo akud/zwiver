@@ -62,6 +62,8 @@
            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
+        <div id="next-button"></div>
+        <div id="previous-button"></div>
         <div class="span8" id="list-container">
           <h2>List of Events</h2>
        </div>
@@ -80,6 +82,13 @@
       <span class="event-title">{{content.title}}</span>
       <div class="event-description">{{content.shortDescription}}</div>
       <a {{bindAttr href="content.url"}}>Original Posting</a>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="next-button">
+      <a href="#"><img src="/images/right_arrow.png" width="42" height="42"></img></a>
+    </script>
+    <script type="text/x-handlebars" data-template-name="prev-button">
+      <a href="#"><img src="/images/left_arrow.png" width="42" height="42"></img></a>
     </script>
 
     <!-- Libraries -->
@@ -101,6 +110,8 @@
       $(document).ready(function(){
         EV.listView.appendTo('#list-container');
         EV.mapView.appendTo('#map-container');
+        EV.nextButton.appendTo('#next-button');
+        EV.prevButton.appendTo('#previous-button');
       });
     </script>  
   
