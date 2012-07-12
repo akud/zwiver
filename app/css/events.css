@@ -5,6 +5,11 @@
 
 #map-container {
 	padding: 10px;
+  background-color: #eeeeee;
+	height: 500px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
 }
 
 /* items in the list view */
@@ -37,15 +42,18 @@ div.info-window-title {
 	font-weight: bold;
 }
 
-.load-button img{
+.load-button img {
+  margin-top: 250px;
   position: relative; 
-  max-width: 100px;
+  max-width: 50px;
 }
 
 .load-button.right img {
   float: right;  
+  margin-left -20px;
 }
 
 .load-button.left img {
   float: left;  
+  margin-right: -20px;
 }
