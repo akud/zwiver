@@ -45,15 +45,16 @@ div.info-window-title {
 .load-button img {
   margin-top: 250px;
   position: relative; 
-  max-width: 50px;
-}
-
-.load-button.right img {
-  float: right;  
-  margin-left -20px;
+  max-width: 75px;
 }
 
 .load-button.left img {
+  margin-left: -10px;
+  margin-right: -40px;
   float: left;  
+}
+
+.load-button.right img {
   margin-right: -20px;
+  float: right;  
 }
