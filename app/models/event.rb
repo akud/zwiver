@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   attr_accessible :date, :description, :venue, :address, :title, :url, :lat, :lon
   
-  validates_presence_of :date, :url, :venue, :address
+  validates_presence_of :date, :title, :venue, :address
 
   validates_uniqueness_of :date, :scope => :title
 
