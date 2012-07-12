@@ -11,12 +11,10 @@ class Event < ActiveRecord::Base
   # Find upcoming events
   # TODO: make this a `find_upcoming_near` and take in IP or location
   # Params:
-  # +days_in_future+:: number of days in the future to look.
-  #                     goes up to midnight that night
-  def self.find_upcoming days_in_future=2
-    start_time = Time.now 
-    end_time = Chronic.parse "#{days_in_future} days from now at midnight"
-    where :date => start_time..end_time
+  # +limit+:: the number of events to return
+  # +offset+:: the number of events to offest by
+  def self.find_upcoming limit, offset
+    where("date > '#{Time.now}'").order("date ASC").limit(limit).offset(offset)
   end
   
   # Search for events matching terms

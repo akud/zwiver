@@ -1,8 +1,19 @@
 class EventsController < ApplicationController
  
   def index
-    @events = Event.find_upcoming
-    render :json => @events
+    params[:start] ||= 0
+    params[:limit] ||= 10
+    @events = Event.find_upcoming params[:limit], params[:start]
+    json = {}
+    json[:events] = @events
+    json[:next] = {
+      :start => params[:start].to_i + 10
+    }
+    json[:prev] = {
+      :start => params[:start].to_i - 10
+    } if params[:start].to_i > 0
+
+    render :json => json
   end
 
   def show 
@@ -16,7 +27,7 @@ class EventsController < ApplicationController
   end
 
   def create 
-    @event = Event.find_by_url_and_title params[:event][:url], params[:event][:title]
+    @event = Event.find_by_title_and_date params[:event][:title], params[:event][:date]
     if @event 
       render :nothing => true, :status => :conflict, :location => @event
     else 
