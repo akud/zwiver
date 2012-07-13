@@ -51,9 +51,9 @@ module Zwiver
       end
       
       if response.is_a? Net::HTTPSuccess
-        puts "Created event for #{@body[:url]}" 
+        puts "Created event: #{@body[:title]}" 
       else
-        puts "Failed to save event for #{@body[:url]}: #{response.code} #{response.message}"
+        puts "Failed to save event #{@body[:title]}: #{response.code} #{response.message}; #{response.body}"
       end
       response
     end
