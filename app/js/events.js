@@ -11,6 +11,10 @@ EV = Events = Ember.Application.create({
 
 EV.Event = Ember.Object.extend({
   maxDescriptionLength: 140,
+  monthNames: [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ],
   position: function() {
     return new google.maps.LatLng(this.get('lat'),this.get('lon'));
   }.property('lat','lon'),
@@ -18,7 +22,7 @@ EV.Event = Ember.Object.extend({
   shortDescription: function() {
     var desc = this.get('description') || '';
     var maxLength = this.get('maxDescriptionLength');
-    return desc.length < maxLength ? desc : desc.substring(0,maxLength) + '...';
+    return desc.length < maxLength ? desc : desc.substring(0,maxLength); 
   }.property('description'), 
 
   mapMarker: function() {
@@ -41,6 +45,15 @@ EV.Event = Ember.Object.extend({
       position: this.get('position')
     });
   }.property('infoWindowContent','position'),
+
+  formattedDate: function() { 
+    var date = new Date(this.get('date'));  
+    return this.get('monthNames')[date.getMonth()] + 
+      ' ' + date.getDate() + ' ' + 
+      date.getHours() + ':' +
+      date.getMinutes() + 
+      (date.getMinutes() < 10 ? '0' : '');
+  }.property('date'),
 
   remove: function() {
     this.get('infoWindow').close();

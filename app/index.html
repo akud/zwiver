@@ -76,9 +76,11 @@
 
     <!-- Handlebars templates -->
     <script type="text/x-handlebars" data-template-name="list-item">
-      <span class="event-title">{{content.title}}</span>
-      <div class="event-description">{{content.shortDescription}}</div>
-      <a {{bindAttr href="content.url"}}>Original Posting</a>
+      <div class="event-title"><a {{bindAttr href="content.url"}}>{{content.title}}</a></div>
+      <div class="event-venue">{{content.venue}}</div>
+      <div class="event-date">{{content.formattedDate}}</div>
+      <div class="event-description">{{content.shortDescription}}<span class="show-more">...</span></div>
+      
     </script>
 
     <script type="text/x-handlebars" data-template-name="next-button">
