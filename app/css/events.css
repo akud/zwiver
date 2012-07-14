@@ -3,6 +3,16 @@
 	max-width: none;
 }
 
+div.scrolls-with {
+  position: fixed;
+}
+div.right {
+  float: right;
+}
+div.left {
+  float: left;
+}
+
 #map-container {
 	padding: 10px;
   background-color: #eeeeee;
@@ -12,6 +22,10 @@
           border-radius: 6px;
 }
 
+div#list-container {
+  position: relative;
+  left: -50px;
+}
 /* items in the list view */
 li.list-item {
 	background-color: #F2FFEE;
@@ -48,13 +62,10 @@ div.info-window-title {
   max-width: 75px;
 }
 
-.load-button.left img {
-  margin-left: -10px;
-  margin-right: -40px;
-  float: left;  
+div#previous-button {
+  margin-left: -75px;
 }
 
-.load-button.right img {
-  margin-right: -20px;
-  float: right;  
+div#next-button {
+  margin-left: 350px;
 }
