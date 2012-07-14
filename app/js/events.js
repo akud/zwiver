@@ -1,7 +1,11 @@
 EV = Events = Ember.Application.create({
   toApiUrl: function(path) {
-    start =  path.indexOf('/') != 0 ? '/api/' : '/api';
-    return start + path;
+    if(!path) {
+      return null;
+    } else {
+      start =  path.indexOf('/') != 0 ? '/api/' : '/api';
+      return start + path;
+    }
   }
 });
 
@@ -63,24 +67,21 @@ EV.eventsController = Ember.ArrayController.create({
     this.set('selectedEvent', evt);
   },
   loadNext: function() {
-    this.load(this.get('nextUrl'));
+    this._load(this.get('nextUrl'));
   },
   loadPrevious: function() {
-    this.load(this.get('previousUrl'));
+    this._load(this.get('previousUrl'));
   },
-  load: function(url) {
+  //private
+  _load: function(url) {
     $.get(url, function(data) {
-      EV.eventsController.get('content').forEach(function(evt) {
-        evt.remove();
-      });
+      EV.eventsController.get('content').invoke('remove');
       EV.eventsController.set('content', data.events.map(function(item) {
         return EV.Event.create(item);
         })
       );
       EV.eventsController.set('nextUrl', EV.toApiUrl(data.nextUrl));
-      if(data.prevUrl) {
-        EV.eventsController.set('previousUrl', EV.toApiUrl(data.prevUrl))
-      }
+      EV.eventsController.set('previousUrl', EV.toApiUrl(data.prevUrl))
     });
   }
 });
@@ -146,6 +147,9 @@ EV.mapView = Ember.View.create({
 
 EV.nextButton = Ember.View.create({
   templateName: 'next-button',
+  clickable: function() {
+    return EV.eventsController.get('nextUrl') != null;
+  }.property('EV.eventsController.nextUrl'),
   click: function() {
     EV.eventsController.loadNext();
   }

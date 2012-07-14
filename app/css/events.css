@@ -62,6 +62,10 @@ div.info-window-title {
   max-width: 75px;
 }
 
+.load-button img:not(.clickable) {
+  opacity: 0.3;
+}
+
 div#previous-button img {
   margin-left: -85px;
 }
