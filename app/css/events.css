@@ -56,20 +56,25 @@ div.info-window-title {
 	font-weight: bold;
 }
 
-.load-button img {
+.load-button {
   margin-top: 250px;
   position: relative; 
+  width: 100px;
+  height: 300px;
+}
+
+.load-button img {
   max-width: 75px;
 }
 
-.load-button img:not(.clickable) {
+.load-button a:not(.clickable) {
   opacity: 0.3;
 }
 
-div#previous-button img {
+div#previous-button a {
   margin-left: -85px;
 }
 
-div#next-button img {
+div#next-button a {
   margin-left: 350px;
 }
