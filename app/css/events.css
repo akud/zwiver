@@ -62,10 +62,10 @@ div.info-window-title {
   max-width: 75px;
 }
 
-div#previous-button {
-  margin-left: -75px;
+div#previous-button img {
+  margin-left: -85px;
 }
 
-div#next-button {
+div#next-button img {
   margin-left: 350px;
 }
