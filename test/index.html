@@ -71,7 +71,7 @@
       /***************Events Controller****************/  
       module('Controllers');
       test('Events Controller', function() {
-        expect(4);
+        expect(10);
         var ev = EV.Event.create({
           title: 'test title',
           description: 'foo',
@@ -81,13 +81,47 @@
         EV.eventsController.select(ev);
         equal(EV.eventsController.get('selectedEvent'), ev, 
           'selects correct event');
-        stop();
+        QUnit.stop();
         setTimeout(function(){
-          ok(!!EV.eventsController.get('length'), 'Controller loads content on init')
+          var length = EV.eventsController.get('length');
+          ok(!!length, 'Controller loads content on init')
           ok(EV.eventsController.everyProperty('title'), 'Every event has a title');
-          ok(EV.eventsController.everyProperty('url'), 'Every event has a url');
-          start();
-        }, 50);
+          ok(EV.eventsController.everyProperty('date'), 'Every event has a date');
+          ok(EV.eventsController.everyProperty('id'), 'Every event has an id');
+
+          var initialIds = EV.eventsController.map(function(evt){return evt.get('id');});
+
+          EV.eventsController.loadNext();
+          QUnit.stop();
+          setTimeout(function() {
+            equal(EV.eventsController.get('length'), length, 
+              'loadNext() returns the same number of events as initial load')
+            //qunit doesn't have a notDeepEqual(), so we have to go through 
+            //some contortions to check that loadNext() actually returned a separate 
+            //set of ids
+            //for every event loaded by loadNext()...
+            ok(EV.eventsController.every(function(evt) {
+              //it should be true that for every event in the initial load...
+              return initialIds.every(function(id) {
+                //that event is not equal to the current one
+                return id != evt.get('id');
+              });
+            }), 'loadNext returns a different set of ids');
+            ok(EV.eventsController.get('previousUrl'), 'loadNext() sets the prev url');
+
+            EV.eventsController.loadPrevious();
+            QUnit.stop();
+            setTimeout(function() {
+              equal(EV.eventsController.get('length'), length, 
+                'loadPrevious() returns same number of events as initial load')
+              var ids = EV.eventsController.map(function(evt){return evt.get('id');})
+              deepEqual(ids, initialIds, 'loadPrevious returns the previous list of events');
+              QUnit.start();
+            }, 75);
+            QUnit.start(); 
+          }, 75);
+          QUnit.start();
+        }, 75);
       });
 
       /********************List View******************/
@@ -100,7 +134,7 @@
         //append to the dom
         EV.listView.appendTo('#qunit-fixture');
 
-        stop();
+        QUnit.stop();
         setTimeout(function() {
           equal($('#qunit-fixture li.list-item').length, 
             EV.eventsController.get('length'), 
@@ -113,7 +147,7 @@
           ok(childViews.everyProperty('selected',false), 
             'views are unselected by default');
           $('#qunit-fixture li.list-item')[0].click();
-          stop();
+          QUnit.stop();
           setTimeout(function() {
             ok(childViews[0].get('selected'),'click selects element');
             ok(!childViews.everyProperty('selected'), 'click selected all elements');
@@ -123,15 +157,15 @@
 
               //select another item
             $('#qunit-fixture li.list-item')[1].click();
-            stop();
+            QUnit.stop();
             setTimeout(function() {
               ok(childViews[1].get('selected'),'click selects new element');
               ok(!childViews[0].get('selected'),'click deselects old element');
-              start();
+              QUnit.start();
             }, 20);
-            start();
+            QUnit.start();
           }, 20);
-          start();
+          QUnit.start();
         }, 20);
       });
   
@@ -139,7 +173,7 @@
       test('MapView', function() {
         expect(3);
         EV.mapView.appendTo('#qunit-fixture');
-        stop();
+        QUnit.stop();
         setTimeout(function() {
           var map = EV.mapView.get('map');
           ok(map,'creates map object');
@@ -154,7 +188,7 @@
           });
 
           EV.eventsController.select(ev);
-          stop();
+          QUnit.stop();
           setTimeout(function() {
             equal(Math.round(EV.mapView.get('map').getCenter().lat()), 
               Math.round(ev.get('position').lat()),
@@ -166,9 +200,9 @@
             equal($('div.info-window-title').text(), ev.get('title'),
               'open info window has correct title');
             */
-            start();
+            QUnit.start();
           }, 25);
-        start();
+        QUnit.start();
         }, 150);
       });
     });  
