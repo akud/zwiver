@@ -7,8 +7,12 @@ class EventsController < ApplicationController
       @events = Event.find_upcoming params[:limit], params[:start]
       json = {}
       json[:events] = @events
-      json[:nextUrl] = "/events?start=#{params[:start].to_i + 10}"
-      json[:prevUrl] = "/events?start=#{params[:start].to_i - 10}" if params[:start].to_i > 0
+      if params[:start].to_i < Event.where("date > '#{Time.now}'").count
+        json[:nextUrl] = "/events?start=#{params[:start].to_i + 10}"
+      end
+      if params[:start].to_i > 0
+        json[:prevUrl] = "/events?start=#{params[:start].to_i - 10}"
+      end
 
       render :json => json, :status => :ok
     rescue => e
