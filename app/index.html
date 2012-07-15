@@ -77,21 +77,21 @@
     <!-- Handlebars templates -->
     <script type="text/x-handlebars" data-template-name="list-item">
       <div class="event-title">
-      {{#if content.url}} 
-        <a {{bindAttr href="content.url"}} target="_blank">{{content.title}}</a>
+      {{#if view.content.url}} 
+        <a {{bindAttr href="view.content.url"}} target="_blank">{{view.content.title}}</a>
       {{else}}
-        {{content.title}}
+        {{view.content.title}}
       {{/if}} 
       </div>
-      <div class="event-venue">{{content.venue}}</div>
-      <div class="event-date">{{content.formattedDate}}</div>
+      <div class="event-venue">{{view.content.venue}}</div>
+      <div class="event-date">{{view.content.formattedDate}}</div>
       <div class="event-description">
-      {{#if showFullText}} 
-        {{content.description}}
+      {{#if view.showFullText}} 
+        {{view.content.description}}
       {{else}}
-        {{content.shortDescription}}
-        {{#if content.hasMore}} 
-          {{view showMoreView}}
+        {{view.content.shortDescription}}
+        {{#if view.content.hasMore}} 
+          {{view view.showMoreView}}
         {{/if}}
      {{/if}}
       </div>
@@ -110,8 +110,8 @@
     <script type="text/javascript" >
       //defaults for ember
       ENV = {
-        CP_DEFAULT_CACHEABLE: true
-        //VIEW_PRESERVES_CONTEXT: true
+        CP_DEFAULT_CACHEABLE: true,
+        VIEW_PRESERVES_CONTEXT: true
       };
     </script>
     <script type="text/javascript" src="js/libs/ember-0.9.8.1.min.js"></script>  
