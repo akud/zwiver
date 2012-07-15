@@ -78,7 +78,7 @@
     <script type="text/x-handlebars" data-template-name="list-item">
       <div class="event-title">
       {{#if content.url}} 
-        <a {{bindAttr href="content.url"}}>{{content.title}}</a>
+        <a {{bindAttr href="content.url"}} target="_blank">{{content.title}}</a>
       {{else}}
         {{content.title}}
       {{/if}} 
