@@ -116,15 +116,19 @@ EV.listView = Ember.CollectionView.create({
   contentBinding: Ember.Binding.oneWay('EV.eventsController.content'),
   tagName: 'ul',
   classNames: ['event-list','unstyled'],
-  itemViewClass: Ember.View.extend({
+  selectedEventObserver: function() {
+    this.get('childViews').invoke('set','selected', false);
+    this.get('childViews').filter(function(childView) {
+      return childView.getPath('content.id') == EV.eventsController.getPath('selectedEvent.id');
+    }).invoke('set', 'selected', true);
+  }.observes('EV.eventsController.selectedEvent'),
+ itemViewClass: Ember.View.extend({
     templateName: 'list-item',
     classNameBindings: ['itemClass','selected'],
     itemClass: 'list-item',
     selected: false,
     showFullText: false,
     click: function(evt) {
-      EV.listView.get('childViews').invoke('set','selected', false);
-      this.set('selected', true);
       EV.eventsController.select(this.get('content'));
     },
     showMoreView: Ember.View.extend({
@@ -148,6 +152,9 @@ EV.mapView = Ember.View.create({
       EV.eventsController.get('content').forEach(function(evt) {
         //TODO: click listener on markers for selecting the event
         evt.get('mapMarker').setMap(map);
+        google.maps.event.addListener(evt.get('mapMarker'), 'click', function() {
+          EV.eventsController.select(evt);
+        });
       });
     }
   }.observes('map','EV.eventsController.content.@each'),
