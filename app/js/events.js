@@ -156,6 +156,9 @@ EV.mapView = Ember.View.create({
           EV.eventsController.select(evt);
         });
       });
+      if(EV.eventsController.toArray().length) {
+        map.panTo(EV.eventsController.toArray()[0].get('position'));
+      }
     }
   }.observes('map','EV.eventsController.content.@each'),
   
