@@ -46,7 +46,17 @@ li.list-item.selected {
 	background-color: #A0CCA0;
 	border: 2px solid #A0CCA0;
 }
+
+li.list-item div.ember-view {
+  display: inline;
+}
+
+li.list-item span.show-more a {
+  font-style: italic;
+  color: #333333;
+}
  
+
 div.info-window-title {
 	font-weight: bold;
 }

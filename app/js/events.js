@@ -121,9 +121,6 @@ EV.listView = Ember.CollectionView.create({
       EV.eventsController.select(this.get('content'));
     },
     showMoreView: Ember.View.extend({
-      template: Ember.Handlebars.compile(
-        '<span class="show-more">...</span>'
-      ),
       click: function() {
         this.get('parentView').set('showFullText', true);
       }

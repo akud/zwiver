@@ -231,7 +231,9 @@
     </ol>  
     <div id="qunit-fixture">test markup, will be hidden</div>
     <script type="text/x-handlebars" data-template-name="list-item">
-      List Item {{view view.showMoreView}}
+      List Item {{#view view.showMoreView}}
+        <span class="show-more">show more</span>
+      {{/view}}
     </script>
   </body>
 </html>  

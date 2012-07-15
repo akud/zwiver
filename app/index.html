@@ -91,7 +91,11 @@
       {{else}}
         {{view.content.shortDescription}}
         {{#if view.content.hasMore}} 
-          {{view view.showMoreView}}
+          {{#view view.showMoreView}}
+            <span class="show-more">
+              <a href="javascript:void(0)">...(more)</a>
+            </span>
+          {{/view}}
         {{/if}}
      {{/if}}
       </div>
