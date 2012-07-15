@@ -34,7 +34,7 @@
       /**************Events Model******************/
       module('Models');
       test('Events Model', function(){
-        expect(11);
+        expect(13);
         var desc = 'I don’t feel that it is necessary to know' + 
         ' exactly what I am. The main interest in life and work' + 
         ' is to become someone else that you were not in the beginning.' + 
@@ -46,11 +46,16 @@
         var ev = EV.Event.create({
           description: desc,
           lat: 35.32145,
-          lon: -124.53435
+          lon: -124.53435,
+          date: '2012-07-15T01:30:00Z'
         });
+        equal(ev.get('formattedDate'),'July 14 6:30pm','formatted date');
+
         ok(ev.get('shortDescription'),'short description');
         ok(ev.get('shortDescription').length < desc.length, 
           'shortDescription.length < description.length');
+        strictEqual(ev.get('hasMore'), true, 'hasMore == true for long description');
+
         ok(ev.get('position'), 'position');
         equal(Math.round(ev.get('position').lat()), 35,
           'correct latitude for position');
@@ -117,11 +122,11 @@
               var ids = EV.eventsController.map(function(evt){return evt.get('id');})
               deepEqual(ids, initialIds, 'loadPrevious returns the previous list of events');
               QUnit.start();
-            }, 75);
+            }, 250);
             QUnit.start(); 
-          }, 75);
+          }, 250);
           QUnit.start();
-        }, 75);
+        }, 50);
       });
 
       /********************List View******************/

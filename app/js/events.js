@@ -22,8 +22,13 @@ EV.Event = Ember.Object.extend({
   shortDescription: function() {
     var desc = this.get('description') || '';
     var maxLength = this.get('maxDescriptionLength');
-    return desc.length < maxLength ? desc : desc.substring(0,maxLength); 
+    return desc.substring(0,maxLength); 
   }.property('description'), 
+
+  hasMore: function() {
+    return this.get('description') && 
+      this.get('description').length > this.get('maxDescriptionLength');
+  }.property('description'),
 
   mapMarker: function() {
     return new google.maps.Marker({
@@ -50,9 +55,10 @@ EV.Event = Ember.Object.extend({
     var date = new Date(this.get('date'));  
     return this.get('monthNames')[date.getMonth()] + 
       ' ' + date.getDate() + ' ' + 
-      date.getHours() + ':' +
-      date.getMinutes() + 
-      (date.getMinutes() < 10 ? '0' : '');
+      (date.getHours() <= 12 ? date.getHours() : date.getHours() - 12) + 
+      ':' + date.getMinutes() + 
+      (date.getMinutes() < 10 ? '0' : '') + 
+      (date.getHours() >= 12 ? 'pm' : 'am');
   }.property('date'),
 
   remove: function() {
