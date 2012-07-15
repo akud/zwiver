@@ -132,7 +132,7 @@
       /********************List View******************/
       module('Views');
       test('ListView', function() {
-        expect(9);
+        expect(10);
         equal(EV.listView.get('content'), EV.eventsController.get('content'), 
           'Controller Binding');
         
@@ -166,6 +166,16 @@
             setTimeout(function() {
               ok(childViews[1].get('selected'),'click selects new element');
               ok(!childViews[0].get('selected'),'click deselects old element');
+
+              //click the 'show more' link
+              $('#qunit-fixture li.list-item:nth-child(2) span.show-more').click();
+              QUnit.stop();
+              setTimeout(function() {
+                strictEqual(childViews[1].get('showFullText'), true, 
+                  'click on show more');  
+                QUnit.start();
+              }, 20);
+
               QUnit.start();
             }, 20);
             QUnit.start();
@@ -220,6 +230,8 @@
     <ol id="qunit-tests">  
     </ol>  
     <div id="qunit-fixture">test markup, will be hidden</div>
-    <script type="text/x-handlebars" data-template-name="list-item">List Item</script>
+    <script type="text/x-handlebars" data-template-name="list-item">
+      List Item {{view view.showMoreView}}
+    </script>
   </body>
 </html>  

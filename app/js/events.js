@@ -114,11 +114,20 @@ EV.listView = Ember.CollectionView.create({
     classNameBindings: ['itemClass','selected'],
     itemClass: 'list-item',
     selected: false,
+    showFullText: false,
     click: function(evt) {
-      EV.listView.get('childViews').invoke('set','selected',false);
+      EV.listView.get('childViews').invoke('set','selected', false);
       this.set('selected', true);
       EV.eventsController.select(this.get('content'));
-    }
+    },
+    showMoreView: Ember.View.extend({
+      template: Ember.Handlebars.compile(
+        '<span class="show-more">...</span>'
+      ),
+      click: function() {
+        this.get('parentView').set('showFullText', true);
+      }
+    })
   })
 });
 

@@ -85,7 +85,16 @@
       </div>
       <div class="event-venue">{{content.venue}}</div>
       <div class="event-date">{{content.formattedDate}}</div>
-      <div class="event-description">{{content.shortDescription}}<span class="show-more">...</span></div>
+      <div class="event-description">
+      {{#if showFullText}} 
+        {{content.description}}
+      {{else}}
+        {{content.shortDescription}}
+        {{#if content.hasMore}} 
+          {{view showMoreView}}
+        {{/if}}
+     {{/if}}
+      </div>
       
     </script>
 
