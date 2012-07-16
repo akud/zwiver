@@ -39,17 +39,21 @@ class EventsController < ApplicationController
   end
 
   def create 
-    @event = Event.find_by_title_and_date params[:event][:title], params[:event][:date]
-    if @event 
-      render :nothing => true, :status => :conflict, :location => @event
-    else 
-      @event = Event.new params[:event]
-      if @event.save
-        render :nothing => true, :status => :created, :location => @event
-      else
-        Rails.logger.error "Failed to create event: #{@event.errors.to_json}"
-        render :json => @event.errors.to_json, :status => :bad_request
+    begin
+      @event = Event.find_by_title_and_date params[:event][:title], Chronic.parse(params[:event][:date])
+      if @event 
+        render :nothing => true, :status => :conflict, :location => @event
+      else 
+        @event = Event.new params[:event]
+        if @event.save
+          render :nothing => true, :status => :created, :location => @event
+        else
+          Rails.logger.error "Failed to create event: #{@event.errors.to_json}"
+          render :json => @event.errors.to_json, :status => :bad_request
+        end
       end
+    rescue => e
+      render :status => :internal_server_error, :json => {:error => e.to_s}
     end
   end
 end

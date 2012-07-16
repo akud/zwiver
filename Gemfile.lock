@@ -86,8 +86,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  chronic
-  geocoder
-  mysql2
+  chronic (~> 0.6.7)
+  geocoder (~> 1.1.2)
+  mysql2 (~> 0.3.11)
   rails (= 3.2.3)
   sqlite3
