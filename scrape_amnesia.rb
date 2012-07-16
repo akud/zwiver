@@ -1,9 +1,8 @@
 #!/usr/bin/ruby -I.
-
 require 'zwiver_event'
 require 'mechanize'
 require 'json'
-require 'chronic'
+require 'time'
 
 module Amnesia 
 
@@ -68,7 +67,7 @@ module Amnesia
     def initialize parent, span
       span = span
       time = span.text.gsub /.*?([:0-9]+)( ?- ?[:0-9]+)?pm.*/m, '\1'
-      @date = "#{parent.date} #{convert_to_24hr time}"
+      @date = Time.parse "#{parent.date} #{convert_to_24hr time} PDT"
       h3 = span.search('h3').first
       if h3
         @title = h3.text.strip

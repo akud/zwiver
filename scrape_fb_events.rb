@@ -2,6 +2,8 @@
 require 'facebook'
 require 'pointlike'
 require 'zwiver_event'
+require 'time'
+require 'chronic'
 
 class EventList < FBList
   def initialize query
@@ -19,16 +21,16 @@ class Event < FBItem
 
   def initialize id
     super id
-    if self['venue']
-      @lat = self['venue']['latitude']
-      @lon = self['venue']['longitude']
+    if @data['venue']
+      @lat = @data['venue']['latitude']
+      @lon = @data['venue']['longitude']
+      @address = "#{@data['venue']['street']} #{@data['venue']['city']} #{@data['venue']['state']}"
     end
-    @url = "http://www.facebook.com/events/#{self['id']}",
-    @title = self['name'],
-    @description = self['description'],
-    @date = self['start_time'],
-    @venue = self['location'],
-    @address = "#{self['venue']['street']} #{@data['venue']['city']} #{@data['venue']['state']}"
+    @url = "http://www.facebook.com/events/#{@data['id']}"
+    @title = @data['name']
+    @description = @data['description']
+    @date = Time.parse "#{@data['start_time']} PDT"
+    @venue = @data['location']
   end
 
   def has_location?

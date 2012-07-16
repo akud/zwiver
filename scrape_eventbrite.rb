@@ -2,6 +2,7 @@
 require 'restclient'
 require 'zwiver_event'
 require 'json'
+require 'time'
 
 class EventbriteList
 
@@ -63,9 +64,9 @@ class EventbriteEvent
     def initialize e
       @url = e['event']['url']
       @title = e['event']['title'].gsub(/<.*?>/, '')
-      @price = e['event']['tickets'][0]['ticket']['price']
+      #@price = e['event']['tickets'][0]['ticket']['price']
       @description = e['event']['description'].gsub(/<.*?>/, '')
-      @date = e['event']['start_date']
+      @date = Time.parse "#{e['event']['start_date']} PDT"
       @venue_name = e['event']['venue']['name']
       @lat = e['event']['venue']['latitude']
       @lon = e['event']['venue']['longitude']
@@ -81,5 +82,6 @@ if $0 == __FILE__
     list.events.each do |e|
       e.save
     end
+    list.load_next!
   end while list.has_next?
 end

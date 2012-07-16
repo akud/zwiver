@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'mechanize'
-require 'chronic'
+require 'time'
 require 'zwiver_event'
 
 class WarfieldScraper 
@@ -24,7 +24,7 @@ class WarfieldScraper
         info_items = event_page.search 'div#main div ul li'
         day = info_items[0].text.sub 'Day: ', ''
         time = info_items[1].text.sub 'Showtime: ', ''
-        date = day + ' ' + time
+        date = Time.parse "#{day} #{time} PDT"
         description = ''
         event_page.search('div.right').each do |tag|
           if tag.name.eql? 'text'

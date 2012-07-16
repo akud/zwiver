@@ -4,6 +4,7 @@ require 'restclient'
 require 'json'
 require 'zwiver_event'
 require 'csv'
+require 'time'
 
 module Stubhub
   
@@ -85,7 +86,7 @@ module Stubhub
       @id = args['id']
       @title = args['title'] 
       @url = "http://stubhub.com/#{args['urlpath']}"
-      @date = args['event_date_time_local']
+      @date = Time.parse "#{args['event_date_time_local']} PDT"
       @address = venue.address
       @venue_name = venue.name
     end

@@ -6,7 +6,7 @@ require 'net/http'
 module Zwiver
 
   
-#Mixin for other classes that can be converted to Zwiver Events
+#Mixin for other classes that can be saved as Zwiver Events
   module Saveable
     def save
       Zwiver::Event.new(:title => @title,
@@ -36,8 +36,16 @@ module Zwiver
 # :lat / :lon (optional)- latitude and longitude of the event venue
     def initialize args
       @body = args
+      raise ArgumentError, "title is required" unless @body[:title].is_a? String
+      raise ArgumentError, "address is required" unless @body[:address].is_a? String
+      raise ArgumentError, "date is required and must be a time object" unless @body[:date].is_a? Time
+      @body[:title] = @body[:title].gsub /<.*?>/m, ''
+      @body[:description] = @body[:description].gsub /<.*?>/m, '' if @body[:description]
     end
 
+    def to_json
+      @body.to_json
+    end
 
     def post
       request = Net::HTTP::Post.new(@@url.path)  

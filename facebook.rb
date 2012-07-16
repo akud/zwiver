@@ -7,6 +7,17 @@ class FB
   @@access_token = '400109626693462|D0Xr_U9eHnr6VWJR7yZECL9lQx8'
   @@base_url = 'https://graph.facebook.com'
   @@search_url = 'https://graph.facebook.com/search'
+
+  def self.search params
+    params[:access_token] = @@access_token
+    params[:fields] ||= 'id'
+    JSON.parse(RestClient.get @@search_url, :params => params)
+  end
+
+  def self.get id
+    JSON.parse(RestClient.get "#{@@base_url}/#{id}", 
+      :params => { :access_token => @@access_token })
+  end
 end
 
 #Wrapper for a list of items from Facebook's graph api
@@ -15,16 +26,14 @@ class FBList < FB
 
   def initialize item_class, params
     @item_class = item_class
-    params[:access_token] = @@access_token
-    params[:fields] = 'id'
-    data = JSON.parse(RestClient.get @@search_url, :params => params)
+    data = FB.search params
     make_list! data
     make_next_params! data
   end
 
   def load_next!
     if @next_params
-      response = JSON.parse(RestClient.get @@search_url, :params => @next_params)
+      response = FB.search @next_params
       make_list! response
       make_next_params! response
     else
@@ -59,8 +68,7 @@ class FBItem < FB
   attr_reader :data
 
   def initialize id
-    @data = JSON.parse(RestClient.get "#{@@base_url}/#{id}", 
-      :params => { :access_token => @@access_token })
+    @data = FB.get id
   end
 
   def [] key
