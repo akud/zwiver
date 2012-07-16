@@ -38,16 +38,18 @@ EV.Event = Ember.Object.extend({
   }.property('title','position'),
 
   infoWindowContent: function() {
-    return '<div class="info-window-title">' + 
+    return '<div class="info-window-title">' +
       this.get('title') + '</div>' +
       '<div class="info-window-content">' + 
-        '<div class="info-window-date">' + 
-          this.get('formattedDate') + 
-        '</div>' + 
-        '<div class="info-window-venue">' +
-          this.get('venue') + 
+        '<div class="info-window-date">' +
+          this.get('formattedDate') +
         '</div>' +
-        this.get('shortDescription') + '...' + 
+        '<div class="info-window-venue">' +
+          this.get('venue') +
+        '</div>' +
+        '<div class="info-window-address">' +
+          this.get('address') +
+        '</div>' +
       '</div>';
   }.property('title','shortDescription'),
 
