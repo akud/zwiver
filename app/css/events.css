@@ -3,6 +3,24 @@
 	max-width: none;
 }
 
+  
+body {
+  background-image: linear-gradient(left , #E6D4E6 0%, #FFFFFF 50%, #E6D4E6 100%);
+  background-image: -o-linear-gradient(left , #E6D4E6 0%, #FFFFFF 50%, #E6D4E6 100%);
+  background-image: -moz-linear-gradient(left , #E6D4E6 0%, #FFFFFF 50%, #E6D4E6 100%);
+  background-image: -webkit-linear-gradient(left , #E6D4E6 0%, #FFFFFF 50%, #E6D4E6 100%);
+  background-image: -ms-linear-gradient(left , #E6D4E6 0%, #FFFFFF 50%, #E6D4E6 100%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0, #E6D4E6),
+    color-stop(0.5, #FFFFFF),
+    color-stop(1, #E6D4E6)
+  );
+}
+
 div.scrolls-with {
   position: fixed;
 }
