@@ -3,15 +3,15 @@ class EventsController < ApplicationController
   def index
     begin
       params[:start] ||= 0
-      params[:limit] ||= 10
+      params[:limit] ||= 20
       @events = Event.find_upcoming params[:limit], params[:start]
       json = {}
       json[:events] = @events
       if params[:start].to_i < Event.where("date > '#{Time.now}'").count
-        json[:nextUrl] = "/events?start=#{params[:start].to_i + 10}"
+        json[:nextUrl] = "/events?start=#{params[:start].to_i + params[:limit].to_i}&limit=#{params[:limit]}"
       end
       if params[:start].to_i > 0
-        json[:prevUrl] = "/events?start=#{params[:start].to_i - 10}"
+        json[:prevUrl] = "/events?start=#{params[:start].to_i - params[:limit].to_i}&limit=#{params[:limit]}"
       end
 
       render :json => json, :status => :ok
