@@ -59,7 +59,7 @@ module Stubhub
       Stubhub.query("stubhubDocumentType:event" + 
         " AND geography_parent:#{@id}" + 
         " AND active:1",
-        :fl => 'id,title,urlpath,event_date_time_local'
+        :fl => 'id,title,urlpath,event_date'
       ).map {|e| Event.new self, e}
     end
 
@@ -86,7 +86,7 @@ module Stubhub
       @id = args['id']
       @title = args['title'] 
       @url = "http://stubhub.com/#{args['urlpath']}"
-      @date = Time.parse "#{args['event_date_time_local']} PDT"
+      @date = Time.parse args['event_date']
       @address = venue.address
       @venue_name = venue.name
     end
@@ -104,7 +104,11 @@ if $0 == __FILE__
   Stubhub::Venue.find_by_region.each do |venue|
     puts "scraping events for #{venue.name}"
     venue.events.each do |event|
-      event.save
+      begin 
+        event.save
+      rescue ArgumentError => e
+        puts e.to_s
+      end
     end
   end
 end
