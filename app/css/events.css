@@ -21,6 +21,20 @@ body {
   );
 }
 
+ul.nav img {
+  height: 25px;
+}
+
+.align-left { 
+  float:left; 
+  margin-right: 1em;
+  vertical-align: top;
+}
+
+.hero-unit img#embedded-logo {
+  margin-top: -46px;
+}
+
 div.scrolls-with {
   position: fixed;
 }
