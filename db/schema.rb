@@ -29,18 +29,4 @@ ActiveRecord::Schema.define(:version => 20120527051147) do
   add_index "events", ["date"], :name => "index_events_on_date"
   add_index "events", ["title", "date"], :name => "index_events_on_title_and_date", :unique => true
 
-  create_table "events_backup", :id => false, :force => true do |t|
-    t.integer  "id",                                         :default => 0, :null => false
-    t.string   "url"
-    t.string   "title"
-    t.text     "description"
-    t.datetime "date"
-    t.string   "venue"
-    t.string   "address"
-    t.decimal  "lat",         :precision => 10, :scale => 0
-    t.decimal  "lon",         :precision => 10, :scale => 0
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
-  end
-
 end
