@@ -15,8 +15,11 @@ EV.Event = Ember.Object.extend({
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ],
+  timezoneOffset: new Date().getTimezoneOffset()*60*1000,
   position: function() {
-    return new google.maps.LatLng(this.get('lat'),this.get('lon'));
+    if(google) {
+      return new google.maps.LatLng(this.get('lat'),this.get('lon'));
+    } 
   }.property('lat','lon'),
 
   shortDescription: function() {
@@ -31,10 +34,12 @@ EV.Event = Ember.Object.extend({
   }.property('description'),
 
   mapMarker: function() {
-    return new google.maps.Marker({
-      position: this.get('position'),
-      title: this.get('title')
-    });
+    if(google) {
+      return new google.maps.Marker({
+        position: this.get('position'),
+        title: this.get('title')
+      });
+    } 
   }.property('title','position'),
 
   infoWindowContent: function() {
@@ -54,20 +59,32 @@ EV.Event = Ember.Object.extend({
   }.property('title','shortDescription'),
 
   infoWindow: function() {
-    return new google.maps.InfoWindow({
-      content: this.get('infoWindowContent'),
-      position: this.get('position')
-    });
+    if(google) {
+      return new google.maps.InfoWindow({
+        content: this.get('infoWindowContent'),
+        position: this.get('position')
+      });
+    }
   }.property('infoWindowContent','position'),
 
   formattedDate: function() { 
-    var date = new Date(this.get('date'));  
-    return this.get('monthNames')[date.getMonth()] + 
-      ' ' + date.getDate() + ' ' + 
-      (date.getHours() <= 12 ? date.getHours() : date.getHours() - 12) + 
-      ':' + date.getMinutes() + 
-      (date.getMinutes() < 10 ? '0' : '') + 
-      (date.getHours() >= 12 ? 'pm' : 'am');
+    if(this.get('date')) {
+      var arr = this.get('date')
+        .replace('T',' ')
+        .replace('Z','')
+        .split(/[-: ]/);
+      var date = Date.UTC(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);  
+      date = new Date(date);
+      //date.setTime(date.getTime() + this.get('timezoneOffset'));
+      return this.get('monthNames')[date.getMonth()] + 
+        ' ' + date.getDate() + ' ' + 
+        (date.getHours() <= 12 ? date.getHours() : date.getHours() - 12) + 
+        ':' + date.getMinutes() + 
+        (date.getMinutes() < 10 ? '0' : '') + 
+        (date.getHours() >= 12 ? 'pm' : 'am');
+    } else {
+      return new Date();
+    }
   }.property('date'),
 
   remove: function() {
