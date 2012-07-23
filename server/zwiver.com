@@ -7,17 +7,17 @@ server {
 
   charset utf-8;
 
-  auth_basic "Restricted";
-  auth_basic_user_file /home/web/.htpasswd;
+  #auth_basic "Restricted";
+  #auth_basic_user_file /home/web/.htpasswd;
 
   location / {
     if ($http_user_agent ~* '(iPhone|iPod|Android|Mobile)') {
-      set $mobile "mobile browser";
+      set $mobile '1';
     }
-    if ($uri !~ 'mobile') {
-      set $mobile "$mobile not mobile page";
+    if ($uri = '/') {
+      set $mobile '$mobile 1';
     }
-    if ($mobile = "mobile browser not mobile page") {
+    if ($mobile = '1 1') {
       rewrite ^ http://www.zwiver.com/mobile.html permanent;
     }
   }
