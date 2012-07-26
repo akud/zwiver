@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -I.
+#!/usr/local/bin/ruby -I.
 require 'facebook'
 require 'pointlike'
 require 'zwiver_event'

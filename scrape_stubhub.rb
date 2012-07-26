@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -I.
+#!/usr/local/bin/ruby -I.
 
 require 'restclient'
 require 'json'

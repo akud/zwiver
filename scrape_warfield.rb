@@ -1,4 +1,4 @@
-#!/home/alex/.rvm/rubies/ruby-1.9.2-p318/bin/ruby -I.
+#!/usr/local/bin/ruby -I.
 
 require 'rubygems'
 require 'mechanize'
