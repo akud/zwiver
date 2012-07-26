@@ -7,8 +7,8 @@ server {
 
   charset utf-8;
 
-  #auth_basic "Restricted";
-  #auth_basic_user_file /home/web/.htpasswd;
+  auth_basic "Restricted";
+  auth_basic_user_file /home/web/.htpasswd;
 
   location / {
     if ($http_user_agent ~* '(iPhone|iPod|Android|Mobile)') {
