@@ -16,6 +16,22 @@ class EventTest < ActiveSupport::TestCase
     assert_equal event.lon, -122.4098898, 'event had incorrect longitude'
   end
 
+  test 'save with lat and lon' do 
+    lat = 35.123
+    lon = -120.00
+    event = Event.new :date => Time.now,
+      :description => 'foo',
+      :venue => 'foo',
+      :title => 'foo',
+      :url => 'foo',
+      :lat => lat,
+      :lon => lon,
+      :address => '982 Market St  San Francisco, CA 94102'
+    assert event.save, 'failed to save event'
+    assert_equal Event.find(event.id).lat, lat, 'overwrote latitude'
+    assert_equal Event.find(event.id).lon, lon, 'overwrote latitude'
+  end
+
   test "doesn't allow save without date" do
     event = Event.new :date => nil, 
       :venue => 'foo',

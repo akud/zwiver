@@ -6,7 +6,16 @@ class Event < ActiveRecord::Base
   validates_uniqueness_of :date, :scope => :title
 
   geocoded_by :address, :latitude => :lat, :longitude => :lon
-  after_validation :geocode 
+
+  after_validation :geocode_if_missing
+
+  def geocode_if_missing
+    if !(self.lat && self.lon)
+      self.geocode()
+    end
+  end
+
+ 
 
   # Find upcoming events
   # TODO: make this a `find_upcoming_near` and take in IP or location
