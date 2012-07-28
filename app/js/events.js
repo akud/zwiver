@@ -153,11 +153,13 @@ EV.listView = Ember.CollectionView.create({
     selectedObserver: function() {
       if(this.get('selected')) {
         var offset = $('#' + this.get('elementId')).offset();
-        offset.top -= 50;
-        $('html, body').animate({
-          scrollTop: offset.top,
-          scrollLeft: offset.left
-        });
+        if(offset) {
+          offset.top -= 50;
+          $('html, body').animate({
+            scrollTop: offset.top,
+            scrollLeft: offset.left
+          });
+        }
       }
     }.observes('selected'),
     showMoreView: Ember.View.extend({
