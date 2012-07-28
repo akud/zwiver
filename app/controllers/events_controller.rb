@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+
+  def self.index_limit_param; :limit; end
+  def self.index_start_param; :start; end
  
   def index
     begin
