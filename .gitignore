@@ -1,1 +1,6 @@
 server/logs/*
+.bash*
+.vim*
+.ssh
+.htpasswd
+.cache
