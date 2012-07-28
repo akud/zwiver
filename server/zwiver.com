@@ -2,13 +2,10 @@ server {
   listen 80;
   server_name localhost www.zwiver.com zwiver.com;
 
-  root /var/www/zwiver.com;
+  root /home/web/app;
   index index.html index.htm;
 
   charset utf-8;
-
-  auth_basic "Restricted";
-  auth_basic_user_file /home/web/.htpasswd;
 
   location / {
     if ($http_user_agent ~* '(iPhone|iPod|Android|Mobile)') {
