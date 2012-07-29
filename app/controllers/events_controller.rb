@@ -11,10 +11,16 @@ class EventsController < ApplicationController
       json = {}
       json[:events] = @events
       if params[:start].to_i < Event.where("date > '#{Time.now}'").count
-        json[:nextUrl] = "/events?start=#{params[:start].to_i + params[:limit].to_i}&limit=#{params[:limit]}"
+        json[:nextUrl] = url_for :action => 'index', 
+          :controller => 'events',
+          :start => params[:start].to_i + 20,
+          :limit => params[:limit]
       end
       if params[:start].to_i > 0
-        json[:prevUrl] = "/events?start=#{params[:start].to_i - params[:limit].to_i}&limit=#{params[:limit]}"
+        json[:prevUrl] = url_for :action => 'index',
+          :controller => 'events',
+          :start => params[:start].to_i - params[:limit].to_i, 
+          :limit => params[:limit]
       end
 
       render :json => json, :status => :ok
