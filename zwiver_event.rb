@@ -22,7 +22,7 @@ module Zwiver
   end
 
   class Event
-    @@url = URI.parse('http://localhost/api/events/')
+    @@url = URI.parse('http://localhost:3000/events/')
     
 ##
 # Constructor. Takes a hash with the following keys:
