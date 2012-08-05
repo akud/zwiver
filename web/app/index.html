@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Zwiver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find events going on around you: comedy shows, open mic nights, concerts, anything really. We provide location-based event search">
+    <meta name="author" content="Alex Kudlick">
+
+    <!-- styles -->
+    <link href="css/bootstrap.css" rel="stylesheet"> 
+    <link href="css/events.css" rel="stylesheet"> 
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57-precomposed.png">
+    <!-- google analytics -->
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-33667701-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a class="brand" href="#"><img src="/images/logo_transparent_white.gif" alt="Zwiver"/></a></li>
+              <li><a href="/about.html">About</a></li>
+              <!--<li><a href="#">Blog</a></li>-->
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      
+      <div class="row"> </div>
+
+      <div class="row">
+        <div class="scrolls-with left">
+          <div class="span7" id="map-container"></div>
+        </div>
+        <div class="right">
+          <div id="previous-button" class="load-button left scrolls-with"></div>
+          <div class="span4" id="list-container"></div>
+          <div id="next-button" class="load-button right scrolls-with"></div>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Handlebars templates -->
+    <script type="text/x-handlebars" data-template-name="list-item">
+      <div class="event-title">
+      {{#if view.content.url}} 
+        <a {{bindAttr href="view.content.url"}} target="_blank">{{view.content.title}}</a>
+      {{else}}
+        {{view.content.title}}
+      {{/if}} 
+      </div>
+      <div class="event-venue">{{view.content.venue}}</div>
+      <div class="event-date">{{view.content.formattedDate}}</div>
+      <div class="event-description">
+      {{#if view.showFullText}} 
+        {{view.content.description}}
+      {{else}}
+        {{view.content.shortDescription}}
+        {{#if view.content.hasMore}} 
+          {{#view view.showMoreView}}
+            <span class="show-more">
+              <a href="javascript:void(0)">...(more)</a>
+            </span>
+          {{/view}}
+        {{/if}}
+     {{/if}}
+      </div>
+      
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="next-button">
+      <a {{bindAttr class="clickable"}} href="#"><img src="/images/right_arrow.png"></img></a>
+    </script>
+    <script type="text/x-handlebars" data-template-name="prev-button">
+      <a {{bindAttr class="clickable"}} href="#"><img src="/images/left_arrow.png"></img></a>
+    </script>
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="js/libs/jquery-1.7.2.min.js"></script>  
+    <script type="text/javascript" >
+      //defaults for ember
+      ENV = {
+        CP_DEFAULT_CACHEABLE: true,
+        VIEW_PRESERVES_CONTEXT: true
+      };
+    </script>
+    <script type="text/javascript" src="js/libs/ember-0.9.8.1.min.js"></script>  
+    <script type="text/javascript" 
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
+    <script type="text/javascript" src="js/events.js"></script>  
+
+    <!-- initialize -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+        EV.listView.appendTo('#list-container');
+        EV.mapView.appendTo('#map-container');
+        EV.nextButton.appendTo('#next-button');
+        EV.prevButton.appendTo('#previous-button');
+      });
+    </script>  
+  </body>
+</html>
