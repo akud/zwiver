@@ -23,8 +23,9 @@ test:
 
 production:
   adapter: postgresql
+  host: ec2-23-23-84-87.compute-1.amazonaws.com
   encoding: unicode
-  database: blog_development
+  database: zwiver
   pool: 5
-  username: blog
-  password:
+  username: rails
+  password: 4iok1yTA
