@@ -1,0 +1,34 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+<% tomorrow = Time.now + (60*60*24) %>
+<% yesterday = Time.now - (60*60*24) %>
+
+one:
+  url: http://thewordparty.com/TheWordParty/Home.html
+  title: WordParty
+  description: Poetry & Jazz open mic at Viracocha EVERY 3rd TUESDAY of the MONTH
+  date: <%= tomorrow %>
+  venue: Viracocha
+  address: 998 Valencia St. (at 21st), San Francisco, CA
+  lat: 37.7568935
+  lon: -122.4211211
+
+two:
+  url: http://www.punchlinecomedyclub.com/event/1C004882DB365EF7
+  title: SF Comedy Showcase
+  description: Come see the Punch Line's weekly SF Comedy Showcase, held every Sunday for over 30 years! San Francisco has a rich and vibrant comedy scene, and this weekly show has birthed such comedians as Patton Oswalt, Margaret Cho and Arj Barker, as well as the current flock of up and coming stars like W. Kamau Bell and Moshe Kasher. Come see the comics of tomorrow, today!
+  date: <%= tomorrow + (60*60*2) %>
+  venue: Punch Line San Francisco
+  address: 444 Battery Street  San Francisco, CA 94111
+  lat: 37.7954673
+  lon: -122.4003408
+
+past:
+  url: http://www.songkick.com/concerts/12518768-mountain-goats-at-cafe-du-nord-swedishamerican-hall 
+  title: YUKON BLONDE
+  description: Over the past two years, Yukon Blonde has earned no shortage of acclaim for its hook-heavy brand of pop rock. But despite their love of vintage rock ‘n’ roll, the members aren’t the kind of guys who cling to the past.
+  date: <%= yesterday %>
+  venue: Cafe Du Nord
+  address: 2170 Market Street  San Francisco, CA 94114
+  lat: 37.7665261
+  lon: -122.430487
