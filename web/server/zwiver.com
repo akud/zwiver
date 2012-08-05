@@ -2,7 +2,7 @@ server {
   listen 80;
   server_name localhost www.zwiver.com zwiver.com;
 
-  root /home/web/app;
+  root /home/zwiver/web/app;
   index index.html index.htm;
 
   charset utf-8;
