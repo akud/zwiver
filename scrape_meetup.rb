@@ -47,7 +47,7 @@ module Meetup
     def initialize hash
       @url = hash['event_url']
       @title = hash['name']
-      #@description = hash['']
+      @description = hash['description']
       @price = hash['fee']['amount'] if hash.include? 'fee'
       @open = hash['group']['join_mode'] == 'open'
       @date = (Time.at(hash['time'] / 1000).getutc) - (hash['utc_offset'] / 1000)
