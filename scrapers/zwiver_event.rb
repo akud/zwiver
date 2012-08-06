@@ -8,12 +8,14 @@ module Zwiver
   
 #Mixin for other classes that can be saved as Zwiver Events
   module Saveable
+
+    attr_reader :title, :date, :url, :venue, :venue_name, :address, :lat, :lon
     def save
       Zwiver::Event.new(:title => @title,
         :date => @date,
         :url => @url,
         :description => @description,
-        :venue => @venue_name,
+        :venue => @venue_name || @venue,
         :address => @address,
         :lat => @lat,
         :lon => @lon
@@ -39,8 +41,8 @@ module Zwiver
       raise ArgumentError, "title is required" unless @body[:title].is_a? String
       raise ArgumentError, "address is required" unless @body[:address].is_a? String
       raise ArgumentError, "date is required and must be a time object" unless @body[:date].is_a? Time
-      @body[:title] = @body[:title].gsub /<.*?>/m, ''
-      @body[:description] = @body[:description].gsub /<.*?>/m, '' if @body[:description]
+      @body[:title] = clean_input @body[:title]
+      @body[:description] = clean_input @body[:description] if @body[:description]
     end
 
     def to_json
@@ -64,6 +66,12 @@ module Zwiver
         puts "Failed to save event #{@body[:title]}: #{response.code} #{response.message}; #{response.body}"
       end
       response
+    end
+
+    private 
+    def clean_input input
+      input.gsub(/<.*?>/m, '').gsub(/\s+/, ' ')\
+        .gsub(/^[:punct:]*\s*(.*)\s*[:punct:]*/, '\1')
     end
   end
 end
