@@ -23,6 +23,16 @@ two:
   lat: 37.7954673
   lon: -122.4003408
 
+three:
+  url: http://stubhub.com/one-direction-oakland-oracle-arena-31-7-2013-4072500
+  title: One Direction Oakland Tickets
+  date: <%= tomorrow + (60*60*3) %>
+  venue: Oracle (formerly Oakland Arena) - Oakland
+  address: 7000 Coliseum Way, Oakland, CA 94621
+  lat: 37.7515541
+  lon: -122.2015715
+
+
 past:
   url: http://www.songkick.com/concerts/12518768-mountain-goats-at-cafe-du-nord-swedishamerican-hall 
   title: YUKON BLONDE

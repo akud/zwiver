@@ -2,12 +2,15 @@ require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
   test "get index" do
-    get :index
+    get :index, {:limit => 1, :start => 2}
     assert_response :success
     assert_not_nil assigns(:events), 'should have created events list'
+    assert assigns(:events).length > 0, 'should have returned events'
     assigns(:events).each do |e|
       assert e.date > Time.now, 'returned an event that wasn\'t in the future'
     end
+    assert_equal 'http://localhost/api/events?limit=1&start=3', JSON.parse(@response.body)['nextUrl']
+    assert_equal 'http://localhost/api/events?limit=1&start=1', JSON.parse(@response.body)['prevUrl']
   end
 
   test "get single event" do
