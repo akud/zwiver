@@ -125,8 +125,8 @@ EV.eventsController = Ember.ArrayController.create({
         return EV.Event.create(item);
         })
       );
-      EV.eventsController.set('nextUrl', data.nextUrl);
-      EV.eventsController.set('previousUrl', data.prevUrl)
+      EV.eventsController.set('nextUrl', EV.toApiUrl(data.nextUrl));
+      EV.eventsController.set('previousUrl', EV.toApiUrl(data.prevUrl));
     });
   }
 });
