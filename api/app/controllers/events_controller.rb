@@ -14,15 +14,13 @@ class EventsController < ApplicationController
         json[:nextUrl] = url_for :action => 'index', 
           :controller => 'events',
           :start => params[:start].to_i + 20,
-          :limit => params[:limit],
-          :only_path => true
+          :limit => params[:limit]
       end
       if params[:start].to_i > 0
         json[:prevUrl] = url_for :action => 'index',
           :controller => 'events',
           :start => params[:start].to_i - params[:limit].to_i, 
-          :limit => params[:limit],
-          :only_path => true
+          :limit => params[:limit]
       end
 
       render :json => json, :status => :ok
