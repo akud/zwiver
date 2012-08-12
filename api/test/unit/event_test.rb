@@ -11,9 +11,9 @@ class EventTest < ActiveSupport::TestCase
     assert event.save, 'failed to save event'
     assert_not_nil event.id, 'event had no id'
     assert_not_nil event.lat, 'event had no latitude'
-    assert_equal event.lat, 37.7825785, 'event had incorrect latitude'
+    assert_equal 37.783, event.lat.to_f.round(3), 'event had incorrect latitude'
     assert_not_nil event.lon, 'event had no longitude'
-    assert_equal event.lon, -122.4098898, 'event had incorrect longitude'
+    assert_equal -122.41, event.lon.to_f.round(3), 'event had incorrect longitude'
   end
 
   test 'save with lat and lon' do 
@@ -28,8 +28,8 @@ class EventTest < ActiveSupport::TestCase
       :lon => lon,
       :address => '982 Market St  San Francisco, CA 94102'
     assert event.save, 'failed to save event'
-    assert_equal Event.find(event.id).lat, lat, 'overwrote latitude'
-    assert_equal Event.find(event.id).lon, lon, 'overwrote latitude'
+    assert_equal lat, Event.find(event.id).lat, 'overwrote latitude'
+    assert_equal lon, Event.find(event.id).lon, 'overwrote latitude'
   end
 
   test "doesn't allow save without date" do
