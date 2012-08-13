@@ -2,7 +2,7 @@
 
 require 'mechanize'
 require 'time'
-require 'zwiver_event'
+require 'zwiver'
 
 module CalAcademy
   
@@ -39,6 +39,6 @@ module CalAcademy
 end
 
 
-if $0 == __FILE__
+Zwiver.register 'California Academy of Sciences' do
   CalAcademy.scrape
 end

@@ -1,5 +1,5 @@
 #!/usr/local/bin/ruby -I.
-require 'zwiver_event'
+require 'zwiver'
 require 'mechanize'
 require 'json'
 require 'time'
@@ -35,6 +35,6 @@ module CalPerformances
   end
 end
 
-if $0 == __FILE__
+Zwiver.register 'Cal Performances Calendar' do
   CalPerformances.scrape
 end

@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'mechanize'
 require 'time'
-require 'zwiver_event'
+require 'zwiver'
 
 module BayAreaScienceCalendar 
 
@@ -52,6 +52,6 @@ module BayAreaScienceCalendar
     end
   end
 end
-if $0 == __FILE__
+Zwiver.register 'Bay Area Science Calendar' do
   BayAreaScienceCalendar.parse_pages
 end

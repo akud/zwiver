@@ -1,4 +1,10 @@
 source "http://rubygems.org"
 
+#gem 'pathname'
+#gem 'json'
+#gem 'time'
+#gem 'net/http'
 gem 'mechanize', '~> 2.5.1'
 gem 'rest-client', '~> 1.6.7'
+gem 'gcal4ruby', '~> 0.5.5'
+gem 'chronic', '~> 0.6.7'
