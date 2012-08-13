@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'mechanize'
 require 'time'
-require 'zwiver_event'
+require 'zwiver'
 
 class WarfieldScraper 
 
@@ -44,6 +44,6 @@ class WarfieldScraper
   end
 end
 
-if $0 == __FILE__
+Zwiver.register 'Warfield' do
   WarfieldScraper.new.scrape_all
 end

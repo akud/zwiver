@@ -71,7 +71,7 @@ module Google
   end
 end
 
-if $0 == __FILE__
+Zwiver.register do
   if ARGV.empty?
     puts "Usage #{$0} term [number of results]"
     exit(1)

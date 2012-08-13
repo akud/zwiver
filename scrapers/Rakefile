@@ -1,0 +1,25 @@
+################ Setup ###############################
+require 'rubygems'
+require 'bundler/setup'
+
+dir = File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH.unshift(dir) unless $LOAD_PATH.include?(dir)
+
+require 'zwiver'
+
+Pathname.glob('scrape_*.rb').each do |path|
+  require path.basename.to_s.gsub(/\.rb$/, '')
+end
+############## End Setup ############################
+
+desc 'List all the registered scrapers' 
+task :list do 
+  Zwiver.list.each do |scraper|
+    puts scraper
+  end
+end
+
+desc 'Run all scrapers registered on the zwiver module'
+task :run_all do
+  Zwiver.run_all
+end

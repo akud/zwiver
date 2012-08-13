@@ -2,7 +2,7 @@
 
 require 'restclient'
 require 'json'
-require 'zwiver_event'
+require 'zwiver'
 require 'csv'
 require 'time'
 
@@ -100,7 +100,7 @@ module Stubhub
   end
 end
 
-if $0 == __FILE__
+Zwiver.register 'Stubhub API' do
   Stubhub::Venue.find_by_region.each do |venue|
     puts "scraping events for #{venue.name}"
     venue.events.each do |event|

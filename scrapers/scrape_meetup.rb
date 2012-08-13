@@ -2,7 +2,7 @@
 require 'json'
 require 'time'
 require 'restclient'
-require 'zwiver_event'
+require 'zwiver'
 module Meetup
   API_KEY = "4718405634e5b49496d651e18462e6f"
   
@@ -66,7 +66,7 @@ module Meetup
   end
 end
 
-if $0 == __FILE__
+Zwiver.register 'Meetup API' do
   list = Meetup::EventList.new 94117
   begin 
     list.events.each do |e|

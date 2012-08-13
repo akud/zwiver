@@ -1,5 +1,5 @@
 #!/usr/local/bin/ruby -I.
-require 'zwiver_event'
+require 'zwiver'
 require 'mechanize'
 require 'json'
 require 'time'
@@ -90,7 +90,7 @@ module Amnesia
   end
 end
 
-if $0 == __FILE__
+Zwiver.register 'Amnesia' do
   Amnesia::Calendar.new.cells.each do |cell|
     cell.events.each do |event|
       event.save

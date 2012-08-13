@@ -1,7 +1,7 @@
 #!/usr/local/bin/ruby -I.
 require 'facebook'
 require 'pointlike'
-require 'zwiver_event'
+require 'zwiver'
 require 'time'
 require 'chronic'
 
@@ -38,7 +38,7 @@ class Event < FBItem
   end
 end
 
-if $0 == __FILE__
+Zwiver.register 'Facebook Events' do
   ('a'..'z').each do |letter|
     events = EventList.new letter
     begin
