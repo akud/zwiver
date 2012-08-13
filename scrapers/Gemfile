@@ -1,0 +1,4 @@
+source "http://rubygems.org"
+
+gem 'mechanize', '~> 2.5.1'
+gem 'rest-client', '~> 1.6.7'
