@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -I.
 require 'json'
 require 'time'
 require 'restclient'
@@ -66,7 +65,7 @@ module Meetup
   end
 end
 
-Zwiver.register 'Meetup API' do
+Zwiver.register __FILE__, '0 8 * * 1' do
   list = Meetup::EventList.new 94117
   begin 
     list.events.each do |e|

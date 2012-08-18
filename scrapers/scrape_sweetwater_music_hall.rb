@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -I.
 require 'zwiver'
 require 'mechanize'
 require 'json'
@@ -54,7 +53,7 @@ module SweetwaterMusicHall
   end
 end
 
-Zwiver.register 'Sweetwater Music Hall' do
+Zwiver.register __FILE__, '0 0 1 * *' do
   SweetwaterMusicHall::Calendar.new.days.each do |day|
     puts 'saving events for ' + day.date
     day.events.each do |e|

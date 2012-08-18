@@ -1,5 +1,3 @@
-#!/usr/local/bin/ruby -I.
-
 require 'rubygems'
 require 'mechanize'
 require 'time'
@@ -44,6 +42,6 @@ class WarfieldScraper
   end
 end
 
-Zwiver.register 'Warfield' do
+Zwiver.register __FILE__, '0 0 1 * *' do
   WarfieldScraper.new.scrape_all
 end

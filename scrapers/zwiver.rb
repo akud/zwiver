@@ -5,32 +5,43 @@ require 'net/http'
 module Zwiver
   
   #holds all the blocks registered as scrapers
-  @@blocks = {}
+  @@scrapers = {}
   
   #Register a block as a scraper
   #
   #Params:
-  #name - the name of the scraper
+  #file - the file of the scraper
+  #cron_string - a cron string for when to run the scraper. Defaults to sunday at midnight
   #&block - a block to be run as a scraper
-  def self.register name, &block
-    @@blocks[name] = block  
+  def self.register file, cron_string='0 0 * * 0', &block
+    @@scrapers[file.split('/').last.gsub(/\.rb$/,'')] = [cron_string, block]
   end
 
-  #list all the scrapers defined
+  #return a list of all the registered scrapers
   def self.list
-    @@blocks.keys
+    @@scrapers.keys
+  end
+  
+  #get the cron string for the specified scraper
+  def self.get_cron scraper
+    @@scrapers[scraper][0]
   end
 
-
+  #Run the specified scraper, identified by it's name
+  def self.run scraper
+    puts "Running #{scraper} scraper"
+    @@scrapers[scraper][1].call
+  end
+ 
   #Run all the blocks that are registered
   #with self.register
   def self.run_all
-    @@blocks.each do |name, block|
+    @@scrapers.each do |name, block|
       puts "Running #{name} scraper"
-      block.call
+      block[1].call
     end
   end
-  
+ 
   #Mixin for other classes that can be saved as Zwiver Events
   module Saveable
 

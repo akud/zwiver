@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -I.
 require 'zwiver'
 require 'mechanize'
 require 'json'
@@ -35,6 +34,6 @@ module CalPerformances
   end
 end
 
-Zwiver.register 'Cal Performances Calendar' do
+Zwiver.register __FILE__, '0 8 1 */3 *' do
   CalPerformances.scrape
 end

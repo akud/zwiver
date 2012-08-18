@@ -1,9 +1,8 @@
-#!/usr/local/bin/ruby -I.
 require 'rubygems'
 require 'gcal4ruby'
 require 'zwiver'
 
-Zwiver.register 'Zwiver Google Calendar' do 
+Zwiver.register __FILE__, '0 0 * * *' do
   calendar_id = 'zwiver.com_gniohjo4b9130ajkrrpc34jbd0@group.calendar.google.com'
   gcal = GCal4Ruby::Service.new
   gcal.authenticate 'alexk@zwiver.com', 'fl1NNtpH'

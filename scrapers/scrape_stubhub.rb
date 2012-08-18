@@ -1,5 +1,3 @@
-#!/usr/local/bin/ruby -I.
-
 require 'restclient'
 require 'json'
 require 'zwiver'
@@ -100,7 +98,7 @@ module Stubhub
   end
 end
 
-Zwiver.register 'Stubhub API' do
+Zwiver.register __FILE__, '0 8 * * 1' do
   Stubhub::Venue.find_by_region.each do |venue|
     puts "scraping events for #{venue.name}"
     venue.events.each do |event|

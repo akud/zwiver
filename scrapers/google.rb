@@ -70,15 +70,3 @@ module Google
     return nil
   end
 end
-
-Zwiver.register do
-  if ARGV.empty?
-    puts "Usage #{$0} term [number of results]"
-    exit(1)
-  end
-  if ARGV.length == 2
-    Google.find_venues ARGV[0], ARGV[1].to_i
-  else 
-    Google.find_venues ARGV[0] 
-  end
-end

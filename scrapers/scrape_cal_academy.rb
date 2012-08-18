@@ -1,5 +1,3 @@
-#!/usr/local/bin/ruby -I.
-
 require 'mechanize'
 require 'time'
 require 'zwiver'
@@ -39,6 +37,6 @@ module CalAcademy
 end
 
 
-Zwiver.register 'California Academy of Sciences' do
+Zwiver.register __FILE__, '0 8 1 * *' do
   CalAcademy.scrape
 end

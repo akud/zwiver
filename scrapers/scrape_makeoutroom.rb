@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -I.
 require 'zwiver'
 require 'mechanize'
 require 'json'
@@ -63,7 +62,7 @@ module MakeoutRoom
   end
 end
 
-Zwiver.register 'Makeout Room' do
+Zwiver.register __FILE__, '0 8 1 * *' do
   MakeoutRoom::Calendar.new.days.each do |day|
     puts 'saving events for ' + day.day
     day.events.each do |event|

@@ -31,7 +31,7 @@ class Venue < FBItem
 end
 
 
-Zwiver.register do
+if $0 == __FILE__
   if ARGV.length < 1
     puts "Usage: #{$0} search_term" 
     exit

@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -I.
 require 'zwiver'
 require 'mechanize'
 require 'json'
@@ -90,7 +89,7 @@ module Amnesia
   end
 end
 
-Zwiver.register 'Amnesia' do
+Zwiver.register __FILE__, '0 8 1 * *' do
   Amnesia::Calendar.new.cells.each do |cell|
     cell.events.each do |event|
       event.save

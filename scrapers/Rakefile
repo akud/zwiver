@@ -1,4 +1,3 @@
-################ Setup ###############################
 require 'rubygems'
 require 'bundler/setup'
 
@@ -7,19 +6,61 @@ $LOAD_PATH.unshift(dir) unless $LOAD_PATH.include?(dir)
 
 require 'zwiver'
 
-Pathname.glob('scrape_*.rb').each do |path|
-  require path.basename.to_s.gsub(/\.rb$/, '')
-end
-############## End Setup ############################
-
-desc 'List all the registered scrapers' 
-task :list do 
-  Zwiver.list.each do |scraper|
-    puts scraper
+desc 'load all scrapers'
+task :load do 
+  Pathname.glob('*.rb').each do |path|
+    require path.basename.to_s.gsub(/\.rb$/, '')
   end
 end
 
-desc 'Run all scrapers registered on the zwiver module'
-task :run_all do
-  Zwiver.run_all
+namespace :scrape do
+  desc 'List all the registered scrapers' 
+  task :list => :load do 
+    Zwiver.list.each do |scraper|
+      puts scraper
+    end
+  end
+
+  desc 'Run all scrapers registered on the zwiver module'
+  task :run_all => :load do
+    Zwiver.run_all
+  end
+
+  desc 'Run the specified scraper, as given by `rake list`'
+  task :run, :scraper do |t, args|
+    require args[:scraper]
+    Zwiver.run args[:scraper] 
+  end
 end
+
+namespace :cron do 
+  desc 'Print out cron strings and commands to run each scraper'
+  task :list => :load do 
+    Zwiver.list.each do |scraper|
+      cmd = "cd #{dir} && rake run[\"#{scraper}\"]"
+      printf "%-12s %s\n", Zwiver.get_cron(scraper), cmd 
+    end
+  end
+  
+  desc 'Update cron entries for all the scrapers. This will replace the user\'s cron jobs'
+  task :write => :load do 
+    puts "WARNING: about to overwrite cron jobs for user #{ENV['USER']}"
+    print "proceed? (y/n):"
+    return unless STDIN.gets.include? 'y'
+
+    cron_file = File.new 'tmp_cron.txt', 'w'
+    begin
+      $stdout = cron_file
+      Rake::Task["cron:list"].execute
+    ensure
+      $stdout = STDOUT
+      cron_file.close
+    end
+    `crontab -u $USER tmp_cron.txt`
+    puts "Wrote cron entries: " 
+    puts `crontab -u $USER -l` 
+    File.delete(cron_file)
+  end
+end
+
+

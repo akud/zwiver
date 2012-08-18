@@ -1,4 +1,3 @@
-#!/usr/local/bin/ruby -I.
 require 'restclient'
 require 'zwiver'
 require 'json'
@@ -76,7 +75,7 @@ class EventbriteEvent
     end
 end
 
-Zwiver.register 'Eventbrite API' do
+Zwiver.register __FILE__, '0 8 * * 1' do
   list = EventbriteList.new
   begin 
     list.events.each do |e|

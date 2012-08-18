@@ -1,5 +1,3 @@
-#!/usr/local/bin/ruby -I.
-
 require 'rubygems'
 require 'mechanize'
 require 'time'
@@ -52,6 +50,6 @@ module BayAreaScienceCalendar
     end
   end
 end
-Zwiver.register 'Bay Area Science Calendar' do
+Zwiver.register __FILE__, '0 18 * * 5' do
   BayAreaScienceCalendar.parse_pages
 end
