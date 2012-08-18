@@ -8,15 +8,7 @@
     <meta name="author" content="Alex Kudlick">
 
     <!-- styles -->
-    <link href="css/bootstrap.css" rel="stylesheet"> 
-    <link href="css/events.css" rel="stylesheet"> 
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/reset.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -44,47 +36,10 @@
     </script>
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a class="brand" href="#"><img src="/images/logo_transparent_white.gif" alt="Zwiver"/></a></li>
-              <li><a href="/about.html">About</a></li>
-              <!--<li><a href="#">Blog</a></li>-->
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
 
-    <div class="container">
-      
-      <div class="row"> </div>
-
-      <div class="row">
-        <div class="scrolls-with left">
-          <div class="span7" id="map-container"></div>
-        </div>
-        <div class="right">
-          <div id="previous-button" class="load-button left scrolls-with"></div>
-          <div class="span4" id="list-container"></div>
-          <div id="next-button" class="load-button right scrolls-with"></div>
-        </div>
-      </div>
-
-      <hr>
-
-      <footer>
-        <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
-      </footer>
-
-    </div> <!-- /container -->
+    <footer>
+      <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
+    </footer>
 
     <!-- Handlebars templates -->
     <script type="text/x-handlebars" data-template-name="list-item">
@@ -138,10 +93,12 @@
     <!-- initialize -->
     <script type="text/javascript">
       $(document).ready(function(){
+          /*
         EV.listView.appendTo('#list-container');
         EV.mapView.appendTo('#map-container');
         EV.nextButton.appendTo('#next-button');
         EV.prevButton.appendTo('#previous-button');
+        */
       });
     </script>  
   </body>
