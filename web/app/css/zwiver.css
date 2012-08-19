@@ -56,20 +56,20 @@ nav[role="navigation"] li {
 }
 nav[role="navigation"] li:first-child {
   float: left;
-  padding-left: 20px;
+  padding-left: 40px;
 }
 nav[role="navigation"] li.last {
-  padding-right: 20px;
+  padding-right: 40px;
 }
 nav[role="navigation"] img.logo, 
 nav[role="navigation"] img.tagline {
-  width: 175px; 
+  width: 12em; 
 }
 
 /* Styles for the tool bar  */
 
 ul#tools {
-  padding: 2em 2em 1em 2em;
+  padding: 10px 40px;
   overflow: hidden;
   height: 3em;
 }
@@ -106,6 +106,7 @@ dl#sort dt {
   font-size: 85%;
   color: #a0a0a0;
   margin-bottom: 0.85em;
+  margin-top: 0.2em;
 }
 
 dl#sort dd {
@@ -135,7 +136,7 @@ div.separator {
   overflow: hidden;
   -webkit-border-radius: 3px;
   border-radius: 3px; 
-  opacity: 0.4;
+  opacity: 0.25;
   height: 24px;
   background: #f4f4f4;
   background: -moz-linear-gradient(top,  #f4f4f4 0%, #f4f4f4 13%, #d6d6d6 63%, #adadad 91%, #adadad 98%, #f4f4f4 100%);
@@ -150,7 +151,7 @@ div.separator {
 /* List and map */
 div#content { 
   overflow: hidden;
-  padding: 20px;
+  padding: 20px 40px;
 }
 div#list-container {
   width: 35%;
@@ -161,13 +162,12 @@ div#list-container {
 div#map-container {
   float: right;
   width: 60%;
-  height: 500px;
+  height: 575px;
   -moz-border-radius: 6px; 
   -webkit-border-radius: 6px;
   border-radius: 6px;
   border: 5px solid black;
 }
 div#map {
-  border 1px solid red;
-  width: 100%;
+  height: 575px;
 }
