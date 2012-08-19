@@ -38,7 +38,7 @@
   </head>
   <body>
     <div id="body">
-      <nav role="navigation" class="container">
+      <nav role="navigation">
         <ul>
           <li><a href="/"><img class="logo" alt="Zwiver" src="/images/logo_no_tagline.png"/><img class="tagline" alt="Find something fun" src="/images/tagline.png"/></a></li>
           <!--Note: due to floating, the About shows before the Contact -->
@@ -47,25 +47,29 @@
         <ul>
       </nav>
 
-      <div id="tools" class="container">
-        <form id="search">
-          <input type="text" name="search-keywords"></input>
-          <input type="button" value="Search"></input>
-        </form>
-        <dl id="sort">
-          <dt>Sort:</dt>
-          <dd class="button">Date</dd>
-          <dd class="button">Distance</dd>
-        </dl>
-      </div>
+      <ul id="tools">
+        <li>
+          <form id="search">
+            <input type="text" name="search-keywords"></input>
+            <input type="button" value="Search"></input>
+          </form>
+        </li>
+        <li>
+          <dl id="sort">
+            <dt>Sort</dt>
+            <dd class="button">Date</dd>
+            <dd class="button">Distance</dd>
+          </dl>
+        </li>
+      </ul>
 
       <div class="separator container">
       </div>
 
       <div id="content">
-        <div id="list-container" class="scrolls container">
+        <div id="list-container">
         </div>
-        <div id="map-container" class="container">
+        <div id="map-container">
           <div id="map"></div>
         </div>
       </div>

@@ -28,22 +28,20 @@ input[type="button"], input[type="submit"], .button {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2e2e2',GradientType=0 );
 }
 input[type="button"]:hover, input[type="submit"]:hover, .button:hover {
-    background: #e2e2e2;
-    background: -moz-linear-gradient(top,  #e2e2e2 0%, #f7f7f7 33%, #ffffff 64%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(33%,#f7f7f7), color-stop(64%,#ffffff));
-    background: -webkit-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
-    background: -o-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
-    background: -ms-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
-    background: linear-gradient(to bottom,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#ffffff',GradientType=0 );
-
+  background: #e2e2e2;
+  background: -moz-linear-gradient(top,  #e2e2e2 0%, #f7f7f7 33%, #ffffff 64%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(33%,#f7f7f7), color-stop(64%,#ffffff));
+  background: -webkit-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
+  background: -o-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
+  background: -ms-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
+  background: linear-gradient(to bottom,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#ffffff',GradientType=0 );
 }
 /* Styles for the top nav, including logo */
 
 nav[role="navigation"] {
   width: 100%;
   border-bottom: 3px solid #a0a0a0; 
-  margin-bottom: 14px; 
   overflow: hidden;
   background-image: -ms-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
   background-image: -moz-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
@@ -70,21 +68,34 @@ nav[role="navigation"] img.tagline {
 
 /* Styles for the tool bar  */
 
-div#tools {
-  padding: 8px;
-  margin-bottom: 12px;
+ul#tools {
+  padding: 2em;
+  overflow: hidden;
+  height: 3em;
 }
 
-div#tools * {
-  display: inline;
-}
-
-div#tools form#search {
-  padding: 10px 20px;
-  margin-right: 80px;
+ul#tools form#search {
+  float: left;
+  padding-top: 1.05em;
   width: 30%;
 }
 
+ul#tools form#search input[type="text"] {
+  height: 1.55em;
+  -moz-border-radius: 1px; 
+  -webkit-border-radius: 1px; 
+  border-radius: 1px; 
+  border: 1px outset rgba(0,0,0,0.5);
+  margin-right: 0;
+}
+
+ul#tools form#search input[type="button"] {
+  margin-left: -2px;
+}
+
+ul#tools dl#sort {
+  float: left;
+}
 
 dl#sort dd.button {
   width: 5em;
@@ -93,10 +104,11 @@ dl#sort dd.button {
 dl#sort dt {
   font-size: 85%;
   color: #a0a0a0;
-  margin-bottom: 1.1em;
+  margin-bottom: 0.85em;
 }
 
 dl#sort dd {
+  display: inline;
 }
 
 /*button on the left*/
