@@ -69,7 +69,7 @@ nav[role="navigation"] img.tagline {
 /* Styles for the tool bar  */
 
 ul#tools {
-  padding: 2em;
+  padding: 2em 2em 1em 2em;
   overflow: hidden;
   height: 3em;
 }
@@ -131,22 +131,20 @@ dl#sort dd.button:nth-child(odd) {
 /*separator*/
 /*TODO: Still needs some work...*/
 div.separator {
-  margin: 18px 80px 50px 80px;
-  height: 16px;
-  opacity: 0.75;
-  -moz-box-shadow: 0px 10px 12px rgba(210,210,210,0.85);
-  -webkit-box-shadow: 0px 10px 12px rgba(210,210,210,0.85);
-  box-shadow: 0px 10px 12px rgba(210,210,210,0.85);
-  -moz-border-radius: 0px 0px 5px 5px; 
-  -webkit-border-radius: 0px 0px 5px 5px; 
-  border-radius: 0px 0px 5px 5px; 
-  background: -moz-linear-gradient(top,  #f4f4f4 29%, #dedede 95%, #c1c1c1 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(29%,#f4f4f4), color-stop(95%,#dedede), color-stop(100%,#c1c1c1));
-  background: -webkit-linear-gradient(top,  #f4f4f4 29%,#dedede 95%,#c1c1c1 100%);
-  background: -o-linear-gradient(top,  #f4f4f4 29%,#dedede 95%,#c1c1c1 100%);
-  background: -ms-linear-gradient(top,  #f4f4f4 29%,#dedede 95%,#c1c1c1 100%);
-  background: linear-gradient(to bottom,  #f4f4f4 29%,#dedede 95%,#c1c1c1 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#c1c1c1',GradientType=0 );
+  margin: 0px 80px;
+  overflow: hidden;
+  -webkit-border-radius: 3px;
+  border-radius: 3px; 
+  opacity: 0.4;
+  height: 24px;
+  background: #f4f4f4;
+  background: -moz-linear-gradient(top,  #f4f4f4 0%, #f4f4f4 13%, #d6d6d6 63%, #adadad 91%, #adadad 98%, #f4f4f4 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(13%,#f4f4f4), color-stop(63%,#d6d6d6), color-stop(91%,#adadad), color-stop(98%,#adadad), color-stop(100%,#f4f4f4));
+  background: -webkit-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  background: -o-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  background: -ms-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  background: linear-gradient(to bottom,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#f4f4f4',GradientType=0 );
 }
 
 /* List and map */
