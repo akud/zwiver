@@ -145,7 +145,7 @@ EV.eventsController = Ember.ArrayController.create({
 EV.listView = Ember.CollectionView.create({
   contentBinding: Ember.Binding.oneWay('EV.eventsController.content'),
   tagName: 'ul',
-  classNames: ['event-list','unstyled'],
+  classNames: ['event-list'],
   selectedEventObserver: function() {
     this.get('childViews').invoke('set','selected', false);
     this.get('childViews').filter(function(childView) {
@@ -154,10 +154,10 @@ EV.listView = Ember.CollectionView.create({
   }.observes('EV.eventsController.selectedEvent'),
   itemViewClass: Ember.View.extend({
     templateName: 'list-item',
-    classNameBindings: ['itemClass','selected'],
+    classNameBindings: ['itemClass','selected', 'expanded'],
     itemClass: 'list-item',
     selected: false,
-    showFullText: false,
+    expanded: false, 
     click: function(evt) {
       EV.eventsController.select(this.get('content'));
     },
@@ -174,8 +174,17 @@ EV.listView = Ember.CollectionView.create({
       }
     }.observes('selected'),
     showMoreView: Ember.View.extend({
+      itemClass: 'event-show-more',
+      imgUrl: function() {
+        if(this.getPath('parentView.expanded')) {
+          return '/images/up_arrow.png';
+        } else {
+          return '/images/down_arrow.png';
+        } 
+      }.property('parentView.selected'),
       click: function() {
-        this.get('parentView').set('showFullText', true);
+        this.get('parentView').set('selected', true);
+        this.get('parentView').set('expanded', !this.getPath('parentView.expanded'));
       }
     })
   })

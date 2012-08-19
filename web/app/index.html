@@ -9,6 +9,7 @@
 
     <!-- styles -->
     <link href="/css/reset.css" rel="stylesheet">
+    <link href="/css/zwiver.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -36,44 +37,58 @@
     </script>
   </head>
   <body>
+    <div id="body">
+      <nav role="navigation" class="container">
+        <ul>
+          <li><a href="/"><img class="logo" alt="Zwiver" src="/images/logo_no_tagline.png"/><img class="tagline" alt="Find something fun" src="/images/tagline.png"/></a></li>
+          <!--Note: due to floating, the About shows before the Contact -->
+          <li class="last"><a href="/contact.html">Contact</a></li>
+          <li><a href="/about.html">About</a></li>
+        <ul>
+      </nav>
 
-    <footer>
-      <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
-    </footer>
+      <div id="tools" class="container">
+        <form id="search">
+          <input type="text" name="search-keywords"></input>
+          <input type="button" value="Search"></input>
+        </form>
+        <dl id="sort">
+          <dt>Sort:</dt>
+          <dd class="button">Date</dd>
+          <dd class="button">Distance</dd>
+        </dl>
+      </div>
+
+      <div class="separator container">
+      </div>
+
+      <div id="content">
+        <div id="list-container" class="scrolls container">
+        </div>
+        <div id="map-container" class="container">
+          <div id="map"></div>
+        </div>
+      </div>
+      <footer>
+        <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
+      </footer>
+    </div>
 
     <!-- Handlebars templates -->
     <script type="text/x-handlebars" data-template-name="list-item">
-      <div class="event-title">
-      {{#if view.content.url}} 
-        <a {{bindAttr href="view.content.url"}} target="_blank">{{view.content.title}}</a>
-      {{else}}
-        {{view.content.title}}
-      {{/if}} 
-      </div>
-      <div class="event-venue">{{view.content.venue}}</div>
-      <div class="event-date">{{view.content.formattedDate}}</div>
-      <div class="event-description">
-      {{#if view.showFullText}} 
-        {{view.content.description}}
-      {{else}}
-        {{view.content.shortDescription}}
-        {{#if view.content.hasMore}} 
-          {{#view view.showMoreView}}
-            <span class="show-more">
-              <a href="javascript:void(0)">...(more)</a>
-            </span>
-          {{/view}}
-        {{/if}}
-     {{/if}}
-      </div>
-      
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="next-button">
-      <a {{bindAttr class="clickable"}} href="#"><img src="/images/right_arrow.png"></img></a>
-    </script>
-    <script type="text/x-handlebars" data-template-name="prev-button">
-      <a {{bindAttr class="clickable"}} href="#"><img src="/images/left_arrow.png"></img></a>
+      <span class="event-date">{{view.content.formattedDate}}</span>
+      <span class="event-title">{{view.content.title}}</span>
+      <span class="event-venue">{{view.content.venue}}</span>
+      {{#if view.expanded}}
+        <ul>
+          <li><a {{bindAttr href="view.content.url"}}>View original posting</a></li>
+          <li><a href="javascript:void(0)">Get Directions</a></li>
+        </ul>
+      {{/if}}
+      {{#view view.showMoreView}}
+        Event Info. 
+        <img class="event-expand-button" {{bindAttr src="view.imgUrl"}}></img>
+      {{/view}}
     </script>
 
     <!-- Libraries -->
@@ -93,9 +108,9 @@
     <!-- initialize -->
     <script type="text/javascript">
       $(document).ready(function(){
-          /*
         EV.listView.appendTo('#list-container');
-        EV.mapView.appendTo('#map-container');
+        EV.mapView.appendTo('#map');
+          /*
         EV.nextButton.appendTo('#next-button');
         EV.prevButton.appendTo('#previous-button');
         */
