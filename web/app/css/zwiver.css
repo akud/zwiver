@@ -37,12 +37,39 @@ input[type="button"]:hover, input[type="submit"]:hover, .button:hover {
   background: linear-gradient(to bottom,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#ffffff',GradientType=0 );
 }
+/*separators*/
+/*TODO: Still needs some work...*/
+div.separator {
+  overflow: hidden;
+  -webkit-border-radius: 3px;
+  border-radius: 3px; 
+  opacity: 0.25;
+  height: 24px;
+  margin: 0px 80px;
+  background: #f4f4f4;
+  background: -moz-linear-gradient(top,  #f4f4f4 0%, #f4f4f4 13%, #d6d6d6 63%, #adadad 91%, #adadad 98%, #f4f4f4 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(13%,#f4f4f4), color-stop(63%,#d6d6d6), color-stop(91%,#adadad), color-stop(98%,#adadad), color-stop(100%,#f4f4f4));
+  background: -webkit-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  background: -o-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  background: -ms-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  background: linear-gradient(to bottom,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#f4f4f4',GradientType=0 );
+}
+
+div#body {
+  position: absolute;
+}
+
 /* Styles for the top nav, including logo */
 
 nav[role="navigation"] {
   width: 100%;
   border-bottom: 3px solid #a0a0a0; 
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5.5em;
   background-image: -ms-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
   background-image: -moz-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
   background-image: -o-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
@@ -66,19 +93,46 @@ nav[role="navigation"] img.tagline {
   width: 12em; 
 }
 
+div#main-container { 
+  overflow: hidden;
+  padding: 20px 40px;
+  position: relative;
+  margin-top: 5.5em;
+}
+
+div#tools-separator {
+  margin-top: 5em;
+  padding: 0;
+}
+
+div#tools-separator hr {
+  opacity: 0.4;
+}
+
+
+div#content {
+  position: relative;
+  margin-top: 2em;
+}
+
+
 /* Styles for the tool bar  */
 
 ul#tools {
   padding: 10px 40px;
-  overflow: hidden;
   height: 3em;
+  position: fixed;
 }
 
-ul#tools form#search {
+ul#tools li:first-child {
   float: left;
   padding-top: 1.05em;
-  padding-right: 10%;
-  /*width: 30%;*/
+  padding-right: 5em;
+  width: 23.5em;
+}
+
+ul#tools li:nth-child(2) {
+  float: left;
 }
 
 ul#tools form#search input[type="text"] {
@@ -92,10 +146,6 @@ ul#tools form#search input[type="text"] {
 
 ul#tools form#search input[type="button"] {
   margin-left: -2px;
-}
-
-ul#tools dl#sort {
-  float: left;
 }
 
 dl#sort dd.button {
@@ -129,34 +179,14 @@ dl#sort dd.button:nth-child(odd) {
 }
 
 
-/*separator*/
-/*TODO: Still needs some work...*/
-div.separator {
-  margin: 0px 80px;
-  overflow: hidden;
-  -webkit-border-radius: 3px;
-  border-radius: 3px; 
-  opacity: 0.25;
-  height: 24px;
-  background: #f4f4f4;
-  background: -moz-linear-gradient(top,  #f4f4f4 0%, #f4f4f4 13%, #d6d6d6 63%, #adadad 91%, #adadad 98%, #f4f4f4 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(13%,#f4f4f4), color-stop(63%,#d6d6d6), color-stop(91%,#adadad), color-stop(98%,#adadad), color-stop(100%,#f4f4f4));
-  background: -webkit-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
-  background: -o-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
-  background: -ms-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
-  background: linear-gradient(to bottom,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#f4f4f4',GradientType=0 );
-}
-
 /* List and map */
-div#content { 
-  overflow: hidden;
-  padding: 20px 40px;
-}
 div#list-container {
   width: 35%;
   float: left;
-  border 1px solid red;
+}
+
+li.list-item {
+  z-index: -1;
 }
 
 div#map-container {
@@ -167,6 +197,8 @@ div#map-container {
   -webkit-border-radius: 6px;
   border-radius: 6px;
   border: 5px solid black;
+  position: fixed;
+  margin-left: 35%;
 }
 div#map {
   height: 575px;

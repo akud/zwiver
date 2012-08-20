@@ -44,38 +44,39 @@
           <!--Note: due to floating, the About shows before the Contact -->
           <li class="last"><a href="/contact.html">Contact</a></li>
           <li><a href="/about.html">About</a></li>
-        <ul>
+        </ul>
       </nav>
 
-      <ul id="tools">
-        <li>
-          <form id="search">
-            <input type="text" name="search-keywords"></input>
-            <input type="button" value="Search"></input>
-          </form>
-        </li>
-        <li>
-          <dl id="sort">
-            <dt>Sort</dt>
-            <dd class="button">Date</dd>
-            <dd class="button">Distance</dd>
-          </dl>
-        </li>
-      </ul>
-
-      <div class="separator">
-      </div>
-
-      <div id="content">
-        <div id="list-container">
+      <div id="main-container">
+        <ul id="tools">
+          <li>
+            <form id="search">
+              <input type="text" name="search-keywords">
+              <input type="button" value="Search">
+            </form>
+          </li>
+          <li>
+            <dl id="sort">
+              <dt>Sort</dt>
+              <dd class="button">Date</dd>
+              <dd class="button">Distance</dd>
+            </dl>
+          </li>
+        </ul>
+        <div id="tools-separator" class="separator"> 
+          <!-- <div class="separator"></div> -->
         </div>
-        <div id="map-container">
-          <div id="map"></div>
+        
+        <div id="content">
+          <div id="list-container"></div>
+          <div id="map-container"><div id="map"></div></div>
         </div>
       </div>
+      <!--
       <footer>
         <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
       </footer>
+      -->
     </div>
 
     <!-- Handlebars templates -->
