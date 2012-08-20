@@ -100,21 +100,21 @@ div#main-container {
   margin-top: 5.5em;
 }
 
-div#tools-separator {
-  margin-top: 5em;
-  padding: 0;
-}
-
-div#tools-separator hr {
-  opacity: 0.4;
-}
-
-
-div#content {
-  position: relative;
+div#lower-container {
   margin-top: 2em;
 }
 
+div#content {
+  position: relative;
+  margin-top: 8em;
+}
+
+div#tools-separator {
+  margin-top: -3.5em;
+  margin-bottom: 1.15em;
+  position: fixed;
+  width: 80em;
+}
 
 /* Styles for the tool bar  */
 
