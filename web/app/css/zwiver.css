@@ -13,9 +13,24 @@ body a:hover {
   color: #00a7e5; 
 }
 
+body a.alternate {
+  color: #f04850;
+  font-size: 85%;
+  font-weight: normal;
+}
+
+body a.alternate:hover {
+  color: #f3696f;
+}
+
+footer {
+  clear: both;
+  margin-top: 700px;
+}
+
 div#body {
   position: relative;
-  padding: 20px 40px;
+  padding: 1% 2%;
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -191,26 +206,90 @@ dl#sort dd.button:nth-child(odd) {
 
 /* List and map */
 div#list-container {
-  width: 35%;
+  width: 40%;
   float: left;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 li.list-item {
   position: relative;
   z-index: -1;
+  padding: 0;
+  background-color: #fff;
+  margin: 10px 0;
+  -webkit-box-shadow: 1px 6px 5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 1px 6px 5px rgba(50, 50, 50, 0.75);
+  box-shadow: 1px 6px 5px rgba(50, 50, 50, 0.75);
+  -moz-border-radius: 4px 4px 8px 8px;
+  -webkit-border-radius:4px 4px 8px 8px;
+  border-radius: 4px 4px 8px 8px;
+}
+
+li.list-item span {
+  font-size: 85%;
+  display: block;
+  padding: 4px 12px; 
+  text-align: left;
+}
+
+li.list-item span:first-child {
+  padding-top: 12px;
+}
+
+li.list-item span.event-title {
+  font-size: 100%;
+  font-weight: bold;
+}
+
+li.list-item span.show-more {
+  text-align: center;
+  font-size: 125%;
+  color: #fff;
+  line-height: 200%;
+  background-image: -ms-linear-gradient(top, #0987B0 0%, #115E8A 100%);
+  background-image: -moz-linear-gradient(top, #0987B0 0%, #115E8A 100%);
+  background-image: -o-linear-gradient(top, #0987B0 0%, #115E8A 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #0987B0), color-stop(1, #115E8A));
+  background-image: -webkit-linear-gradient(top, #0987B0 0%, #115E8A 100%);
+  background-image: linear-gradient(to bottom, #0987B0 0%, #115E8A 100%);
+  /*corners must be sharper than the corners of the containing li*/
+  -moz-border-radius: 0 0 6px 6px;
+  -webkit-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+}
+
+li.list-item span.show-more span {
+  display: inline;
+  line-height: 200%;
+}
+li.list-item span.show-more img {
+  vertical-align: middle; 
+  margin-top: -2px; /*compensate for the text's padding*/
+}
+
+li.list-item ul.event-expanded {
+  list-style: square inside url("/images/list_arrow.png");
+  padding: 12px;
+}
+
+li.list-item ul.event-expanded li {
+  padding: 12px 0; 
 }
 
 div#map-container {
   float: right;
-  width: 60%;
-  height: 575px;
+  width: 54%;
+  margin-left: 40%;
+  height: 65%;
   -moz-border-radius: 6px; 
   -webkit-border-radius: 6px;
   border-radius: 6px;
   border: 5px solid black;
   position: fixed;
-  margin-left: 35%;
 }
 div#map {
-  height: 575px;
+  height: 100%;
 }

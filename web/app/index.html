@@ -73,11 +73,9 @@
           </div>
         </div>
       </div>
-      <!--
       <footer>
         <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
       </footer>
-      -->
     </div>
 
     <!-- Handlebars templates -->
@@ -86,13 +84,13 @@
       <span class="event-title">{{view.content.title}}</span>
       <span class="event-venue">{{view.content.venue}}</span>
       {{#if view.expanded}}
-        <ul>
-          <li><a {{bindAttr href="view.content.url"}}>View original posting</a></li>
-          <li><a href="javascript:void(0)">Get Directions</a></li>
+        <ul class="event-expanded">
+          <li><a {{bindAttr href="view.content.url"}} class="alternate">View original posting</a></li>
+          <li><a href="javascript:void(0)" class="alternate">Get Directions</a></li>
         </ul>
       {{/if}}
       {{#view view.showMoreView}}
-        Event Info. 
+        <span>Event Info</span>
         <img class="event-expand-button" {{bindAttr src="view.imgUrl"}}></img>
       {{/view}}
     </script>

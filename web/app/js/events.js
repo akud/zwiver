@@ -174,7 +174,8 @@ EV.listView = Ember.CollectionView.create({
       }
     }.observes('selected'),
     showMoreView: Ember.View.extend({
-      itemClass: 'event-show-more',
+      classNames: ['show-more'],
+      tagName: 'span',
       imgUrl: function() {
         if(this.getPath('parentView.expanded')) {
           return '/images/up_arrow.png';
