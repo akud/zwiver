@@ -1,7 +1,6 @@
 body {
   font-size: small;
   background-color: #f4f4f4;
-  padding: 20px 40px;
 }
 /*anchors*/
 body a {
@@ -13,6 +12,16 @@ body a {
 body a:hover {
   color: #00a7e5; 
 }
+
+div#body {
+  position: relative;
+  padding: 20px 40px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 /*buttons*/
 input[type="button"], input[type="submit"], .button {
   padding: 0.25em 0.75em; 
@@ -26,7 +35,6 @@ input[type="button"], input[type="submit"], .button {
   background: -o-linear-gradient(top,  #ffffff 23%,#f7f7f7 62%,#e2e2e2 100%);
   background: -ms-linear-gradient(top,  #ffffff 23%,#f7f7f7 62%,#e2e2e2 100%);
   background: linear-gradient(to bottom,  #ffffff 23%,#f7f7f7 62%,#e2e2e2 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2e2e2',GradientType=0 );
 }
 input[type="button"]:hover, input[type="submit"]:hover, .button:hover {
   background: #e2e2e2;
@@ -36,7 +44,6 @@ input[type="button"]:hover, input[type="submit"]:hover, .button:hover {
   background: -o-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
   background: -ms-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
   background: linear-gradient(to bottom,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#ffffff',GradientType=0 );
 }
 /*separators*/
 /*TODO: Still needs some work...*/
@@ -55,11 +62,6 @@ div.separator {
   background: -o-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
   background: -ms-linear-gradient(top,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
   background: linear-gradient(to bottom,  #f4f4f4 0%,#f4f4f4 13%,#d6d6d6 63%,#adadad 91%,#adadad 98%,#f4f4f4 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#f4f4f4',GradientType=0 );
-}
-
-div#body {
-  position: absolute;
 }
 
 /* Styles for the top nav, including logo */
