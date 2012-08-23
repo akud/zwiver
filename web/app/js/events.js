@@ -48,7 +48,8 @@ EV.Event = Ember.Object.extend({
     if(google) {
       return new google.maps.Marker({
         position: this.get('position'),
-        title: this.get('title')
+        title: this.get('title'), 
+        icon: '/images/map_marker.png'
       });
     } 
   }.property('title','position'),
