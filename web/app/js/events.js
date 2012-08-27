@@ -148,7 +148,8 @@ EV.listView = Ember.CollectionView.create({
   tagName: 'ul',
   classNames: ['event-list'],
   selectedEventObserver: function() {
-    this.get('childViews').invoke('set','selected', false);
+    this.get('childViews').invoke('set', 'selected', false);
+    this.get('childViews').invoke('set', 'expanded', false);
     this.get('childViews').filter(function(childView) {
       return childView.getPath('content.id') === EV.eventsController.getPath('selectedEvent.id');
     }).invoke('set', 'selected', true);
@@ -160,18 +161,19 @@ EV.listView = Ember.CollectionView.create({
     selected: false,
     expanded: false, 
     click: function(evt) {
-      EV.eventsController.select(this.get('content'));
+      if(!this.get('selected')) {
+        EV.eventsController.select(this.get('content'));
+      }
     },
     selectedObserver: function() {
       if(this.get('selected')) {
-        var offset = $('#' + this.get('elementId')).offset();
-        if(offset) {
-          offset.top -= 50;
-          $('html, body').animate({
-            scrollTop: offset.top,
-            scrollLeft: offset.left
-          });
-        }
+        this.set('expanded', true);
+        var newTop = $('#' + this.get('elementId')).offset().top - 300;
+        var curTop = $('html').scrollTop();
+        var time = Math.max(800, Math.abs(newTop - curTop));
+        $('html, body').animate({
+          scrollTop: newTop
+        }, time);
       }
     }.observes('selected'),
     showMoreView: Ember.View.extend({
@@ -185,7 +187,6 @@ EV.listView = Ember.CollectionView.create({
         } 
       }.property('parentView.expanded'),
       click: function() {
-        this.get('parentView').set('selected', true);
         this.get('parentView').set('expanded', !this.getPath('parentView.expanded'));
       }
     })

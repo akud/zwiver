@@ -147,7 +147,7 @@
       /********************List View******************/
       module('Views');
       test('ListView', function() {
-        expect(11);
+        expect(12);
         equal(EV.listView.get('content'), EV.eventsController.get('content'), 
           'Controller Binding');
         
@@ -166,7 +166,10 @@
           //check click behavior
           ok(childViews.everyProperty('selected',false), 
             'views are unselected by default');
-          $('#qunit-fixture li.list-item')[0].click();
+          ok(childViews.everyProperty('expanded',false), 
+            'views are unexpanded by default');
+          var clickedItem = $('#qunit-fixture li.list-item:first-child span.show-more')
+            .click();
           QUnit.stop();
           setTimeout(function() {
             ok(childViews[0].get('selected'),'click selects element');
@@ -175,7 +178,18 @@
               EV.eventsController.get('selectedEvent'), 
               'Click sets selected event on events controller');
 
-              //select another item
+            ok(childViews[0].get('expanded'), 
+              'clicking on show more expands list item');  
+            //toggle expanded state
+            clickedItem.click();
+            QUnit.stop();
+            setTimeout(function() {
+              ok(!childViews[0].get('expanded'), 
+                'clicking on show more toggles expanded state');  
+              QUnit.start();
+            }, 20);
+
+            //select another item
             $('#qunit-fixture li.list-item')[1].click();
             QUnit.stop();
             setTimeout(function() {
@@ -184,15 +198,6 @@
 
               //click the 'show more' link
               $('#qunit-fixture li.list-item:nth-child(2) span.show-more').click();
-              QUnit.stop();
-              setTimeout(function() {
-                strictEqual(childViews[1].get('selected'), true, 
-                  'click on show more selects list item');  
-                strictEqual(childViews[1].get('expanded'), true, 
-                  'click on show more expands list item');  
-                QUnit.start();
-              }, 20);
-
               QUnit.start();
             }, 20);
             QUnit.start();
