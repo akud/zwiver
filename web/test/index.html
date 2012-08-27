@@ -147,7 +147,7 @@
       /********************List View******************/
       module('Views');
       test('ListView', function() {
-        expect(10);
+        expect(11);
         equal(EV.listView.get('content'), EV.eventsController.get('content'), 
           'Controller Binding');
         
@@ -186,8 +186,10 @@
               $('#qunit-fixture li.list-item:nth-child(2) span.show-more').click();
               QUnit.stop();
               setTimeout(function() {
-                strictEqual(childViews[1].get('showFullText'), true, 
-                  'click on show more');  
+                strictEqual(childViews[1].get('selected'), true, 
+                  'click on show more selects list item');  
+                strictEqual(childViews[1].get('expanded'), true, 
+                  'click on show more expands list item');  
                 QUnit.start();
               }, 20);
 
@@ -246,8 +248,8 @@
     </ol>  
     <div id="qunit-fixture">test markup, will be hidden</div>
     <script type="text/x-handlebars" data-template-name="list-item">
-      List Item {{#view view.showMoreView}}
-        <span class="show-more">show more</span>
+      List Item {{#view view.showMoreView}} 
+        Wrapped in show more
       {{/view}}
     </script>
   </body>

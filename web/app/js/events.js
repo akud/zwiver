@@ -183,7 +183,7 @@ EV.listView = Ember.CollectionView.create({
         } else {
           return '/images/down_arrow.png';
         } 
-      }.property('parentView.selected'),
+      }.property('parentView.expanded'),
       click: function() {
         this.get('parentView').set('selected', true);
         this.get('parentView').set('expanded', !this.getPath('parentView.expanded'));
