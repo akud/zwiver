@@ -93,7 +93,7 @@ nav[role="navigation"] {
   border-bottom: 3px solid #a0a0a0; 
   overflow: hidden;
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   background-image: -ms-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
   background-image: -moz-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
   background-image: -o-linear-gradient(top, #FFFFFF 0%, #DBDBDB 100%);
@@ -133,9 +133,9 @@ div#content {
 
 div#tools-separator {
   position: fixed;
-  width: 90%;
+  z-index: 1;
+  width: 85%;
   margin-left: 5%;
-  margin-right: 5%;
   margin-top: -28px;
 }
 
@@ -145,6 +145,7 @@ ul#tools {
   height: 50px;
   width: 100%;
   position: fixed;
+  z-index: 5;
   background-color: #f4f4f4;
   padding-top: 20px;
 }
@@ -205,6 +206,8 @@ dl#sort dd.button:nth-child(odd) {
 
 /* List and map */
 div#list-container {
+  position: relative;
+  z-index: 0;
   width: 40%;
   float: left;
   padding: 10px;
@@ -214,8 +217,6 @@ div#list-container {
 }
 
 li.list-item {
-  position: relative;
-  z-index: -1;
   padding: 0;
   background-color: #fff;
   margin: 10px 0;
