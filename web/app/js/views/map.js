@@ -4,8 +4,64 @@
  * @requires app.js
  * @requires controllers/events_controller.js
  * @requires models/event.js
+ * @exports EV.mapView
+ * @modifies EV.Event
  */
 (function(Ember, $, google, EV) {
+  //extend the event model with google maps functions
+  EV.Event = EV.Event.extend({
+    /**
+     * @return a google maps LatLng object with the position of this event
+     */
+    position: function() {
+      return new google.maps.LatLng(this.get('lat'),this.get('lon'));
+    }.property('lat','lon'),
+    /**
+     * @return a google maps Marker object for the event
+     */
+    mapMarker: function() {
+      return new google.maps.Marker({
+        position: this.get('position'),
+        title: this.get('title'), 
+        icon: '/images/map_marker.png'
+      });
+    }.property('title','position'),
+    /**
+     * @return html content for the map info window
+     */
+    infoWindowContent: function() {
+      return '<div class="info-window-title">' +
+        this.get('title') + '</div>' +
+        '<div class="info-window-content">' + 
+          '<div class="info-window-date">' +
+            this.get('formattedDate') +
+          '</div>' +
+          '<div class="info-window-venue">' +
+            this.get('venue') +
+          '</div>' +
+          '<div class="info-window-address">' +
+            this.get('address') +
+          '</div>' +
+        '</div>';
+    }.property('formattedDate', 'address', 'venue'),
+    /**
+     * @return A google maps info window object 
+     */
+    infoWindow: function() {
+      return new google.maps.InfoWindow({
+        content: this.get('infoWindowContent'),
+        position: this.get('position')
+      });
+    }.property('infoWindowContent','position'),
+   /**
+     * Remove this event from the map
+     */
+    remove: function() {
+      this.get('infoWindow').close();
+      this.get('mapMarker').setMap(null);
+    }
+  });
+
   EV.mapView = Ember.View.create({
     map: null,
     //observes events list and draws markers

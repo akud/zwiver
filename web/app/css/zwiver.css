@@ -40,6 +40,7 @@ div#body {
 /*buttons*/
 input[type="button"], input[type="submit"], .button {
   cursor: pointer;
+  display: inline;
   padding: 0.25em 0.75em; 
   border: 1px solid #a0a0a0; 
   -webkit-border-radius: 3px;
@@ -52,7 +53,9 @@ input[type="button"], input[type="submit"], .button {
   background: -ms-linear-gradient(top,  #ffffff 23%,#f7f7f7 62%,#e2e2e2 100%);
   background: linear-gradient(to bottom,  #ffffff 23%,#f7f7f7 62%,#e2e2e2 100%);
 }
-input[type="button"]:hover, input[type="submit"]:hover, .button:hover {
+input[type="button"]:hover, input[type="submit"]:hover, .button:hover, 
+input[type="button"].clicked, input[type="submit"].clicked, .button.clicked, 
+input[type="button"].selected, input[type="submit"].selected, .button.selected {
   background: #e2e2e2;
   background: -moz-linear-gradient(top,  #e2e2e2 0%, #f7f7f7 33%, #ffffff 64%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(33%,#f7f7f7), color-stop(64%,#ffffff));

@@ -95,7 +95,7 @@
       /***************Events Controller****************/  
       module('Controllers');
       test('Events Controller', function() {
-        expect(10);
+        expect(11);
         var ev = EV.Event.create({
           title: 'test title',
           description: 'foo',
@@ -115,6 +115,20 @@
 
           var initialIds = EV.eventsController.map(function(evt){return evt.get('id');});
 
+          //check sorts
+          EV.eventsController.sortBy(EV.sorts.DATE);
+          QUnit.stop();
+          setTimeout(function() {
+            ok(EV.eventsController.filter(function(e,index) {
+                return index > 0;
+              }).every(function(event, index) {
+                return Date.parse(event.get('date')) >= Date.parse(EV.eventsController.toArray()[index].get('date'));
+            }), 'sort by date');
+            QUnit.start();
+          }, 20);
+
+
+          //check loadNext/loadPrevious
           EV.eventsController.loadNext();
           QUnit.stop();
           setTimeout(function() {

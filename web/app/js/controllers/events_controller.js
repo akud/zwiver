@@ -2,6 +2,7 @@
  * Controller for events.
  *
  * @requires app.js
+ * @exports EV.eventsController
  */
 (function(Ember, $, EV) {
   EV.eventsController = Ember.ArrayController.create({
@@ -21,6 +22,22 @@
         this.get('selectedEvent').get('infoWindow').close();
       }
       this.set('selectedEvent', evt);
+    },
+    /**
+      * sort the loaded events by the given sort parameter.
+      * @param sort One of <code>EV.sorts</code>. required. 
+      */
+    sortBy: function(sort) {
+      switch(sort) {
+        case EV.sorts.DISTANCE:
+          console.log('called sort by date');
+          break;
+        case EV.sorts.DATE:
+          this.get('content').sort(function(left, right) {
+            return Date.parse(left.get('date')) - Date.parse(right.get('date'));
+          });
+          break;
+      }
     },
     loadNext: function() {
       this._load(this.get('nextUrl'));

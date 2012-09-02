@@ -1,9 +1,17 @@
 /**
  * Creates the application namespace, EV
+ * @exports EV
  */
 (function(window, Ember) {
   window.EV = Ember.Application.create({
-    /**
+  /**
+   * Different options by which to sort events.
+   */
+   sorts: {
+     DISTANCE: 0,
+     DATE: 1 
+   },
+   /**
     * Transform a relative or absolute url into one to access the api
     */
     toApiUrl: function(path) {

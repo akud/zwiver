@@ -58,8 +58,8 @@
           <li>
             <dl id="sort">
               <dt>Sort</dt>
-              <dd class="button">Date</dd>
-              <dd class="button">Distance</dd>
+              <dd id="sort-by-date"></dd>
+              <dd id="sort-by-distance"></dd>
             </dl>
           </li>
         </ul>
@@ -119,6 +119,8 @@
       $(document).ready(function(){
         EV.listView.appendTo('#list-container');
         EV.mapView.appendTo('#map');
+        EV.sortButtons.date.appendTo('#sort-by-date');
+        EV.sortButtons.distance.appendTo('#sort-by-distance');
           /*
         EV.nextButton.appendTo('#next-button');
         EV.prevButton.appendTo('#previous-button');
