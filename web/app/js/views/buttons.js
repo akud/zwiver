@@ -3,52 +3,39 @@
  *
  * @requires app.js
  * @requires controller/events_controller.js
+ * @provides EV.sortButtons
+ * @provides EV.nextButton
+ * @provides EV.previousButton
  */
 (function(EV, Ember) {
-/**
-  * Base class for buttons. Sets selected state on click; subclasses should 
-  * override <code>doClick()</code>
-  */
-  EV.Button = Ember.View.extend({
+  /**
+   * local only. Base class for sort buttons.
+   */
+  var SortButtonClass = Ember.View.extend({
     clicked: false,
     _buttonClass: 'button',
     classNameBindings: ['_buttonClass', 'clicked'],
     click: function() {
-      this.set('clicked', !this.get('clicked'));
-      this.doClick();
-    },
-    unClick: function() {
-      this.set('clicked', false);
-    },
-    doClick: function() {
-      console.warn(this + " should override doClick()"); 
+      if(!this.get('clicked')) {
+        EV.sortButtons.get('childViews').setEach('clicked', false);
+        this.set('clicked', true);
+        EV.eventsController.sortBy(this.get('sortParam'));
+      }
     }
   });
 
-
-  /**
+   /**
    * Buttons for sorting events, only one of which is in the 'clicked' state
    * 'date' is clicked by default.
    */
   EV.sortButtons = Ember.View.create({
     templateName: 'sort-buttons',
-    _unclickOthers: function(button) {
-      this.get('childViews').filter(function(view) {
-        return view !== button;
-      }).invoke('unclick');
-    },
-    dateButton: EV.Button.extend({
+    dateButton: SortButtonClass.extend({
       clicked: true, //clicked by default
-      doClick: function() {
-        EV.sortButtons._unclickOthers(this);
-        EV.eventsController.sortBy(EV.sorts.DATE);
-      }
+      sortParam: EV.sorts.DATE
     }),
-    distanceButton: EV.Button.extend({
-      doClick: function() {
-        EV.sortButtons._unclickOthers(this);
-        EV.eventsController.sortBy(EV.sorts.DISTANCE);
-      }
+    distanceButton: SortButtonClass.extend({
+      sortParam: EV.sorts.DISTANCE
     })
   });
 

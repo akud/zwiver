@@ -64,6 +64,9 @@ input[type="button"].selected, input[type="submit"].selected, .button.selected {
   background: -ms-linear-gradient(top,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
   background: linear-gradient(to bottom,  #e2e2e2 0%,#f7f7f7 33%,#ffffff 64%);
 }
+.button-container {
+  padding: 0;
+}
 /*separators*/
 /*TODO: Still needs some work...*/
 div.separator {

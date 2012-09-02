@@ -9,7 +9,8 @@
    *
    * example: 
    * <code>
-   *  var mock = new Mock(EV.eventsController, 'sortBy', function(arg) {
+   *  var mock = new Mock(EV.eventsController, 'sortBy');
+   *  mock.apply(function(arg) {
    *    alert('called SortBy with argument ' + arg);
    *  });
    *  EV.eventsController.sortBy(EV.sorts.DATE);
@@ -21,21 +22,28 @@
    */
   global.Mock = function(holder, target, replacement) {
     this.original = holder[target];
-    if(replacement) {
-      holder[target] = replacement;
-    };
+    this.replacement = replacement;
+
     /**
-     * Replace the target function with the given replacement
-     * @param replacement the function with which to replace the target
+     * Apply a replacement to the target function.
+     * If no argument is given, then the replacment supplied when constructing this object will be used.
      */
-    this.replaceWith = function(replacement) {
-      holder[target] = replacement;
+    this.apply = function(replacement) {
+      if(replacement) {
+        holder[target] = replacement;
+      } else if (this.replacement) {
+        holder[target] = this.replacement;
+      } else {
+        console.warn("Called mock.apply() without a replacement defined");
+      }
+      return this;
     }
     /**
      * Release the mock wrapper around target function.
      */
     this.release = function() {
       holder[target] = this.original;
+      return this;
     };
   };
 })(window);
