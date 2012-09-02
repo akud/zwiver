@@ -8,8 +8,8 @@
    * Different options by which to sort events.
    */
    sorts: {
-     DISTANCE: 0,
-     DATE: 1 
+     DISTANCE: 1,
+     DATE: 2 
    },
    /**
     * Transform a relative or absolute url into one to access the api
