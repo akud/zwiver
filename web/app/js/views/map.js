@@ -9,7 +9,7 @@
  */
 (function(Ember, $, google, EV) {
   //extend the event model with google maps functions
-  EV.Event = EV.Event.extend({
+  EV.Event.reopen({
     /**
      * @return a google maps LatLng object with the position of this event
      */

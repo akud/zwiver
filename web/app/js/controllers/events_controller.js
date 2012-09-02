@@ -18,7 +18,7 @@
       this.loadNext();
     },
     select: function(evt) {
-      if(this.get('selectedEvent')) {
+      if(this.get('selectedEvent') && this.get('selectedEvent').get('infoWindow')) {
         this.get('selectedEvent').get('infoWindow').close();
       }
       this.set('selectedEvent', evt);
