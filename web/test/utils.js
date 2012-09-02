@@ -9,11 +9,11 @@
    *
    * example: 
    * <code>
-   *  var mock = new Mock(EV.eventsController, 'sortBy');
+   *  var mock = new Mock(ZWVR.eventsController, 'sortBy');
    *  mock.apply(function(arg) {
    *    alert('called SortBy with argument ' + arg);
    *  });
-   *  EV.eventsController.sortBy(EV.sorts.DATE);
+   *  ZWVR.eventsController.sortBy(ZWVR.sorts.DATE);
    *  mock.release();
    * </code>
    * @param holder reference to the object holding the function to be replaced. Required

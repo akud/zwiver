@@ -2,13 +2,13 @@
  * Controller for events.
  *
  * @requires app.js
- * @exports EV.eventsController
+ * @exports ZWVR.eventsController
  */
-(function(Ember, $, EV) {
-  EV.eventsController = Ember.ArrayController.create({
+(function(Ember, $, ZWVR) {
+  ZWVR.eventsController = Ember.ArrayController.create({
     content: [],
     selectedEvent: null,
-    nextUrl: EV.toApiUrl('/events'),
+    nextUrl: ZWVR.toApiUrl('/events'),
     previousUrl: null,
     /**
       * Load upcoming events
@@ -25,14 +25,14 @@
     },
     /**
       * sort the loaded events by the given sort parameter.
-      * @param sort One of <code>EV.sorts</code>. required. 
+      * @param sort One of <code>ZWVR.sorts</code>. required. 
       */
     sortBy: function(sort) {
       switch(sort) {
-        case EV.sorts.DISTANCE:
+        case ZWVR.sorts.DISTANCE:
           console.log('called sort by date');
           break;
-        case EV.sorts.DATE:
+        case ZWVR.sorts.DATE:
           this.get('content').sort(function(left, right) {
             return Date.parse(left.get('date')) - Date.parse(right.get('date'));
           });
@@ -48,14 +48,14 @@
     //private
     _load: function(url) {
       $.get(url, function(data) {
-        EV.eventsController.get('content').invoke('remove');
-        EV.eventsController.set('content', data.events.map(function(item) {
-          return EV.Event.create(item);
+        ZWVR.eventsController.get('content').invoke('remove');
+        ZWVR.eventsController.set('content', data.events.map(function(item) {
+          return ZWVR.Event.create(item);
           })
         );
-        EV.eventsController.set('nextUrl', EV.toApiUrl(data.nextUrl));
-        EV.eventsController.set('previousUrl', EV.toApiUrl(data.prevUrl));
+        ZWVR.eventsController.set('nextUrl', ZWVR.toApiUrl(data.nextUrl));
+        ZWVR.eventsController.set('previousUrl', ZWVR.toApiUrl(data.prevUrl));
       });
     }
   });
-})(Ember, jQuery, EV);
+})(Ember, jQuery, ZWVR);

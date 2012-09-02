@@ -2,19 +2,19 @@
 module('Views');
 test('ListView', function() {
   expect(12);
-  equal(EV.listView.get('content'), EV.eventsController.get('content'), 
+  equal(ZWVR.listView.get('content'), ZWVR.eventsController.get('content'), 
     'Controller Binding');
   
   //append to the dom
-  EV.listView.appendTo('#qunit-fixture');
+  ZWVR.listView.appendTo('#qunit-fixture');
 
   QUnit.stop();
   setTimeout(function() {
     equal($('#qunit-fixture li.list-item').length, 
-      EV.eventsController.get('length'), 
+      ZWVR.eventsController.get('length'), 
       'appending creates list elements');  
 
-    var childViews = EV.listView.get('childViews');
+    var childViews = ZWVR.listView.get('childViews');
     ok(!!childViews.length, 'creates child views');
 
     //check click behavior
@@ -29,7 +29,7 @@ test('ListView', function() {
       ok(childViews[0].get('selected'),'click selects element');
       ok(!childViews.everyProperty('selected'), 'click selected all elements');
       equal(childViews[0].get('content'), 
-        EV.eventsController.get('selectedEvent'), 
+        ZWVR.eventsController.get('selectedEvent'), 
         'Click sets selected event on events controller');
 
       ok(childViews[0].get('expanded'), 
@@ -63,25 +63,25 @@ test('ListView', function() {
 /******************Map View*****************/
 test('MapView', function() {
   expect(3);
-  EV.mapView.appendTo('#qunit-fixture');
+  ZWVR.mapView.appendTo('#qunit-fixture');
   QUnit.stop();
   setTimeout(function() {
-    var map = EV.mapView.get('map');
+    var map = ZWVR.mapView.get('map');
     ok(map,'creates map object');
     //the map should have appended a bunch of div children
     ok($('#qunit-fixture div').length > 10, 'appends map elements');
     
-    var ev = EV.Event.create({
+    var ev = ZWVR.Event.create({
       lat: 30.129,
       lon: 129.34,
       title: 'test title',
       description: 'foo'
     });
 
-    EV.eventsController.select(ev);
+    ZWVR.eventsController.select(ev);
     QUnit.stop();
     setTimeout(function() {
-      equal(Math.round(EV.mapView.get('map').getCenter().lat()), 
+      equal(Math.round(ZWVR.mapView.get('map').getCenter().lat()), 
         Math.round(ev.get('position').lat()),
         'selecting an event pans the map');
       /*
@@ -100,17 +100,17 @@ test('Sort Buttons', function() {
   expect(7);
   //setup mock
   var sortArgs = [];
-  var mock = new Mock(EV.eventsController, 'sortBy', function(sortType) {
+  var mock = new Mock(ZWVR.eventsController, 'sortBy', function(sortType) {
     sortArgs.push(sortType);
   }).apply();
 
   //append to DOM
-  EV.sortButtons.appendTo('#qunit-fixture');
+  ZWVR.sortButtons.appendTo('#qunit-fixture');
   QUnit.stop();
   setTimeout(function() {
     ok($('#sort-buttons').length, 'appends correctly');
     //check clicked state
-    deepEqual(EV.sortButtons.get('childViews').getEach('clicked'), 
+    deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
       [true, false], 'default clicked state');
 
     //date sort is already clicked
@@ -118,7 +118,7 @@ test('Sort Buttons', function() {
     QUnit.stop();
     setTimeout(function() {
       //state should be the same
-      deepEqual(EV.sortButtons.get('childViews').getEach('clicked'), 
+      deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
         [true, false], 'clicking selected sorts does not change state');
       ok(!sortArgs.length, 
         'clicking selected sort button does not call sort function');
@@ -127,16 +127,16 @@ test('Sort Buttons', function() {
       $('#distance-sort div').click();
       QUnit.stop();
       setTimeout(function() {
-        deepEqual(EV.sortButtons.get('childViews').getEach('clicked'), 
+        deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
           [false, true], 'clicked state changes');
 
         //click the date sort button again
         $('#date-sort div').click();
         QUnit.stop();
         setTimeout(function() {
-          deepEqual(EV.sortButtons.get('childViews').getEach('clicked'), 
+          deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
             [true, false], 'clicked state changes');
-          deepEqual(sortArgs, [EV.sorts.DISTANCE, EV.sorts.DATE], 'Sort arguments');
+          deepEqual(sortArgs, [ZWVR.sorts.DISTANCE, ZWVR.sorts.DATE], 'Sort arguments');
           QUnit.start();
           mock.release();
         }, 20);

@@ -5,18 +5,18 @@
  * @requires models/event.js 
  * @requires controllers/events_controller.js 
  */
-(function(Ember, $, EV) {
-  EV.listView = Ember.CollectionView.create({
-    contentBinding: Ember.Binding.oneWay('EV.eventsController.content'),
+(function(Ember, $, ZWVR) {
+  ZWVR.listView = Ember.CollectionView.create({
+    contentBinding: Ember.Binding.oneWay('ZWVR.eventsController.content'),
     tagName: 'ul',
     classNames: ['event-list'],
     selectedEventObserver: function() {
       this.get('childViews').invoke('set', 'selected', false);
       this.get('childViews').invoke('set', 'expanded', false);
       this.get('childViews').filter(function(childView) {
-        return childView.getPath('content.id') === EV.eventsController.getPath('selectedEvent.id');
+        return childView.getPath('content.id') === ZWVR.eventsController.getPath('selectedEvent.id');
       }).invoke('set', 'selected', true);
-    }.observes('EV.eventsController.selectedEvent'),
+    }.observes('ZWVR.eventsController.selectedEvent'),
     itemViewClass: Ember.View.extend({
       templateName: 'list-item',
       classNameBindings: ['itemClass','selected', 'expanded'],
@@ -25,7 +25,7 @@
       expanded: false, 
       click: function(evt) {
         if(!this.get('selected')) {
-          EV.eventsController.select(this.get('content'));
+          ZWVR.eventsController.select(this.get('content'));
         }
       },
       selectedObserver: function() {
@@ -55,4 +55,4 @@
       })
     })
   });
-})(Ember, jQuery, EV);
+})(Ember, jQuery, ZWVR);

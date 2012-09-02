@@ -2,9 +2,9 @@
  * Event model
  *
  * @requires app.js
- * @exports EV.Event
+ * @exports ZWVR.Event
  */
-(function(EV, Ember) {
+(function(ZWVR, Ember) {
   var timezoneOffset = new Date().getTimezoneOffset()*60*1000;
   var maxDescriptionLength = 140;
   var monthNames = [
@@ -12,7 +12,7 @@
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  EV.Event = Ember.Object.extend({
+  ZWVR.Event = Ember.Object.extend({
     shortDescription: function() {
       var desc = this.get('description') || '';
       return desc.substring(0, maxDescriptionLength); 
@@ -48,5 +48,5 @@
       }
     }.property('date')
   });
-})(EV, Ember);
+})(ZWVR, Ember);
 

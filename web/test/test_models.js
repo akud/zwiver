@@ -11,7 +11,7 @@ $(document).ready(function() {
     ' What is true for writing and for love relationships is true' + 
     ' also for life. The game is worthwhile insofar as we don\'t' + 
     ' know where it will end.';
-    var ev = EV.Event.create({
+    var ev = ZWVR.Event.create({
       description: desc,
       lat: 35.32145,
       lon: -124.53435,

@@ -1,9 +1,9 @@
 /**
- * Creates the application namespace, EV
- * @exports EV
+ * Creates the application namespace, ZWVR
+ * @exports ZWVR
  */
 (function(window, Ember) {
-  window.EV = Ember.Application.create({
+  window.ZWVR = Ember.Application.create({
   /**
    * Different options by which to sort events.
    */
