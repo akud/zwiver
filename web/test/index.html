@@ -23,6 +23,7 @@
 
     <!-- test scripts -->
     <script type="text/javascript" src="/test/qunit.js"></script>
+    <script type="text/javascript" src="/test/utils.js"></script>
     <script type="text/javascript" src="/test/core_test.js"></script>
     <script type="text/javascript" src="/test/models_test.js"></script>
     <script type="text/javascript" src="/test/controllers_test.js"></script>
@@ -43,6 +44,12 @@
       List Item {{#view view.showMoreView}} 
         Wrapped in show more
       {{/view}}
+    </script>
+    <script type="text/x-handlebars" data-template-name="sort-buttons">
+      <div id="sort-buttons">Sort Buttons 
+        <div id="date-sort">{{#view view.dateButton}}Date{{/view}}</div>
+        <div id="distance-sort">{{#view view.distanceButton}}Distance{{/view}}</div>
+      </div>
     </script>
   </body>
 </html>  

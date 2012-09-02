@@ -25,6 +25,33 @@
     }
   });
 
+
+  /**
+   * Buttons for sorting events, only one of which is in the 'clicked' state
+   * 'date' is clicked by default.
+   */
+  EV.sortButtons = Ember.View.create({
+    templateName: 'sort-buttons',
+    _unclickOthers: function(button) {
+      this.get('childViews').filter(function(view) {
+        return view !== button;
+      }).invoke('unclick');
+    },
+    dateButton: EV.Button.extend({
+      clicked: true, //clicked by default
+      doClick: function() {
+        EV.sortButtons._unclickOthers(this);
+        EV.eventsController.sortBy(EV.sorts.DATE);
+      }
+    }),
+    distanceButton: EV.Button.extend({
+      doClick: function() {
+        EV.sortButtons._unclickOthers(this);
+        EV.eventsController.sortBy(EV.sorts.DISTANCE);
+      }
+    })
+  });
+
   EV.nextButton = Ember.View.create({
     templateName: 'next-button',
     clickable: function() {

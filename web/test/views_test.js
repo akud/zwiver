@@ -1,5 +1,5 @@
 /********************List View******************/
-(function($, QUnit, EV) {
+(function($, start, stop, EV, Mock) {
   $(document).ready(function() {
     module('Views');
     test('ListView', function() {
@@ -10,7 +10,7 @@
       //append to the dom
       EV.listView.appendTo('#qunit-fixture');
 
-      QUnit.stop();
+      stop();
       setTimeout(function() {
         equal($('#qunit-fixture li.list-item').length, 
           EV.eventsController.get('length'), 
@@ -26,7 +26,7 @@
           'views are unexpanded by default');
         var clickedItem = $('#qunit-fixture li.list-item:first-child span.show-more')
           .click();
-        QUnit.stop();
+        stop();
         setTimeout(function() {
           ok(childViews[0].get('selected'),'click selects element');
           ok(!childViews.everyProperty('selected'), 'click selected all elements');
@@ -38,27 +38,27 @@
             'clicking on show more expands list item');  
           //toggle expanded state
           clickedItem.click();
-          QUnit.stop();
+          stop();
           setTimeout(function() {
             ok(!childViews[0].get('expanded'), 
               'clicking on show more toggles expanded state');  
-            QUnit.start();
+            start();
           }, 20);
 
           //select another item
           $('#qunit-fixture li.list-item')[1].click();
-          QUnit.stop();
+          stop();
           setTimeout(function() {
             ok(childViews[1].get('selected'),'click selects new element');
             ok(!childViews[0].get('selected'),'click deselects old element');
 
             //click the 'show more' link
             $('#qunit-fixture li.list-item:nth-child(2) span.show-more').click();
-            QUnit.start();
+            start();
           }, 20);
-          QUnit.start();
+          start();
         }, 20);
-        QUnit.start();
+        start();
       }, 20);
     });
 
@@ -66,7 +66,7 @@
     test('MapView', function() {
       expect(3);
       EV.mapView.appendTo('#qunit-fixture');
-      QUnit.stop();
+      stop();
       setTimeout(function() {
         var map = EV.mapView.get('map');
         ok(map,'creates map object');
@@ -81,7 +81,7 @@
         });
 
         EV.eventsController.select(ev);
-        QUnit.stop();
+        stop();
         setTimeout(function() {
           equal(Math.round(EV.mapView.get('map').getCenter().lat()), 
             Math.round(ev.get('position').lat()),
@@ -93,10 +93,32 @@
           equal($('div.info-window-title').text(), ev.get('title'),
             'open info window has correct title');
           */
-          QUnit.start();
+          start();
         }, 25);
-      QUnit.start();
+      start();
       }, 150);
     });
+    test('Sort Buttons', function() {
+      expect(4);
+      EV.sortButtons.appendTo('#qunit-fixture');
+      stop();
+      setTimeout(function() {
+        ok($('#sort-buttons').length, 'appends correctly');
+        var sortArgs = [];
+        var mock = new Mock(EV.eventsController, 'sortBy', function(sortType) {
+          sortArgs.push(sortType);
+        });
+        $('#date-sort div').click();
+        $('#distance-sort div').click();
+        stop();
+        setTimeout(function() {
+          equal(sortArgs.length, 2, 'Called sort incorrect number of times');
+          equal(sortArgs[0], EV.sorts.DATE, 'date sort had incorrect arg');
+          equal(sortArgs[1], EV.sorts.DISTANCE, 'date sort had incorrect arg');
+          start();
+        }, 20);
+       start();
+      }, 20);
+    });
   });  
-})(jQuery, QUnit, EV);
+})(jQuery, QUnit.start, QUnit.stop, EV, Mock);
