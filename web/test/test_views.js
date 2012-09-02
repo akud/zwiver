@@ -97,17 +97,16 @@ test('MapView', function() {
   }, 150);
 });
 test('Sort Buttons', function() {
-  expect(7);
+  expect(9);
   //setup mock
   var sortArgs = [];
-  var mock = new Mock(ZWVR.eventsController, 'sortBy', function(sortType) {
+  var mock = new ZWVR.Mock(ZWVR.eventsController, 'sortBy', function(sortType) {
     sortArgs.push(sortType);
   }).apply();
 
   //append to DOM
   ZWVR.sortButtons.appendTo('#qunit-fixture');
-  QUnit.stop();
-  setTimeout(function() {
+  ZWVR.timeout(function() {
     ok($('#sort-buttons').length, 'appends correctly');
     //check clicked state
     deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
@@ -115,8 +114,7 @@ test('Sort Buttons', function() {
 
     //date sort is already clicked
     $('#date-sort div').click();
-    QUnit.stop();
-    setTimeout(function() {
+    ZWVR.timeout(function() {
       //state should be the same
       deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
         [true, false], 'clicking selected sorts does not change state');
@@ -125,25 +123,18 @@ test('Sort Buttons', function() {
       
       //click the distance sort button
       $('#distance-sort div').click();
-      QUnit.stop();
-      setTimeout(function() {
+      ZWVR.timeout(function() {
         deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
           [false, true], 'clicked state changes');
 
         //click the date sort button again
         $('#date-sort div').click();
-        QUnit.stop();
-        setTimeout(function() {
+        ZWVR.timeout(function() {
           deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
             [true, false], 'clicked state changes');
           deepEqual(sortArgs, [ZWVR.sorts.DISTANCE, ZWVR.sorts.DATE], 'Sort arguments');
-          QUnit.start();
-          mock.release();
-        }, 20);
-        QUnit.start();
-      }, 20);
-      QUnit.start();
-     }, 10);
-   QUnit.start();
-  }, 20);
+        }, mock.release);
+      });
+     });
+  });
 });
