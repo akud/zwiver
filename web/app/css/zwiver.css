@@ -180,7 +180,7 @@ form#search input[type="button"] {
   margin-left: -2px;
 }
 
-dl#sort dd.button {
+dl#sort dd .button {
   width: 5em;
 }
 
@@ -196,14 +196,14 @@ dl#sort dd {
 }
 
 /*button on the left*/
-dl#sort dd.button:nth-child(even) {
+dl#sort dd:nth-child(even) .button {
   margin-right: 0;
   -moz-border-radius: 3px 0px 0px 3px; 
   -webkit-border-radius: 3px 0px 0px 3px; 
   border-radius: 3px 0px 0px 3px; 
 }
 /*button on the right*/
-dl#sort dd.button:nth-child(odd) {
+dl#sort dd:nth-child(odd) .button {
   margin-left: -5px;
   -moz-border-radius: 0px 3px 3px 0px; 
   -webkit-border-radius: 0px 3px 3px 0px; 
