@@ -30,13 +30,17 @@
     sortBy: function(sort) {
       switch(sort) {
         case ZWVR.sorts.DISTANCE:
-          console.log('called sort by date');
+          console.log('called sort by distance');
           break;
         case ZWVR.sorts.DATE:
-          this.get('content').sort(function(left, right) {
+          var sortedContent = $.merge([], this.get('content'));
+          sortedContent.sort(function(left, right) {
             return Date.parse(left.get('date')) - Date.parse(right.get('date'));
           });
+          this.set('content', sortedContent);
           break;
+        default: 
+          console.warn('called sort with unknown parameter ' + sort);
       }
     },
     loadNext: function() {
