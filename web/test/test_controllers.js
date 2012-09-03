@@ -12,33 +12,29 @@ $(document).ready(function() {
     ZWVR.eventsController.select(ev);
     equal(ZWVR.eventsController.get('selectedEvent'), ev, 
       'selects correct event');
-    QUnit.stop();
-    setTimeout(function(){
+    QUnit.delay(50, function() {
       var length = ZWVR.eventsController.get('length');
       ok(!!length, 'Controller loads content on init')
       ok(ZWVR.eventsController.everyProperty('title'), 'Every event has a title');
       ok(ZWVR.eventsController.everyProperty('date'), 'Every event has a date');
       ok(ZWVR.eventsController.everyProperty('id'), 'Every event has an id');
 
-      var initialIds = ZWVR.eventsController.map(function(evt){return evt.get('id');});
+      var initialIds = ZWVR.eventsController.getEach('id');
 
       //check sorts
       ZWVR.eventsController.sortBy(ZWVR.sorts.DATE);
-      QUnit.stop();
-      setTimeout(function() {
+      QUnit.delay(function() {
         ok(ZWVR.eventsController.filter(function(e,index) {
             return index > 0;
           }).every(function(event, index) {
             return Date.parse(event.get('date')) >= Date.parse(ZWVR.eventsController.toArray()[index].get('date'));
         }), 'sort by date');
-        QUnit.start();
-      }, 20);
+      });
 
 
       //check loadNext/loadPrevious
       ZWVR.eventsController.loadNext();
-      QUnit.stop();
-      setTimeout(function() {
+      QUnit.delay(300, function() {
         equal(ZWVR.eventsController.get('length'), length, 
           'loadNext() returns the same number of events as initial load')
         //qunit doesn't have a notDeepEqual(), so we have to go through 
@@ -55,17 +51,13 @@ $(document).ready(function() {
         ok(ZWVR.eventsController.get('previousUrl'), 'loadNext() sets the prev url');
 
         ZWVR.eventsController.loadPrevious();
-        QUnit.stop();
-        setTimeout(function() {
+        QUnit.delay(300, function() {
           equal(ZWVR.eventsController.get('length'), length, 
             'loadPrevious() returns same number of events as initial load')
           var ids = ZWVR.eventsController.map(function(evt){return evt.get('id');})
           deepEqual(ids, initialIds, 'loadPrevious returns the previous list of events');
-          QUnit.start();
-        }, 250);
-        QUnit.start(); 
-      }, 250);
-      QUnit.start();
-    }, 50);
+        });
+      });
+    });
   });
 });
