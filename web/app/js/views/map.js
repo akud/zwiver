@@ -95,9 +95,8 @@
     }.observes('ZWVR.eventsController.selectedEvent'),
 
     //initialize the map when we're appending to the dom
-    appendTo: function(selector) {
-      this._super(selector);
-      this.set('map', new google.maps.Map($(selector).get(0),  { 
+    didInsertElement: function() {
+      this.set('map', new google.maps.Map(this.$().parent().get(0),  { 
         //TODO: more intelligent center for the map
         center: new google.maps.LatLng(37.78,-122.442),
         zoom: 12,
