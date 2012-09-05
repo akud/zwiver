@@ -20,3 +20,5 @@ api/spec/tmp/*
 api/**.orig
 api/rerun.txt
 api/pickle-email-*.html
+api/config/development.sphinx.conf
+api/db/sphinx

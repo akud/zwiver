@@ -15,6 +15,19 @@ class Event < ActiveRecord::Base
     end
   end
 
+  #thinking_sphinx index
+  define_index do 
+    #fields (things you can search on)
+    indexes description
+    indexes venue
+    indexes address
+    indexes title 
+    indexes url
+
+    #attributes (things you can filter/group/sort on)
+    has date
+  end
+
  
 
   # Find upcoming events
@@ -24,22 +37,5 @@ class Event < ActiveRecord::Base
   # +offset+:: the number of events to offest by
   def self.find_upcoming limit, offset
     where("date > '#{Time.now}'").order("date ASC").limit(limit).offset(offset)
-  end
-  
-  # Search for events matching terms
-  #
-  # TODO: use a search engine to do this
-  #
-  # Params:
-  # +terms+:: array or comma-delimited string of terms to search on (e.g. comedy, etc.)
-  def self.search terms=[]
-    if terms.kind_of?  String
-      terms = terms.split ','    
-    end
-    results = []
-    terms.each do |t|
-      results << (where 'title ilike ? or description ilike ?', t, t)
-    end
-    results
   end
 end

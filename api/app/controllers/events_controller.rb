@@ -40,7 +40,10 @@ class EventsController < ApplicationController
 
   def search 
     begin
-      @events = Event.search params[:terms]
+      @events = Event.search params[:q], 
+        :order => :date, 
+        :sort_mode => :asc,
+        :with => { :date => Time.now..(Time.now + 4.months)}
       render :json => @events
     rescue => e
       render :status => :internal_server_error, :json => {:error => e.to_s} 
