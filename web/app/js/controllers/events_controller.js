@@ -2,6 +2,7 @@
  * Controller for events.
  *
  * @requires app.js
+ * @requires controllers/location_controller.js
  * @exports ZWVR.eventsController
  */
 (function(Ember, $, ZWVR) {
@@ -30,7 +31,21 @@
     sortBy: function(sort) {
       switch(sort) {
         case ZWVR.sorts.DISTANCE:
-          console.log('called sort by distance');
+          ZWVR.locationController.withLocation(function(location) {
+            var sortedContent = $.merge([], ZWVR.eventsController.get('content'));
+            sortedContent.sort(function(left, right) {
+              var leftDistance = ZWVR.locationController.distance(location, {
+                latitude: parseFloat(left.get('lat')),
+                longitude: parseFloat(left.get('lon')),
+              });
+              var rightDistance = ZWVR.locationController.distance(location, {
+                latitude: parseFloat(right.get('lat')),
+                longitude: parseFloat(right.get('lon')),
+              });
+              return leftDistance - rightDistance;
+            });
+            ZWVR.eventsController.set('content', sortedContent); 
+          });
           break;
         case ZWVR.sorts.DATE:
           var sortedContent = $.merge([], this.get('content'));

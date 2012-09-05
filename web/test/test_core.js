@@ -4,13 +4,14 @@
 $(document).ready(function(){  
   module('Core');  
   test('Required Objects', function(){  
-    expect(8);    
+    expect(9);    
     ok(ZWVR, 'ZWVR');
     ok(ZWVR.sorts, 'ZWVR.sorts');
     ok(ZWVR.sorts.DATE, 'ZWVR.sorts.DATE');
     ok(ZWVR.sorts.DISTANCE, 'ZWVR.sorts.DISTANCE');
     ok(ZWVR.Event, 'Event Class');
     ok(ZWVR.eventsController, 'eventsController');
+    ok(ZWVR.locationController, 'locationController');
     ok(ZWVR.listView, 'listView');
     ok(ZWVR.mapView, 'mapView');
   });  

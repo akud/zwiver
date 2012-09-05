@@ -1,8 +1,18 @@
 /***************Events Controller****************/  
 $(document).ready(function() {
   module('Controllers');
+  test('Location Controller', function() {
+    expect(1);
+    var distance = ZWVR.locationController.distance(
+      {latitude: 37.7750, longitude: -122.4183},
+      {latitude: 38.5817, longitude: -121.4933}
+    );
+    var expected = 120.8;
+    ok(Math.abs(distance - expected) / expected < 0.01, 
+      'Distance; returned ' + distance + ' for expected value ' + expected);
+  });
   test('Events Controller', function() {
-    expect(11);
+    expect(12);
     var ev = ZWVR.Event.create({
       title: 'test title',
       description: 'foo',
@@ -20,17 +30,6 @@ $(document).ready(function() {
       ok(ZWVR.eventsController.everyProperty('id'), 'Every event has an id');
 
       var initialIds = ZWVR.eventsController.getEach('id');
-
-      //check sorts
-      ZWVR.eventsController.sortBy(ZWVR.sorts.DATE);
-      QUnit.delay(function() {
-        ok(ZWVR.eventsController.filter(function(e,index) {
-            return index > 0;
-          }).every(function(event, index) {
-            return Date.parse(event.get('date')) >= Date.parse(ZWVR.eventsController.toArray()[index].get('date'));
-        }), 'sort by date');
-      });
-
 
       //check loadNext/loadPrevious
       ZWVR.eventsController.loadNext();
@@ -56,6 +55,41 @@ $(document).ready(function() {
             'loadPrevious() returns same number of events as initial load')
           var ids = ZWVR.eventsController.map(function(evt){return evt.get('id');})
           deepEqual(ids, initialIds, 'loadPrevious returns the previous list of events');
+
+          //check sorts
+          ZWVR.eventsController.sortBy(ZWVR.sorts.DATE);
+          QUnit.delay(function() {
+            ok(ZWVR.eventsController.filter(function(e,index) {
+                return index > 0;
+              }).every(function(event, index) {
+                return Date.parse(event.get('date')) >= Date.parse(ZWVR.eventsController.toArray()[index].get('date'));
+            }), 'sort by date');
+       
+            //distance sort
+            var center = {latitude: 37.7750, longitude: -122.4183};
+            QUnit.stub(ZWVR.locationController, 'withLocation', function(callback) {
+              callback(center);
+            });
+            ZWVR.eventsController.sortBy(ZWVR.sorts.DISTANCE);
+            QUnit.delay(function() {
+              var sorted = ZWVR.eventsController.get('content').filter(function(e, index) {
+                return index > 0;
+              }).every(function(event, index) {
+                var thisDistance = ZWVR.locationController.distance(center, {
+                  latitude: parseFloat(event.get('lat')),
+                  longitude: parseFloat(event.get('lon'))
+                }); 
+                var previousDistance = ZWVR.locationController.distance(center, {
+                  latitude: parseFloat(ZWVR.eventsController.toArray()[index].get('lat')),
+                  longitude: parseFloat(ZWVR.eventsController.toArray()[index].get('lon'))
+                }); 
+                return thisDistance >= previousDistance;
+              });
+              ok(sorted, 'sort by distance');
+            }, function() {
+              QUnit.release(ZWVR.locationController, 'withLocation');
+            });
+          });
         });
       });
     });

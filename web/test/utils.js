@@ -6,47 +6,49 @@
  */
 (function($, QUnit) {
   /**
-   * Defines a Mock class, to temporarily replace a target function.
+   * Holds pointers to originals for stubbed out functions.
+   *
+   * @see QUnit.stub
+   * @see QUnit.release
+   */
+  var _stubs = {
+    keyFor: function(holder, target) {
+      return holder.toString() + target;
+    }
+  };
+  /**
+   * Stub out a target function with a replacement. Release the stub (return function to its original) with <code>QUnit.relase(holder, target);</code>
    *
    * example: 
    * <code>
-   *  var mock = new Mock(ZWVR.eventsController, 'sortBy');
-   *  mock.apply(function(arg) {
+   *  QUnit.stub(ZWVR.eventsController, 'sortBy', function(arg) {
    *    alert('called SortBy with argument ' + arg);
    *  });
-   *  ZWVR.eventsController.sortBy(ZWVR.sorts.DATE);
-   *  mock.release();
+   *  ZWVR.eventsController.sortBy(ZWVR.sorts.DATE); //alerts
+   *  QUnit.release(ZWVR.eventsController, 'sortBy');
    * </code>
    * @param holder reference to the object holding the function to be replaced. Required
    * @param target string naming the target function. Required 
-   * @param replacement the function with which to replace target. Optional.
+   * @param replacement the function with which to replace target. Required.
    */
-  QUnit.Mock = function(holder, target, replacement) {
-    this.original = holder[target];
-    this.replacement = replacement;
-
-    /**
-     * Apply a replacement to the target function.
-     * If no argument is given, then the replacment supplied when constructing this object will be used.
-     */
-    this.apply = function(replacement) {
-      if(replacement) {
-        holder[target] = replacement;
-      } else if (this.replacement) {
-        holder[target] = this.replacement;
-      } else {
-        console.warn("Called mock.apply() without a replacement defined");
-      }
-      return this;
-    }
-    /**
-     * Release the mock wrapper around target function.
-     */
-    this.release = function() {
-      holder[target] = this.original;
-      return this;
-    };
+  QUnit.stub = function(holder, target, replacement) {
+    _stubs[_stubs.keyFor(holder, target)] = holder[target];
+    holder[target] = replacement;
+    return QUnit;
   };
+
+  /**
+   * Release the stub replacing a function.
+   *
+   * @param holder reference to the object holding the replaced function
+   * @param target string naming the replaced function
+   */
+  QUnit.release = function(holder, target) {
+    var key = _stubs.keyFor(holder, target);
+    holder[target] = _stubs[key];
+    delete(_stubs[key]);
+    return QUnit;
+  }
  
   /**
    * Set a delay for a function, ensuring that <code>QUnit.stop()</code> and <code>QUnit.start()</code> are called appropriately.
@@ -56,10 +58,9 @@
    * @param cleanup any cleanup work to be performed after the target function. Optional.
    */
   QUnit.delay = function(delay, after, cleanup) {
-    if(typeof(delay) === 'function') {
-      //delay argument wasn't supplied, set defaults
-      after = arguments[0];
-      cleanup = arguments[1];
+    if(typeof(arguments[0]) === 'function') {
+      cleanup = arguments[1],
+      after = arguments[0],
       delay = 20;
     }
     QUnit.stop()
@@ -73,5 +74,6 @@
         }
       }
     }, delay);
+    return QUnit;
   }
 })(jQuery, QUnit);

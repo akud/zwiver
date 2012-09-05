@@ -85,12 +85,12 @@ $(function() {
     });
   });
   test('Sort Buttons', function() {
-    expect(9);
+    expect(7);
     //setup mock
     var sortArgs = [];
-    var mock = new QUnit.Mock(ZWVR.eventsController, 'sortBy', function(sortType) {
+    QUnit.stub(ZWVR.eventsController, 'sortBy', function(sortType) {
       sortArgs.push(sortType);
-    }).apply();
+    });
 
     //append to DOM
     ZWVR.sortButtons.appendTo('#qunit-fixture');
@@ -121,7 +121,7 @@ $(function() {
             deepEqual(ZWVR.sortButtons.get('childViews').getEach('clicked'), 
               [true, false], 'clicked state changes');
             deepEqual(sortArgs, [ZWVR.sorts.DISTANCE, ZWVR.sorts.DATE], 'Sort arguments');
-          }, mock.release);
+          }, function() {QUnit.release(ZWVR.eventsController, 'sortBy');});
         });
        });
     });
