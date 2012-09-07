@@ -9,7 +9,8 @@ body a {
   color: #0f6894;
   font-size: 115%;
 }
-body a:hover {
+body a:hover, 
+body a.current {
   color: #00a7e5; 
 }
 
