@@ -30,8 +30,13 @@
      * @return html content for the map info window
      */
     infoWindowContent: function() {
-      return '<div class="info-window-title">' +
-        this.get('title') + '</div>' +
+      var title; 
+      if(this.get('url')) {
+        title = '<a target="_blank" href="' + this.get('url') + '">' + this.get('title') + '</a>';
+      } else {
+        title = this.get('title');
+      }
+      return '<div class="info-window-title">' + title + '</div>' +
         '<div class="info-window-content">' + 
           '<div class="info-window-date">' +
             this.get('formattedDate') +
@@ -43,7 +48,7 @@
             this.get('address') +
           '</div>' +
         '</div>';
-    }.property('formattedDate', 'address', 'venue'),
+    }.property('formattedDate', 'address', 'venue', 'url'),
     /**
      * @return A google maps info window object 
      */
