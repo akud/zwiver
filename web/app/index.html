@@ -76,8 +76,10 @@
       <span class="event-venue">{{view.content.venue}}</span>
       {{#if view.expanded}}
         <ul class="event-expanded">
-          <li><a {{bindAttr href="view.content.url"}} class="alternate" target="_blank">View original posting</a></li>
-          <li><a href="javascript:void(0)" class="alternate">Get Directions</a></li>
+          {{#if view.content.url}}
+            <li><a {{bindAttr href="view.content.url"}} class="alternate" target="_blank">View original posting</a></li>
+          {{/if}}
+          <li><a {{bindAttr href="view.content.directionsUrl"}} class="alternate" target="_blank">Get Directions</a></li>
         </ul>
       {{/if}}
       {{#view view.showMoreView}}
@@ -121,10 +123,6 @@
         ZWVR.searchForm.appendTo('#search');
         ZWVR.listView.appendTo('#list-container');
         ZWVR.mapView.appendTo('#map');
-          /*
-        ZWVR.nextButton.appendTo('#next-button');
-        ZWVR.prevButton.appendTo('#previous-button');
-        */
       });
     </script>  
   </body>

@@ -2,7 +2,7 @@
 $(document).ready(function() { 
   module('Models');
   test('Events Model', function(){
-    expect(13);
+    expect(15);
     var desc = 'I don’t feel that it is necessary to know' + 
     ' exactly what I am. The main interest in life and work' + 
     ' is to become someone else that you were not in the beginning.' + 
@@ -15,7 +15,8 @@ $(document).ready(function() {
       description: desc,
       lat: 35.32145,
       lon: -124.53435,
-      date: '2012-07-15T01:30:00Z'
+      date: '2012-07-15T01:30:00Z', 
+      address: '458 Waller St., SF, CA 94117'
     });
     equal(ev.get('formattedDate'),'July 14 6:30pm','formatted date');
 
@@ -39,5 +40,21 @@ $(document).ready(function() {
       'correct position for info window');
     equal(ev.get('infoWindow').getContent(), ev.get('infoWindowContent'),
       'correct content for info window');
+
+    var directions = ev.get('directionsUrl');
+    equal(directions.split('?')[0],'http://maps.google.com/maps', 'base directions url');
+    var expectedParams = {
+      saddr: 'My+Location',
+      daddr: '458+Waller+St.,+SF,+CA+94117',
+      dirflg: 'r'
+    };
+    var actualParams = {};
+    var params = directions.split('?')[1].split('&');
+    for(var i=0; i < params.length; i++) {
+      var key = params[i].split('=')[0];
+      var value = params[i].split('=')[1];
+      actualParams[key] = value;
+    }
+    deepEqual(actualParams, expectedParams, 'directions url parameters');
   });
 });

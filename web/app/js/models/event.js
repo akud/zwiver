@@ -46,7 +46,13 @@
       } else {
         return new Date();
       }
-    }.property('date')
+    }.property('date'),
+    directionsUrl: function() {
+      var address = this.get('address')
+        .replace(/\s+/g, '+')
+        .replace(/&/g,'&amp;');
+      return 'http://maps.google.com/maps?dirflg=r&saddr=My+Location&daddr=' + address;
+    }.property('address')
   });
 })(ZWVR, Ember);
 
