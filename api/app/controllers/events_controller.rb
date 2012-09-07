@@ -44,7 +44,7 @@ class EventsController < ApplicationController
         :order => :date, 
         :sort_mode => :asc,
         :with => { :date => Time.now..(Time.now + 4.months)}
-      render :json => @events
+      render :json => {:events => @events}
     rescue => e
       render :status => :internal_server_error, :json => {:error => e.to_s} 
     end

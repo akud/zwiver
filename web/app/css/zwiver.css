@@ -167,7 +167,7 @@ ul#tools li:first-child {
   width: 30%; 
 }
 
-form#search input[type="text"] {
+#search input[type="text"] {
   height: 1.55em;
   -moz-border-radius: 1px; 
   -webkit-border-radius: 1px; 
@@ -176,8 +176,11 @@ form#search input[type="text"] {
   margin-right: 0;
 }
 
-form#search input[type="button"] {
-  margin-left: -2px;
+#search .button {
+  height: 1.55em;
+  font-weight: bold;
+  margin-left: 0.3em;
+  padding: 0.35em 1em;
 }
 
 dl#sort dd .button {

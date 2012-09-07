@@ -49,11 +49,7 @@
 
       <div id="main-container">
         <ul id="tools">
-          <li>
-            <form id="search">
-              <input type="text" name="search-keywords">
-              <input type="button" value="Search">
-            </form>
+          <li id="search">
           </li>
           <li id="sort-buttons">
           </li>
@@ -116,11 +112,13 @@
     <script type="text/javascript" src="/js/views/buttons.js"></script>
     <script type="text/javascript" src="/js/views/list.js"></script>
     <script type="text/javascript" src="/js/views/map.js"></script>
+    <script type="text/javascript" src="/js/views/search.js"></script>
 
     <!-- initialize -->
     <script type="text/javascript">
       $(document).ready(function(){
         ZWVR.sortButtons.appendTo('#sort-buttons');
+        ZWVR.searchForm.appendTo('#search');
         ZWVR.listView.appendTo('#list-container');
         ZWVR.mapView.appendTo('#map');
           /*

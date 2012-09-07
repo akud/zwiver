@@ -58,6 +58,9 @@
           console.warn('called sort with unknown parameter ' + sort);
       }
     },
+    search: function(keywords) {
+      this._load(ZWVR.toApiUrl('/events/search'), {q: keywords});
+    },
     loadNext: function() {
       this._load(this.get('nextUrl'));
     },
@@ -65,8 +68,9 @@
       this._load(this.get('previousUrl'));
     },
     //private
-    _load: function(url) {
-      $.get(url, function(data) {
+    _load: function(url, params) {
+      params = params || {};
+      $.get(url, params, function(data) {
         ZWVR.eventsController.get('content').invoke('remove');
         ZWVR.eventsController.set('content', data.events.map(function(item) {
           return ZWVR.Event.create(item);
