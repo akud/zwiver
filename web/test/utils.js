@@ -32,8 +32,12 @@
    * @param replacement the function with which to replace target. Required.
    */
   QUnit.stub = function(holder, target, replacement) {
-    _stubs[_stubs.keyFor(holder, target)] = holder[target];
+    var key = _stubs.keyFor(holder, target);
+    _stubs[key] = holder[target];
     holder[target] = replacement;
+    replacement.toString = function() {
+      return 'Stub for ' + key;
+    };
     return QUnit;
   };
 

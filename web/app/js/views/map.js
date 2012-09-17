@@ -101,16 +101,18 @@
 
     //initialize the map when we're appending to the dom
     didInsertElement: function() {
-      this.set('map', new google.maps.Map(this.$().parent().get(0),  { 
-        //TODO: more intelligent center for the map
-        center: new google.maps.LatLng(37.78,-122.442),
-        zoom: 12,
-        disableDefaultUI: true,
-        zoomControl: true,
-        panControl: true,
-        scrollwheel: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }));
+      if(!this.get('map')) {
+        this.set('map', new google.maps.Map(this.$().parent().get(0),  { 
+          //TODO: more intelligent center for the map
+          center: new google.maps.LatLng(37.78,-122.442),
+          zoom: 12,
+          disableDefaultUI: true,
+          zoomControl: true,
+          panControl: true,
+          scrollwheel: false,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }));
+      }
     }
   });
 })(Ember, jQuery, google, ZWVR);

@@ -39,28 +39,52 @@
     })
   });
 
-  ZWVR.nextButton = Ember.View.create({
-    templateName: 'next-button',
-    clickable: function() {
-      return ZWVR.eventsController.get('nextUrl') != null;
-    }.property('ZWVR.eventsController.nextUrl'),
-    click: function() {
-      ZWVR.eventsController.loadNext();
-    }
-  });
-
-
-  ZWVR.prevButton = Ember.View.create({
-    templateName: 'prev-button',
-
-    clickable: function() {
-      return ZWVR.eventsController.get('previousUrl') != null;
-    }.property('ZWVR.eventsController.previousUrl'),
-
-    click: function() {
-      if(this.get('clickable')) {
-        ZWVR.eventsController.loadPrevious();
+  ZWVR.switchButtons = Ember.View.create({
+    template: Ember.Handlebars.compile(
+      '<img id="map-switcher" {{action switchToMap}} {{bindAttr src="mapImg"}}></img>' +
+      '<img id="list-switcher" {{action switchToList}} {{bindAttr src="listImg"}}></img>'
+    ),
+    classNames: ['switch-buttons'],
+    current: 'list',
+    //url for map image
+    mapImg: function() {
+      if(this.get('current') === 'map') {
+        return '/images/map-selected.png';
+      } else {
+        return '/images/map-unselected.png';
+      }
+    }.property('current'),
+    //url for list img
+    listImg: function() {
+      if(this.get('current') === 'list') {
+        return '/images/list-selected.png';
+      } else {
+        return '/images/list-unselected.png';
+      }
+    }.property('current'),
+    removeViews: function(viewName) {
+      ZWVR.listView.remove();
+      ZWVR.mapView.remove();
+    },
+    switchToMap: function() {
+      this._switchTo('map', ZWVR.mapView, '#map');
+    },
+    switchToList: function() {
+      this._switchTo('list', ZWVR.listView, '#list-container');
+    },
+    /**
+     * Private. Switch to the provided view
+     *
+     * @param name: the name to use as the 'current' property
+     * @param view: the view object to append
+     * @param target: jquery selector string for the view's target dom element
+     */
+    _switchTo: function(name, view, target) {
+      if(name !== this.get('current')) {
+        this.set('current', name);
+        this.removeViews();
+        view.appendTo(target);
       }
     }
-  });
+ });
 })(ZWVR, Ember);

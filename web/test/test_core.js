@@ -4,7 +4,7 @@
 $(document).ready(function(){  
   module('Core');  
   test('Required Objects', function(){  
-    expect(9);    
+    expect(11);    
     ok(ZWVR, 'ZWVR');
     ok(ZWVR.sorts, 'ZWVR.sorts');
     ok(ZWVR.sorts.DATE, 'ZWVR.sorts.DATE');
@@ -14,6 +14,8 @@ $(document).ready(function(){
     ok(ZWVR.locationController, 'locationController');
     ok(ZWVR.listView, 'listView');
     ok(ZWVR.mapView, 'mapView');
+    ok(ZWVR.switchButtons, 'Switch buttons');
+    ok(ZWVR.sortButtons, 'sort buttons');
   });  
 
   test('ZWVR.toApiUrl', function() {
