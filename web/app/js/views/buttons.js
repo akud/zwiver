@@ -44,11 +44,10 @@
       '<img id="map-switcher" {{action switchToMap}} {{bindAttr src="mapImg"}}></img>' +
       '<img id="list-switcher" {{action switchToList}} {{bindAttr src="listImg"}}></img>'
     ),
-    classNames: ['switch-buttons'],
-    current: 'list',
+    current: '#list-container',
     //url for map image
     mapImg: function() {
-      if(this.get('current') === 'map') {
+      if(this.get('current') === '#map-container') {
         return '/images/map-selected.png';
       } else {
         return '/images/map-unselected.png';
@@ -56,35 +55,33 @@
     }.property('current'),
     //url for list img
     listImg: function() {
-      if(this.get('current') === 'list') {
+      if(this.get('current') === '#list-container') {
         return '/images/list-selected.png';
       } else {
         return '/images/list-unselected.png';
       }
     }.property('current'),
-    removeViews: function(viewName) {
-      ZWVR.listView.remove();
-      ZWVR.mapView.remove();
-    },
+    //selectors for all the views that are managed by the switcher buttons
+    selectors: ['#list-container', '#map-container'],
     switchToMap: function() {
-      this._switchTo('map', ZWVR.mapView, '#map');
+      this._switchTo('#map-container');
     },
     switchToList: function() {
-      this._switchTo('list', ZWVR.listView, '#list-container');
+      this._switchTo('#list-container');
     },
     /**
      * Private. Switch to the provided view
      *
-     * @param name: the name to use as the 'current' property
-     * @param view: the view object to append
-     * @param target: jquery selector string for the view's target dom element
+     * @param selector - a jQuery selector for the view to show
      */
-    _switchTo: function(name, view, target) {
-      if(name !== this.get('current')) {
-        this.set('current', name);
-        this.removeViews();
-        view.appendTo(target);
-      }
+    _switchTo: function(selector) {
+      this.set('current', selector);
+      this.get('selectors').filter(function(otherSelector) {
+        return otherSelector !== selector;
+      }).forEach(function(otherSelector) {
+        $(otherSelector).hide(); 
+      });
+      $(selector).show();
     }
  });
 })(ZWVR, Ember);

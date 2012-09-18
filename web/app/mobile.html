@@ -8,7 +8,9 @@
     <meta name="author" content="Alex Kudlick">
 
     <!-- styles -->
-    <link href="css/mobile.css" rel="stylesheet"> 
+    <link href="/css/reset.css" rel="stylesheet">
+    <link href="/css/zwiver.css" rel="stylesheet">
+    <link href="/css/zwiver-mobile-overrides.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -21,7 +23,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-57-precomposed.png">
-     <!-- google analytics -->
+    <!-- google analytics -->
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-33667701-1']);
@@ -34,82 +36,91 @@
       })();
 
     </script>
- </head>
+  </head>
   <body>
-    <div class="navbar">
-      <ul class="nav">
-        <li class="load-button first"><div id="previous-button"></div></li>
-        <li class="middle"><img class="logo" src="/images/logo_transparent_white.gif" alt="Zwiver"/></li>
-        <li class="load-button last"><div id="next-button"></div></li>
-      </ul>
-    </div>
+    <div id="body">
+      <nav role="navigation">
+        <ul>
+          <li><a href="/"><img class="logo" alt="Zwiver" src="/images/logo_no_tagline.png"/><img class="tagline" alt="Find something fun" src="/images/tagline.png"/></a></li>
+        </ul>
+      </nav>
 
-    <div class="container">
-      <h3>Upcoming Events</h3>
-      <div class="row">
-        <div class="span4" id="list-container"></div>
+      <div id="main-container">
+        <ul id="tools">
+          <li id="sort-buttons">
+          </li>
+          <li id="switch-buttons">
+          </li>
+        </ul>
+        <div id="lower-container">
+          <div id="search"></div>
+          <div id="content">
+            <div id="list-container"></div>
+            <div id="map-container" style="display: none;"></div>
+          </div>
+        </div>
       </div>
-
-      <hr>
-    </div> <!-- /container -->
+      <footer>
+        <p>&copy; Zwiver, Inc. 2012 &nbsp;<a href="http://www.vim.org/iccf/"><img src="/images/vim.gif"/></a><p>
+      </footer>
+    </div>
 
     <!-- Handlebars templates -->
     <script type="text/x-handlebars" data-template-name="list-item">
-      <div class="event-title">
-      {{#if view.content.url}} 
-        <a {{bindAttr href="view.content.url"}} target="_blank">{{view.content.title}}</a>
-      {{else}}
-        {{view.content.title}}
-      {{/if}} 
-      </div>
-      <div class="event-venue">{{view.content.venue}}</div>
-      <div class="event-date">{{view.content.formattedDate}}</div>
-      <div class="event-description">
-      {{#if view.showFullText}} 
-        {{view.content.description}}
-      {{else}}
-        {{view.content.shortDescription}}
-        {{#if view.content.hasMore}} 
-          {{#view view.showMoreView}}
-            <span class="show-more">
-              <a href="javascript:void(0)">...(more)</a>
-            </span>
-          {{/view}}
-        {{/if}}
-     {{/if}}
-      </div>
-      
+      <span class="event-date">{{view.content.formattedDate}}</span>
+      <span class="event-title">{{view.content.title}}</span>
+      <span class="event-venue">{{view.content.venue}}</span>
+      {{#if view.expanded}}
+        <ul class="event-expanded">
+          {{#if view.content.url}}
+            <li><a {{bindAttr href="view.content.url"}} class="alternate">View original posting</a></li>
+          {{/if}}
+          <li><a {{bindAttr href="view.content.directionsUrl"}} class="alternate">Get Directions</a></li>
+        </ul>
+      {{/if}}
+      {{#view view.showMoreView}}
+        <span>Event Info</span>
+        <img class="event-expand-button" {{bindAttr src="view.imgUrl"}}></img>
+      {{/view}}
     </script>
 
-    <script type="text/x-handlebars" data-template-name="next-button">
-      <a {{bindAttr class="clickable"}} href="#"><img src="/images/right_arrow.png"></img></a>
+    <script type="text/x-handlebars" data-template-name="sort-buttons">
+      <dl id="sort">
+        <dt>Sort</dt>
+        <dd class="button-container">{{#view view.dateButton}}Date{{/view}}</dd>
+        <dd class="button-container">{{#view view.distanceButton}}Distance{{/view}}</dd>
+      </dl>
     </script>
-    <script type="text/x-handlebars" data-template-name="prev-button">
-      <a {{bindAttr class="clickable"}} href="#"><img src="/images/left_arrow.png"></img></a>
-    </script>
-
     <!-- Libraries -->
     <script type="text/javascript" src="/js/libs/jquery-1.7.2.min.js"></script>  
     <script type="text/javascript" >
       //defaults for ember
       ENV = {
         CP_DEFAULT_CACHEABLE: true,
-        VIEW_PRESERVES_CONTEXT: true
+        VIEW_PRESERVES_CONTEXT: true,
+        MOBILE: true
       };
     </script>
     <script type="text/javascript" src="/js/libs/ember-0.9.8.1.min.js"></script>  
+    <script type="text/javascript" 
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPy-D421ZfcuKJZO-qDhG7ndbYloXWqWs&sensor=false"></script>
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/models/event.js"></script>
+    <script type="text/javascript" src="/js/controllers/location_controller.js"></script>
     <script type="text/javascript" src="/js/controllers/events_controller.js"></script>
     <script type="text/javascript" src="/js/views/buttons.js"></script>
     <script type="text/javascript" src="/js/views/list.js"></script>
+    <script type="text/javascript" src="/js/views/map.js"></script>
+    <script type="text/javascript" src="/js/views/search.js"></script>
 
     <!-- initialize -->
     <script type="text/javascript">
       $(document).ready(function(){
+        ZWVR.searchForm.appendTo('#search');
+        ZWVR.sortButtons.appendTo('#sort-buttons');
+        ZWVR.switchButtons.appendTo('#switch-buttons');
         ZWVR.listView.appendTo('#list-container');
-        ZWVR.nextButton.appendTo('#next-button');
-        ZWVR.prevButton.appendTo('#previous-button');
+        ZWVR.mapView.appendTo('#map-container');
       });
     </script>  
   </body>

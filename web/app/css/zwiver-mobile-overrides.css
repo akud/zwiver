@@ -1,0 +1,67 @@
+nav[role="navigation"] {
+  padding: 0;
+  height: 60px;
+}
+nav[role="navigation"] li {
+  padding: 0;
+}
+
+nav[role="navigation"] img.logo, 
+nav[role="navigation"] img.tagline {
+  width: 8em; 
+}
+
+div#main-container {
+ margin-top: 60px;
+}
+
+ul#tools {
+  height: 60px;
+  padding: 2px 8px;
+  margin-top: -10px;
+  margin-left: -10px;
+  background: #f4f4f4;
+  background: -moz-linear-gradient(top,  #f4f4f4 0%, #cfcfcf 98%, #898989 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(98%,#cfcfcf), color-stop(100%,#898989));
+  background: -webkit-linear-gradient(top,  #f4f4f4 0%,#cfcfcf 98%,#898989 100%);
+  background: -o-linear-gradient(top,  #f4f4f4 0%,#cfcfcf 98%,#898989 100%);
+  background: -ms-linear-gradient(top,  #f4f4f4 0%,#cfcfcf 98%,#898989 100%);
+  background: linear-gradient(to bottom,  #f4f4f4 0%,#cfcfcf 98%,#898989 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#898989',GradientType=0 );
+}
+
+ul#tools li:first-child {
+  width: 55%;
+}
+
+#switch-buttons {
+  padding-top: 20px;
+  margin-left: 4%;
+}
+
+#switch-buttons div {
+  display: inline;
+}
+
+#switch-buttons img:first-child {
+  margin-right: 2px;
+}
+
+div#lower-container {
+  margin-top: 70px;
+}
+
+div#content {
+  margin-top: 0;
+}
+
+div#list-container {
+  width: 100%;
+}
+
+div#map-container {
+  width: 96%;
+  position: relative;
+  height: 250px; 
+  margin-top: 10px;
+}

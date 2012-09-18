@@ -170,6 +170,7 @@ ul#tools li:first-child {
 
 #search input[type="text"] {
   height: 1.55em;
+  width: 12em;
   -moz-border-radius: 1px; 
   -webkit-border-radius: 1px; 
   border-radius: 1px; 
